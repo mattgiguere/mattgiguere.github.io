@@ -9,10 +9,10 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Carousel Template for Bootstrap</title>
+    <title>Matt Giguere</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -21,7 +21,7 @@
     <![endif]-->
 
     <!-- Custom styles for this template -->
-    <link href="css/carousel.css" rel="stylesheet">
+    <link href="assets/css/carousel.css" rel="stylesheet">
   </head>
 <!-- NAVBAR
 ================================================== -->
@@ -44,19 +44,8 @@
               <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
+                <li><a href="#about">CV</a></li>
+                <li><a href="#contact">Blog</a></li>
               </ul>
             </div>
           </div>
@@ -77,12 +66,13 @@
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+          <img src="assets/images/PH2crop.png" alt="Planet Hunters PH2">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Example headline.</h1>
-              <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+              <h1>The view from an exomoon</h1>
+              <p>PH2-b, a gas giant discovered through <a href="planethunters.org" target="new">planethunters.org</a>, is in the habitable 
+              zone of its parent star. This is an artistic rendering of what the view could look like from a hypothetical moon orbiting PH2-b.</p>
+              <p><a class="btn btn-lg btn-primary" href="http://news.yale.edu/2013/01/07/within-habitable-zone-more-planets-we-knew" role="button" target="new">Read more</a></p>
             </div>
           </div>
         </div>
@@ -192,8 +182,15 @@
 
       <!-- FOOTER -->
       <footer>
+        <p class="pull-left">&copy; 2015 Matt Giguere &middot; All rights reserved &middot; </p>
+        <ul class="footer-menu pull-right">
+        <ul class="social_links">
+          <li><a href="mailto: matthew [dot] giguere [at] yale [dot] edu">
+            <i class="icon-mail"></i>
+          </a></li>
+        </ul>
+
         <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
       </footer>
 
     </div><!-- /.container -->
@@ -207,5 +204,11 @@
     <script src="js/docs.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>  
+    <script>
+      $('.carousel').carousel({
+       interval: 10000
+      });
+    </script>                           
   </body>
 </html>
