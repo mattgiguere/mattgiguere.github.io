@@ -1,0 +1,19 @@
+# Site settings
+title: Matt Giguere
+email: matthew.giguere@yale.edu
+description: > # this means to ignore newlines until "baseurl:"
+  Hi, I'm Matt Giguere, a graduate student searching for rocky
+  planets and characterizing stellar activity of the stars
+  that host them. In addition to working towards the discovery 
+  of other rocky worlds, I am constantly working to defend my best dad 
+  of the year title. I also enjoy learning new programming languages, 
+  new statistical methods, and new visualization tools, and making 
+  things in many different media.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://yourdomain.com" # the base hostname & protocol for your site
+twitter_username: magickair
+github_username:  mattgiguere
+linkedin_username: matthewgiguere
+
+# Build settings
+markdown: kramdown
