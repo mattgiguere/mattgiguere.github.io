@@ -1,0 +1,61 @@
+.footer .container {
+    width: 90%
+}
+
+.footer .container.inner {
+    padding-top: 30px;
+    padding-bottom: 30px
+}
+
+.footer-menu {
+    padding: 0;
+    margin-top: 7px;
+    list-style: none;
+}
+
+.footer-menu li {
+    display: inline;
+    padding-left: 10px
+}
+
+.footer-menu li:before {
+    display: inline-block;
+    padding-right: 12px
+}
+
+.footer-menu li:first-child:before {
+    display: none
+}
+
+.page_links {
+    float: left
+}
+
+.page_links a:hover {
+    color: #fff;
+    text-decoration: none
+}
+
+@media (max-width: 800px) {
+    .page_links {
+        clear: both;
+        float: none
+    }
+}
+
+.social_links {
+    float: right;
+}
+
+.social_links a {
+    color: #5a5a5a;
+}
+
+.social_links a:hover {
+    color: #222222;
+    -webkit-transform: scale(1.2, 1.2);
+    -moz-transform: scale(1.2, 1.2);
+    transform: scale(1.2, 1.2);
+}
+
+
