@@ -10,7 +10,7 @@ description: > # this means to ignore newlines until "baseurl:"
   new statistical methods, and new visualization tools, and making 
   things in many different media.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://yourdomain.com" # the base hostname & protocol for your site
+url: "http://mattgiguere.github.io" # the base hostname & protocol for your site
 twitter_username: magickair
 github_username:  mattgiguere
 linkedin_username: matthewgiguere
