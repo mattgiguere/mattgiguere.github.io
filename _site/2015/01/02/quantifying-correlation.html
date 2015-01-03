@@ -10,7 +10,7 @@
   <meta name="description" content="In a recent work, I used the Pearson linear correlation coefficient, \rho, to describe the linear correlation between the radial velocity (RV) measurements a...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://yourdomain.com/statistics/activity/planets/p-values/bootstrap/montecarlo/frequentist/2015/01/02/quantifying-correlation.html">
+  <link rel="canonical" href="http://yourdomain.com/2015/01/02/quantifying-correlation.html">
   <link rel="alternate" type="application/rss+xml" title="Matt Giguere" href="http://yourdomain.com/feed.xml" />
 </head>
 
@@ -74,7 +74,7 @@
 
 <p>For the H-alpha analysis I was doing today, I wrote a few more lines to add the Pearson linear correlation coefficient and its associated p-value to an optional plot output.</p>
 
-<p><img src="../images/PearsonBootstrapPlot.png" alt="Pearson Rho Distribution from Bootstrap Monte Carlo Permutations" /></p>
+<p><img src="/images/PearsonBootstrapPlot.png" alt="Pearson Rho Distribution from Bootstrap Monte Carlo Permutations" /></p>
 
 <p>The figure above is the output from <code>pearsonBootstrapPvalue.py</code>. The blue bins show the distribution of bootstrapped p-values, the red lines show the calculated p-value of the unscrambled RV-Halpha data, and highlighted in salmon are the scrambled bootstrap permutations that are more extreme, i.e. show a more significant correlation or anti-correlation, than the unscrambled data set. Since a significant fraction of the scrambled permutations are more extreme than the unscrambled data set, there is no significant linear correlation in this data set.</p>
 
