@@ -6,12 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Matt Giguere</title>
-  <meta name="description" content="Hi, I'm Matt Giguere, a graduate student searching for rocky planets and characterizing stellar activity of the stars that host them. In addition to working towards the discovery  of other rocky worlds, I am constantly working to defend my best dad  of the year title. I also enjoy learning new programming languages,  new statistical methods, and new visualization tools, and making  things in many different media.
-">
+  <title>Setting up mpi4py</title>
+  <meta name="description" content="Today I’ve been trying to get emcee up and running and to use it with MPI. There were a number of obstacles that I needed to overcome to get MPI working on m...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://mattgiguere.github.io/blog.html">
+  <link rel="canonical" href="http://mattgiguere.github.io/2015/01/27/setting-up-mpi4py.html">
   <link rel="alternate" type="application/rss+xml" title="Matt Giguere" href="http://mattgiguere.github.io/feed.xml" />
 </head>
 
@@ -61,55 +60,54 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home">
+        <div class="post">
 
-  <h1 class="page-heading">Posts</h1>
+  <header class="post-header">
+    <h1 class="post-title">Setting up mpi4py</h1>
+    <p class="post-meta">Jan 27, 2015</p>
+  </header>
 
-  <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">Jan 27, 2015</span>
+  <article class="post-content">
+    <p>Today I’ve been trying to get <code>emcee</code> up and running and to use it with MPI. There were a number of obstacles that I needed to overcome to get MPI working on multiple machines.</p>
 
-        <h2>
-          <a class="post-link" href="/2015/01/27/setting-up-mpi4py.html">Setting up mpi4py</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 4, 2015</span>
+<p>I have an anaconda installation of python, and mpi4py is one of the packages they support (more below), so I installed mpi4py using the following command:</p>
 
-        <h2>
-          <a class="post-link" href="/2015/01/04/out-of-range-table.html">Out of Range Table</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 2, 2015</span>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">conda install mpi4py</code></pre></div>
 
-        <h2>
-          <a class="post-link" href="/2015/01/02/quantifying-correlation.html">Quantifying Correlation</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 2, 2015</span>
+<p>But when I tried running it I got the following error:</p>
 
-        <h2>
-          <a class="post-link" href="/jekyll/update/2015/01/02/my-first-post-with-jekyll.html">Blogging with Jekyll</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 2, 2015</span>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">/opt/anaconda1anaconda2anaconda3/share/openmpi/help-opal-runtime.txt</code></pre></div>
 
-        <h2>
-          <a class="post-link" href="/jekyll/update/2015/01/02/welcome-to-jekyll.html">Welcome to Jekyll!</a>
-        </h2>
-      </li>
-    
-  </ul>
+<p>After a little searching through my path, I saw one file that was causing problems, but fixing it still resulted in the above error. Fortunately, someone else encountered a similar error. Until anaconda fixes their bug, an inelegant hack is to make a symbolic link pointing from /opt/ana… to the correct path. I have anaconda python installed for all users, so instead of pointing the symbolic link to my home directory, I pointed it to the directory containing the anaconda python distribution, the Applications directory:</p>
 
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo ln -s /Applications/anaconda/ /opt/anaconda1anaconda2anaconda3</code></pre></div>
+
+<p>I did this on all 5 machines that I plan on testing MPI on. The next step is to create a hostfile containing the names or IP addresses of all hosts that will be used for computing. This is just a simple text file containing nothing more than the name of the host and the number of slots, or threads, to run on it at any given time:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">host1.example.edu <span class="nv">slots</span><span class="o">=</span>8
+host2.example.edu <span class="nv">slots</span><span class="o">=</span>12</code></pre></div>
+
+<p>The example tests in the limited <a href="http://mpi4py.scipy.org/docs/usrman/install.html">mpi4py documentation</a> failed for me, but @jbornschein put together a nice <a href="https://github.com/jbornschein/mpi4py-examples">github repository with some example code</a>. I ran the 01-helloworld example, specifying the hosts I wanted to distribute the jobs to:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">cd </span>projects/mpi4pyexamples
+mpirun --hostfile myhostfile.txt ./01-helloworld</code></pre></div>
+
+<p>After a rather long delay in returning a result, an error was returned saying it could connect on the default port. That makes sense since we use non-default ports for our machines. After some searching, it doesn’t seem like there’s any way to specify the port in the hostfile, instead I used an ssh config file. I’m using Mac OS X 10.10, and setting a config file up was quite quick and easy to do:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">emacs ~/.ssh/config</code></pre></div>
+
+<p>and for contents add</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">Host host1.example.edu
+   Hostname host1.example.edu
+   Port 2400
+
+Host host2.example.edu
+   Hostname host2.example.edu
+   Port 2400</code></pre></div>
+
+
+  </article>
 
 </div>
 
