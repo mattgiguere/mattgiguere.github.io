@@ -18,7 +18,7 @@ But when I tried running it I got the following error:
 /opt/anaconda1anaconda2anaconda3/share/openmpi/help-opal-runtime.txt
 {% endhighlight %}
 
-After a little searching through my path, I saw one file that was causing problems, but fixing it still resulted in the above error. Fortunately, someone else encountered a similar error. Until anaconda fixes their bug, an inelegant hack is to make a symbolic link pointing from /opt/ana... to the correct path. I have anaconda python installed for all users, so instead of pointing the symbolic link to my home directory, I pointed it to the directory containing the anaconda python distribution, the Applications directory:
+Fortunately for me, [someone else encountered a similar error](https://groups.google.com/a/continuum.io/forum/#!topic/anaconda/7CsGQKNvcdQ). Until anaconda fixes their bug, an inelegant hack is to make a symbolic link pointing from /opt/ana... to the correct path. I have anaconda python installed for all users, so instead of pointing the symbolic link to my home directory, I pointed it to the directory containing the anaconda python distribution, the Applications directory:
 {% highlight sh %}
 sudo ln -s /Applications/anaconda/ /opt/anaconda1anaconda2anaconda3
 {% endhighlight %}
@@ -30,7 +30,7 @@ host1.example.edu slots=8
 host2.example.edu slots=12
 {% endhighlight %}
 
-The example tests in the limited [mpi4py documentation](http://mpi4py.scipy.org/docs/usrman/install.html) failed for me, but @jbornschein put together a nice [github repository with some example code](https://github.com/jbornschein/mpi4py-examples). I ran the 01-helloworld example, specifying the hosts I wanted to distribute the jobs to:
+The example tests in the [mpi4py documentation](http://mpi4py.scipy.org/docs/usrman/install.html) failed for me, but @jbornschein put together a nice [github repository with some example code](https://github.com/jbornschein/mpi4py-examples). I ran the 01-helloworld example, specifying the hosts I wanted to distribute the jobs to:
 
 {% highlight sh %}
 cd projects/mpi4pyexamples
@@ -53,4 +53,41 @@ Host host1.example.edu
 Host host2.example.edu
    Hostname host2.example.edu
    Port 2400
+{% endhighlight %}
+
+After adding the hosts and ports to the `config` file, I didn't need to restart, or open a new terminal window or anything else that might be expected. Reissuing the same command in the same terminal window returned an immediate result:
+
+{% highlight sh %}
+∞ mpirun --hostfile myhostfile ./01-hello-world
+Hello! I'm rank 1 from 8 running in total...
+Hello! I'm rank 3 from 8 running in total...
+Hello! I'm rank 0 from 8 running in total...
+Hello! I'm rank 2 from 8 running in total...
+Hello! I'm rank 7 from 8 running in total...
+Hello! I'm rank 4 from 8 running in total...
+Hello! I'm rank 5 from 8 running in total...
+Hello! I'm rank 6 from 8 running in total...
+^Cmpirun: killing job...
+{% endhighlight %}
+
+However, as you can see things didn't end very well. I had to kill the job, otherwise I end up with a strange error:
+
+{% highlight sh %}
+∞ mpirun --hostfile hostfile ./01-hello-world
+Hello! I'm rank 0 from 8 running in total...
+Hello! I'm rank 3 from 8 running in total...
+Hello! I'm rank 1 from 8 running in total...
+Hello! I'm rank 2 from 8 running in total...
+Hello! I'm rank 4 from 8 running in total...
+Hello! I'm rank 5 from 8 running in total...
+Hello! I'm rank 6 from 8 running in total...
+Hello! I'm rank 7 from 8 running in total...
+[host2.example.edu][[7061,1],4][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect() to 128.5.5.6 failed: Operation timed out (60)
+[host2.example.edu][[7061,1],5][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect() to 128.5.5.6 failed: Operation timed out (60)
+[host2.example.edu][[7061,1],6][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect() to 128.5.5.6 failed: Operation timed out (60)
+[host2.example.edu][[7061,1],7][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect() to 128.5.5.6 failed: Operation timed out (60)
+[host1.example.edu][[7061,1],0][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect() to 128.5.5.5 failed: Operation timed out (60)
+[host1.example.edu][[7061,1],1][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect() to 128.5.5.5 failed: Operation timed out (60)
+[host1.example.edu][[7061,1],2][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect() to 128.5.5.5 failed: Operation timed out (60)
+[host1.example.edu][[7061,1],3][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect() to 128.5.5.5 failed: Operation timed out (60)
 {% endhighlight %}
