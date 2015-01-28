@@ -26,8 +26,8 @@ sudo ln -s /Applications/anaconda/ /opt/anaconda1anaconda2anaconda3
 I did this on all 5 machines that I plan on testing MPI on. The next step is to create a hostfile containing the names or IP addresses of all hosts that will be used for computing. This is just a simple text file containing nothing more than the name of the host and the number of slots, or threads, to run on it at any given time:
 
 {% highlight sh %}
-host1.example.edu slots=8
-host2.example.edu slots=12
+host1.example.edu slots=12
+host2.example.edu slots=8
 {% endhighlight %}
 
 The example tests in the [mpi4py documentation](http://mpi4py.scipy.org/docs/usrman/install.html) failed for me, but @jbornschein put together a nice [github repository with some example code](https://github.com/jbornschein/mpi4py-examples). I ran the 01-helloworld example, specifying the hosts I wanted to distribute the jobs to:
@@ -99,3 +99,7 @@ mpiexec --hostfile hostfile python test/runtests.py
 {% endhighlight %}
 
 Running `runtests.py` when the `hostfile` contains only `host1.example.edu` or `host2.example.edu` works fine. However, when I include both hosts I end up with the same error as the `helloworld.py` example. This error doesn't crop up with the `mpi4py` `helloworld` example, just the `mpi4py-examples` `helloworld`. The difference between the failed and successful versions being that the version that fails waits for all jobs to finish up at the end through `comm.Barrier()`.
+
+[This article](http://stackoverflow.com/questions/15072563/running-mpi-on-two-hosts), which discusses the communication was helpful --- it appears the two computers, host1 and host2, can communicate with the machine I am running the commands from, but they cannot communicate with eachother.
+
+I disabled the firewall through System Preferences -> Security & Privacy. This worked for the `helloworld.py` example, but not for `tests/runtests.py`. I should also mention that `host1` has 12 cores and `host2` has 8 cores. While testing out my hostfile I had reduced the number of "slots" on each to 4 and it worked. When I increased the number of slots on either host above 4, the connection failed error message reappeared when running `helloworld.py`.

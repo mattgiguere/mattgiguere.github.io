@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 27 Jan 2015 20:02:23 -0500</pubDate>
-    <lastBuildDate>Tue, 27 Jan 2015 20:02:23 -0500</lastBuildDate>
+    <pubDate>Tue, 27 Jan 2015 20:26:10 -0500</pubDate>
+    <lastBuildDate>Tue, 27 Jan 2015 20:26:10 -0500</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -28,8 +28,8 @@
 
 &lt;p&gt;I did this on all 5 machines that I plan on testing MPI on. The next step is to create a hostfile containing the names or IP addresses of all hosts that will be used for computing. This is just a simple text file containing nothing more than the name of the host and the number of slots, or threads, to run on it at any given time:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;host1.example.edu &lt;span class=&quot;nv&quot;&gt;slots&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8
-host2.example.edu &lt;span class=&quot;nv&quot;&gt;slots&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;12&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;host1.example.edu &lt;span class=&quot;nv&quot;&gt;slots&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;12
+host2.example.edu &lt;span class=&quot;nv&quot;&gt;slots&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The example tests in the &lt;a href=&quot;http://mpi4py.scipy.org/docs/usrman/install.html&quot;&gt;mpi4py documentation&lt;/a&gt; failed for me, but @jbornschein put together a nice &lt;a href=&quot;https://github.com/jbornschein/mpi4py-examples&quot;&gt;github repository with some example code&lt;/a&gt;. I ran the 01-helloworld example, specifying the hosts I wanted to distribute the jobs to:&lt;/p&gt;
 
@@ -88,6 +88,10 @@ Hello! I&lt;span class=&quot;s1&quot;&gt;&amp;#39;m rank 6 from 8 running in tot
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;mpiexec --hostfile hostfile python &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt;/runtests.py&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Running &lt;code&gt;runtests.py&lt;/code&gt; when the &lt;code&gt;hostfile&lt;/code&gt; contains only &lt;code&gt;host1.example.edu&lt;/code&gt; or &lt;code&gt;host2.example.edu&lt;/code&gt; works fine. However, when I include both hosts I end up with the same error as the &lt;code&gt;helloworld.py&lt;/code&gt; example. This error doesn’t crop up with the &lt;code&gt;mpi4py&lt;/code&gt; &lt;code&gt;helloworld&lt;/code&gt; example, just the &lt;code&gt;mpi4py-examples&lt;/code&gt; &lt;code&gt;helloworld&lt;/code&gt;. The difference between the failed and successful versions being that the version that fails waits for all jobs to finish up at the end through &lt;code&gt;comm.Barrier()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/questions/15072563/running-mpi-on-two-hosts&quot;&gt;This article&lt;/a&gt;, which discusses the communication was helpful — it appears the two computers, host1 and host2, can communicate with the machine I am running the commands from, but they cannot communicate with eachother.&lt;/p&gt;
+
+&lt;p&gt;I disabled the firewall through System Preferences -&amp;gt; Security &amp;amp; Privacy. This worked for the &lt;code&gt;helloworld.py&lt;/code&gt; example, but not for &lt;code&gt;tests/runtests.py&lt;/code&gt;. I should also mention that &lt;code&gt;host1&lt;/code&gt; has 12 cores and &lt;code&gt;host2&lt;/code&gt; has 8 cores. While testing out my hostfile I had reduced the number of “slots” on each to 4 and it worked. When I increased the number of slots on either host above 4, the connection failed error message reappeared when running &lt;code&gt;helloworld.py&lt;/code&gt;.&lt;/p&gt;
 </description>
         <pubDate>Tue, 27 Jan 2015 13:25:09 -0500</pubDate>
         <link>http://mattgiguere.github.io/2015/01/27/setting-up-mpi4py.html</link>

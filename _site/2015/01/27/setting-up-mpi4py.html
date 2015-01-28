@@ -84,8 +84,8 @@
 
 <p>I did this on all 5 machines that I plan on testing MPI on. The next step is to create a hostfile containing the names or IP addresses of all hosts that will be used for computing. This is just a simple text file containing nothing more than the name of the host and the number of slots, or threads, to run on it at any given time:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">host1.example.edu <span class="nv">slots</span><span class="o">=</span>8
-host2.example.edu <span class="nv">slots</span><span class="o">=</span>12</code></pre></div>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">host1.example.edu <span class="nv">slots</span><span class="o">=</span>12
+host2.example.edu <span class="nv">slots</span><span class="o">=</span>8</code></pre></div>
 
 <p>The example tests in the <a href="http://mpi4py.scipy.org/docs/usrman/install.html">mpi4py documentation</a> failed for me, but @jbornschein put together a nice <a href="https://github.com/jbornschein/mpi4py-examples">github repository with some example code</a>. I ran the 01-helloworld example, specifying the hosts I wanted to distribute the jobs to:</p>
 
@@ -144,6 +144,10 @@ Hello! I<span class="s1">&#39;m rank 6 from 8 running in total...</span>
 <div class="highlight"><pre><code class="language-sh" data-lang="sh">mpiexec --hostfile hostfile python <span class="nb">test</span>/runtests.py</code></pre></div>
 
 <p>Running <code>runtests.py</code> when the <code>hostfile</code> contains only <code>host1.example.edu</code> or <code>host2.example.edu</code> works fine. However, when I include both hosts I end up with the same error as the <code>helloworld.py</code> example. This error doesn’t crop up with the <code>mpi4py</code> <code>helloworld</code> example, just the <code>mpi4py-examples</code> <code>helloworld</code>. The difference between the failed and successful versions being that the version that fails waits for all jobs to finish up at the end through <code>comm.Barrier()</code>.</p>
+
+<p><a href="http://stackoverflow.com/questions/15072563/running-mpi-on-two-hosts">This article</a>, which discusses the communication was helpful — it appears the two computers, host1 and host2, can communicate with the machine I am running the commands from, but they cannot communicate with eachother.</p>
+
+<p>I disabled the firewall through System Preferences -&gt; Security &amp; Privacy. This worked for the <code>helloworld.py</code> example, but not for <code>tests/runtests.py</code>. I should also mention that <code>host1</code> has 12 cores and <code>host2</code> has 8 cores. While testing out my hostfile I had reduced the number of “slots” on each to 4 and it worked. When I increased the number of slots on either host above 4, the connection failed error message reappeared when running <code>helloworld.py</code>.</p>
 
   </article>
 
