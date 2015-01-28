@@ -149,6 +149,10 @@ Hello! I<span class="s1">&#39;m rank 6 from 8 running in total...</span>
 
 <p>I disabled the firewall through System Preferences -&gt; Security &amp; Privacy. This worked for the <code>helloworld.py</code> example, but not for <code>tests/runtests.py</code>. I should also mention that <code>host1</code> has 12 cores and <code>host2</code> has 8 cores. While testing out my hostfile I had reduced the number of “slots” on each to 4 and it worked. When I increased the number of slots on either host above 4, the connection failed error message reappeared when running <code>helloworld.py</code>.</p>
 
+<p>It looks like part of the problem may be that <code>host1</code> and <code>host2</code> are using different SSH ports, and therefore cannot communicate between each other. I switched to using two host machines that are using the same ports for SSH, and both <code>helloworld.py</code> and <code>runtests.py</code> finished up successfully.</p>
+
+<p>However, adding a third machine is now causing issues…</p>
+
   </article>
 
 </div>

@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 27 Jan 2015 20:26:10 -0500</pubDate>
-    <lastBuildDate>Tue, 27 Jan 2015 20:26:10 -0500</lastBuildDate>
+    <pubDate>Tue, 27 Jan 2015 20:38:10 -0500</pubDate>
+    <lastBuildDate>Tue, 27 Jan 2015 20:38:10 -0500</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -92,6 +92,10 @@ Hello! I&lt;span class=&quot;s1&quot;&gt;&amp;#39;m rank 6 from 8 running in tot
 &lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/questions/15072563/running-mpi-on-two-hosts&quot;&gt;This article&lt;/a&gt;, which discusses the communication was helpful — it appears the two computers, host1 and host2, can communicate with the machine I am running the commands from, but they cannot communicate with eachother.&lt;/p&gt;
 
 &lt;p&gt;I disabled the firewall through System Preferences -&amp;gt; Security &amp;amp; Privacy. This worked for the &lt;code&gt;helloworld.py&lt;/code&gt; example, but not for &lt;code&gt;tests/runtests.py&lt;/code&gt;. I should also mention that &lt;code&gt;host1&lt;/code&gt; has 12 cores and &lt;code&gt;host2&lt;/code&gt; has 8 cores. While testing out my hostfile I had reduced the number of “slots” on each to 4 and it worked. When I increased the number of slots on either host above 4, the connection failed error message reappeared when running &lt;code&gt;helloworld.py&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;It looks like part of the problem may be that &lt;code&gt;host1&lt;/code&gt; and &lt;code&gt;host2&lt;/code&gt; are using different SSH ports, and therefore cannot communicate between each other. I switched to using two host machines that are using the same ports for SSH, and both &lt;code&gt;helloworld.py&lt;/code&gt; and &lt;code&gt;runtests.py&lt;/code&gt; finished up successfully.&lt;/p&gt;
+
+&lt;p&gt;However, adding a third machine is now causing issues…&lt;/p&gt;
 </description>
         <pubDate>Tue, 27 Jan 2015 13:25:09 -0500</pubDate>
         <link>http://mattgiguere.github.io/2015/01/27/setting-up-mpi4py.html</link>

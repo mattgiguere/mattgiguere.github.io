@@ -103,3 +103,7 @@ Running `runtests.py` when the `hostfile` contains only `host1.example.edu` or `
 [This article](http://stackoverflow.com/questions/15072563/running-mpi-on-two-hosts), which discusses the communication was helpful --- it appears the two computers, host1 and host2, can communicate with the machine I am running the commands from, but they cannot communicate with eachother.
 
 I disabled the firewall through System Preferences -> Security & Privacy. This worked for the `helloworld.py` example, but not for `tests/runtests.py`. I should also mention that `host1` has 12 cores and `host2` has 8 cores. While testing out my hostfile I had reduced the number of "slots" on each to 4 and it worked. When I increased the number of slots on either host above 4, the connection failed error message reappeared when running `helloworld.py`.
+
+It looks like part of the problem may be that `host1` and `host2` are using different SSH ports, and therefore cannot communicate between each other. I switched to using two host machines that are using the same ports for SSH, and both `helloworld.py` and `runtests.py` finished up successfully.
+
+However, adding a third machine is now causing issues...
