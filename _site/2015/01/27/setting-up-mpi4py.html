@@ -139,6 +139,11 @@ Hello! I<span class="s1">&#39;m rank 6 from 8 running in total...</span>
 <span class="o">[</span>host1.example.edu<span class="o">][[</span>7061,1<span class="o">]</span>,2<span class="o">][</span>btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect<span class="o">]</span> connect<span class="o">()</span> to 128.5.5.5 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
 <span class="o">[</span>host1.example.edu<span class="o">][[</span>7061,1<span class="o">]</span>,3<span class="o">][</span>btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect<span class="o">]</span> connect<span class="o">()</span> to 128.5.5.5 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span></code></pre></div>
 
+<p>I downloaded the <a href="https://bitbucket.org/mpi4py/mpi4py/downloads">source code</a> for mpi4py, changed directories into the downloaded directory and tried running their tests:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">mpiexec --hostfile hostfile python <span class="nb">test</span>/runtests.py</code></pre></div>
+
+<p>Running <code>runtests.py</code> when the <code>hostfile</code> contains only <code>host1.example.edu</code> or <code>host2.example.edu</code> works fine. However, when I include both hosts I end up with the same error as the <code>helloworld.py</code> example. This error doesn’t crop up with the <code>mpi4py</code> <code>helloworld</code> example, just the <code>mpi4py-examples</code> <code>helloworld</code>. The difference between the failed and successful versions being that the version that fails waits for all jobs to finish up at the end through <code>comm.Barrier()</code>.</p>
 
   </article>
 

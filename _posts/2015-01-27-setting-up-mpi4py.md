@@ -91,3 +91,11 @@ Hello! I'm rank 7 from 8 running in total...
 [host1.example.edu][[7061,1],2][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect() to 128.5.5.5 failed: Operation timed out (60)
 [host1.example.edu][[7061,1],3][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect() to 128.5.5.5 failed: Operation timed out (60)
 {% endhighlight %}
+
+I downloaded the [source code](https://bitbucket.org/mpi4py/mpi4py/downloads) for mpi4py, changed directories into the downloaded directory and tried running their tests:
+
+{% highlight sh %}
+mpiexec --hostfile hostfile python test/runtests.py
+{% endhighlight %}
+
+Running `runtests.py` when the `hostfile` contains only `host1.example.edu` or `host2.example.edu` works fine. However, when I include both hosts I end up with the same error as the `helloworld.py` example. This error doesn't crop up with the `mpi4py` `helloworld` example, just the `mpi4py-examples` `helloworld`. The difference between the failed and successful versions being that the version that fails waits for all jobs to finish up at the end through `comm.Barrier()`.

@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 27 Jan 2015 19:52:29 -0500</pubDate>
-    <lastBuildDate>Tue, 27 Jan 2015 19:52:29 -0500</lastBuildDate>
+    <pubDate>Tue, 27 Jan 2015 20:02:23 -0500</pubDate>
+    <lastBuildDate>Tue, 27 Jan 2015 20:02:23 -0500</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -83,6 +83,11 @@ Hello! I&lt;span class=&quot;s1&quot;&gt;&amp;#39;m rank 6 from 8 running in tot
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;host1.example.edu&lt;span class=&quot;o&quot;&gt;][[&lt;/span&gt;7061,1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,2&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; connect&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; to 128.5.5.5 failed: Operation timed out &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;60&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;host1.example.edu&lt;span class=&quot;o&quot;&gt;][[&lt;/span&gt;7061,1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,3&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; connect&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; to 128.5.5.5 failed: Operation timed out &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;60&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;p&gt;I downloaded the &lt;a href=&quot;https://bitbucket.org/mpi4py/mpi4py/downloads&quot;&gt;source code&lt;/a&gt; for mpi4py, changed directories into the downloaded directory and tried running their tests:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;mpiexec --hostfile hostfile python &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt;/runtests.py&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Running &lt;code&gt;runtests.py&lt;/code&gt; when the &lt;code&gt;hostfile&lt;/code&gt; contains only &lt;code&gt;host1.example.edu&lt;/code&gt; or &lt;code&gt;host2.example.edu&lt;/code&gt; works fine. However, when I include both hosts I end up with the same error as the &lt;code&gt;helloworld.py&lt;/code&gt; example. This error doesn’t crop up with the &lt;code&gt;mpi4py&lt;/code&gt; &lt;code&gt;helloworld&lt;/code&gt; example, just the &lt;code&gt;mpi4py-examples&lt;/code&gt; &lt;code&gt;helloworld&lt;/code&gt;. The difference between the failed and successful versions being that the version that fails waits for all jobs to finish up at the end through &lt;code&gt;comm.Barrier()&lt;/code&gt;.&lt;/p&gt;
 </description>
         <pubDate>Tue, 27 Jan 2015 13:25:09 -0500</pubDate>
         <link>http://mattgiguere.github.io/2015/01/27/setting-up-mpi4py.html</link>
