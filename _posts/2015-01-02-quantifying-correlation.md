@@ -11,7 +11,7 @@ These two pieces of code came in handy again for some recent work measuring the 
 
 For the H-alpha analysis I was doing today, I wrote a few more lines to add the Pearson linear correlation coefficient and its associated p-value to an optional plot output.
 
-![Pearson Rho Distribution from Bootstrap Monte Carlo Permutations]({{ site.baseurl }}/images/PearsonBootstrapPlot.png)
+![Pearson Rho Distribution from Bootstrap Monte Carlo Permutations]({{ site.baseurl }}/images/Show_PearsonBootstrapPlot.png)
 
 The figure above is the output from `pearsonBootstrapPvalue.py`. The blue bins show the distribution of bootstrapped p-values, the red lines show the calculated p-value of the unscrambled RV-Halpha data, and highlighted in salmon are the scrambled bootstrap permutations that are more extreme, i.e. show a more significant correlation or anti-correlation, than the unscrambled data set. Since a significant fraction of the scrambled permutations are more extreme than the unscrambled data set, there is no significant linear correlation in this data set.
 
