@@ -107,3 +107,5 @@ I disabled the firewall through System Preferences -> Security & Privacy. This w
 It looks like part of the problem may be that `host1` and `host2` are using different SSH ports, and therefore cannot communicate between each other. I switched to using two host machines that are using the same ports for SSH, and both `helloworld.py` and `runtests.py` finished up successfully.
 
 However, adding a third machine is now causing issues...
+
+This turned out to be that the firewall was still on despite turning it off through the GUI in system preferences. Simply turning the firewall off through the System Preferences GUI worked on 2 of the 3 machines, so I'm not sure why it got hung up on the third. If you're having similar problems, try taking a look at either "All Messages" or "secure.log" in the console (or /var/log/secure.log) on the mac host. If you see lines stating that the Firewall refused connection, this is your problem too. Simply restarting the system did the trick. I've now added several more machines and have executed `helloworld.py` and `tests/runtests.py` successfully on 96 cores!

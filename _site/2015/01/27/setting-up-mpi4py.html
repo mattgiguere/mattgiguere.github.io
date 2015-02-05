@@ -153,6 +153,8 @@ Hello! I<span class="s1">&#39;m rank 6 from 8 running in total...</span>
 
 <p>However, adding a third machine is now causing issues…</p>
 
+<p>This turned out to be that the firewall was still on despite turning it off through the GUI in system preferences. Simply turning the firewall off through the System Preferences GUI worked on 2 of the 3 machines, so I’m not sure why it got hung up on the third. If you’re having similar problems, try taking a look at either “All Messages” or “secure.log” in the console (or /var/log/secure.log) on the mac host. If you see lines stating that the Firewall refused connection, this is your problem too. Simply restarting the system did the trick. I’ve now added several more machines and have executed <code>helloworld.py</code> and <code>tests/runtests.py</code> successfully on 96 cores!</p>
+
   </article>
 
 </div>
