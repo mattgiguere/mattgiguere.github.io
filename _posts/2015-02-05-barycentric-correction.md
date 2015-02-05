@@ -100,6 +100,29 @@ still not below the value from the old barycorr.
 |         Method                 |     RMS    |
 |--------------------------------|------------|
 | Old Barycode                   | 2.178 m/s  |
-| Barycorr /hip - Hip & Mam vals | 2.474 m/s  |
 | Barycorr J2000- Hip & Mam vals | 2.722 m/s  |
+| Barycorr /hip - Hip & Mam vals | 2.474 m/s  |
 | Barycorr /hip - MCMC vals      | 2.467 m/s  |
+
+I then looked into whether or not any structure existed between the old barycentric correction
+and the new. The time series of the ("Old Barycode" - "Barycorr with Mamajek (2012) and van Leeuwen (2007) (1991.25 Epoch))
+ residuals is shown below.
+
+![Residual Time Series of Old Barycode - Barycorr w. Mamajek and van Leeuwen vals (1991.25 Epoch)]({{ site.baseurl }}/images/Show_BarycentricDifference.png)
+
+I was a little surprised to see the lack of structure in the residuals. I was expecting something
+with maybe an annual, semi-annual, or at least periodic signal. Looking at the distribution of
+the residuals shows nothing strange --- they appear roughly normally distributed about some offset.
+Since we're only concerned with differential RVs, the offset isn't a big deal. I know we've seen
+this before.
+
+![ Distribution of Old Barycode - Barycorr w. Mamajek and van Leeuwen vals (1991.25 Epoch)]({{ site.baseurl }}/images/Show_OldBC-BarycorrHipMamajekVanLeeuwenDist.png)
+
+And looking at a periodogram of the time series shows nothing significant. Below is a plot showing the
+periodogoram of the same data set: Old barycode - Barycorr with Mamajek (2012) CTIO 1.5 m, van Leeuwen (2007),
+and 1991.25 Epoch. The superimposed horizontal lines are the 95% and 99% confidence levels based on a Boostrap
+MC analysis. These show that there is no significant power at any period between 0.1 and 400 days.
+The highest peak is at a period of 117.79 days, and the second highest peak is at period of 171.43 days.
+
+
+![Periodogram of Old Barycode - Barycorr w. Mamajek and van Leeuwen vals (Hip Epoch)]({{ site.baseurl }}/images/Show_OldBC-BarycorrHipMamajekVanLeeuwenPerg.png)
