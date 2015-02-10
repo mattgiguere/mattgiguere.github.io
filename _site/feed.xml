@@ -6,9 +6,36 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 08 Feb 2015 22:18:05 -0500</pubDate>
-    <lastBuildDate>Sun, 08 Feb 2015 22:18:05 -0500</lastBuildDate>
+    <pubDate>Tue, 10 Feb 2015 18:40:16 -0500</pubDate>
+    <lastBuildDate>Tue, 10 Feb 2015 18:40:16 -0500</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Stellar Spot Modeling</title>
+        <description>&lt;p&gt;Over the past two days I worked on fitting the simultaneous MOST photometry
+and CHIRON RV measurements of Epsilon Eridani. For starters I downsampled
+the MOST photometry to a running mean in 8 hour bins. This greatly reduced
+the noise and made the number of observations comparable to the RV
+measurements.&lt;/p&gt;
+
+&lt;p&gt;To downsample I used the &lt;code&gt;pandas&lt;/code&gt; resample command.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 10 Feb 2015 13:35:53 -0500</pubDate>
+        <link>http://mattgiguere.github.io/2015/02/10/spot-modeling.html</link>
+        <guid isPermaLink="true">http://mattgiguere.github.io/2015/02/10/spot-modeling.html</guid>
+        
+        <category>python,</category>
+        
+        <category>imagemagick,</category>
+        
+        <category>simulation,</category>
+        
+        <category>animation,</category>
+        
+        <category>pandas</category>
+        
+        
+      </item>
     
       <item>
         <title>Barycentric Correction Results</title>
