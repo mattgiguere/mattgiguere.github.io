@@ -6,17 +6,19 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 10 Feb 2015 20:13:09 -0500</pubDate>
-    <lastBuildDate>Tue, 10 Feb 2015 20:13:09 -0500</lastBuildDate>
+    <pubDate>Tue, 10 Feb 2015 20:33:37 -0500</pubDate>
+    <lastBuildDate>Tue, 10 Feb 2015 20:33:37 -0500</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
         <title>Stellar Spot Modeling</title>
         <description>&lt;p&gt;Over the past two days I worked on fitting the simultaneous MOST photometry
-and CHIRON RV measurements of Epsilon Eridani. For starters I downsampled
-the MOST photometry to a running mean in 8 hour bins. This greatly reduced
-the noise and made the number of observations comparable to the RV
-measurements.&lt;/p&gt;
+and CHIRON RV measurements of Epsilon Eridani. This document describes
+some of the more general code as well as the early results. The full
+spot modeling code will be made publicly available when the peer-reviewed
+paper is accepted.&lt;/p&gt;
+
+&lt;h4 id=&quot;importing-the-data&quot;&gt;Importing the Data&lt;/h4&gt;
 
 &lt;p&gt;After finding out over the weekend that the times we stored in IDL data
 structures (and published over the last 6 years) were erroneous, I used
@@ -38,9 +40,9 @@ the &lt;code&gt;pandas&lt;/code&gt; &lt;code&gt;DatetimeIndex&lt;/code&gt; and &
 &lt;span class=&quot;n&quot;&gt;eerv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;emmnwobjd&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;emmnwobjds&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_julian_date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The next step was to restore the MOST data from file and downsample by taking a
-running mean. Downsampling reduced the noise and provided a data set that could
-be combined with the RV measurements without completely dominating the solution.
-Both restoring the data and downsampling can also easily be accomplished in
+running mean. Downsampling reduced the noise and allowed the photometry to
+be combined with the RV data without completely dominating the solution.
+Both restoring the data and downsampling were accomplished in
 pandas with a little help from the &lt;code&gt;Time&lt;/code&gt; method in &lt;code&gt;astropy&lt;/code&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;astropy.time&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Time&lt;/span&gt;
@@ -61,26 +63,42 @@ pandas with a little help from the &lt;code&gt;Time&lt;/code&gt; method in &lt;c
 &lt;p&gt;Since the MOST data have reported homoscedastic errors (a rarity in astronomy)
 this worked out. Otherwise, we’d need to take a weighted mean.&lt;/p&gt;
 
-&lt;p&gt;For a first step in fitting the spectroscopic and photometric data to
-create a self-consistent spot model describing the star I used the maximum
-likelihood approach.&lt;/p&gt;
+&lt;h4 id=&quot;the-maximum-likelihood-method&quot;&gt;The Maximum Likelihood Method&lt;/h4&gt;
+
+&lt;p&gt;We would like to fit the spectroscopic and photometric data simultaneously
+to get a self-consistent model describing the star. For a first step in doing
+this, I went with a quick maximum likelihood approach. The log likehood function
+for the problem is:&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;\[
-\sigma
+\ln{p(v, \phi|t, \sigma, t&#39;, \sigma&#39;, \Theta)} = - \frac{1}{2} \sum_{n}\left[ \frac{(v_{n} - f(t_{n}| \Theta))^{2}}{\sigma_{n}^2} + \ln{(2 \pi \sigma_{n}^{2})}\right]
+- \frac{1}{2} \sum_{m}\left[ \frac{(\phi_{m} - f&#39;(t&#39;_{m}| \Theta))^{2}}{\sigma_{m}^{&#39;2}} + \ln{(2 \pi \sigma_{m}^{&#39;2})}\right]
 \]&lt;/code&gt;&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\chi&lt;/script&gt;
+&lt;p&gt;where &lt;script type=&quot;math/tex&quot;&gt;v_{n}&lt;/script&gt; is the radial velocity measurement for the &lt;script type=&quot;math/tex&quot;&gt;n^{th}&lt;/script&gt; observation taken at time &lt;script type=&quot;math/tex&quot;&gt;t_{n}&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\sigma_{n}&lt;/script&gt; is the single measurement uncertainty, and &lt;script type=&quot;math/tex&quot;&gt;f&lt;/script&gt; is the radial velocity spot model given our hyperparamers, &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\phi_{m}&lt;/script&gt; is the flux of the &lt;script type=&quot;math/tex&quot;&gt;m^{th}&lt;/script&gt; photometric observation happening at time &lt;script type=&quot;math/tex&quot;&gt;t&#39;&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;f&#39;&lt;/script&gt; is the photometric spot model given our same hyperparameters, &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt;, and &lt;script type=&quot;math/tex&quot;&gt;\sigma_{m}^{&#39;}&lt;/script&gt; is the photometric uncertainty of the &lt;script type=&quot;math/tex&quot;&gt;m^{th}&lt;/script&gt; observation. The hyperparameters here are&lt;/p&gt;
 
-&lt;p&gt;hih&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;the latitude of spot 1&lt;/li&gt;
+  &lt;li&gt;the phase of spot 1&lt;/li&gt;
+  &lt;li&gt;the fractional area of spot 1&lt;/li&gt;
+  &lt;li&gt;the latitude of spot 2&lt;/li&gt;
+  &lt;li&gt;the phase of spot 2&lt;/li&gt;
+  &lt;li&gt;the fractional area of spot 2&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;where is chi?&lt;/p&gt;
+&lt;p&gt;This was then driven by minimizing the negative of the log likelihood:&lt;/p&gt;
 
-&lt;p&gt;$\theta$&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#use the scipy optimize method:&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;scipy.optimize&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;op&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;nll&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lnlike&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;op&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;minimize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;theta_init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;verr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ferr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+                     &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Powell&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;hello theta?&lt;/p&gt;
+&lt;p&gt;For a first pass we decided to include two spots. No spot growth or decay.
+No differential rotation. Just something quick and dirty, but it was clear
+at least two spots were needed. Below is an animation showing the result.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-latex&quot; data-lang=&quot;latex&quot;&gt;&lt;span class=&quot;sb&quot;&gt;$$&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;\sigma&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$$&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
+&lt;p&gt;&lt;img src=&quot;/images/Show_ObsAnim12medPause.gif&quot; alt=&quot;Spot Modeling Photometry and Spectroscopy Simultaneously&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 10 Feb 2015 13:35:53 -0500</pubDate>
         <link>http://mattgiguere.github.io/2015/02/10/spot-modeling.html</link>

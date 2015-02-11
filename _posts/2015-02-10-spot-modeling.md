@@ -6,10 +6,12 @@ tags: python, imagemagick, simulation, animation, pandas
 ---
 
 Over the past two days I worked on fitting the simultaneous MOST photometry
-and CHIRON RV measurements of Epsilon Eridani. For starters I downsampled
-the MOST photometry to a running mean in 8 hour bins. This greatly reduced
-the noise and made the number of observations comparable to the RV
-measurements.
+and CHIRON RV measurements of Epsilon Eridani. This document describes
+some of the more general code as well as the early results. The full
+spot modeling code will be made publicly available when the peer-reviewed
+paper is accepted.
+
+####Importing the Data
 
 After finding out over the weekend that the times we stored in IDL data
 structures (and published over the last 6 years) were erroneous, I used
@@ -35,9 +37,9 @@ eerv['emmnwobjd'] = emmnwobjds.to_julian_date()
 {% endhighlight %}
 
 The next step was to restore the MOST data from file and downsample by taking a
-running mean. Downsampling reduced the noise and provided a data set that could
-be combined with the RV measurements without completely dominating the solution.
-Both restoring the data and downsampling can also easily be accomplished in
+running mean. Downsampling reduced the noise and allowed the photometry to
+be combined with the RV data without completely dominating the solution.
+Both restoring the data and downsampling were accomplished in
 pandas with a little help from the `Time` method in `astropy`:
 
 {% highlight python %}
@@ -60,24 +62,39 @@ downsampledflux = eemr.resample("480min", how = mhc)
 Since the MOST data have reported homoscedastic errors (a rarity in astronomy)
 this worked out. Otherwise, we'd need to take a weighted mean.
 
-For a first step in fitting the spectroscopic and photometric data to
-create a self-consistent spot model describing the star I used the maximum
-likelihood approach.
+####The Maximum Likelihood Method
+
+We would like to fit the spectroscopic and photometric data simultaneously
+to get a self-consistent model describing the star. For a first step in doing
+this, I went with a quick maximum likelihood approach. The log likehood function
+for the problem is:
 
 `\[
-\sigma
+\ln{p(v, \phi|t, \sigma, t', \sigma', \Theta)} = - \frac{1}{2} \sum_{n}\left[ \frac{(v_{n} - f(t_{n}| \Theta))^{2}}{\sigma_{n}^2} + \ln{(2 \pi \sigma_{n}^{2})}\right]
+- \frac{1}{2} \sum_{m}\left[ \frac{(\phi_{m} - f'(t'_{m}| \Theta))^{2}}{\sigma_{m}^{'2}} + \ln{(2 \pi \sigma_{m}^{'2})}\right]
 \]`
 
-$$\chi$$
+where $$v_{n}$$ is the radial velocity measurement for the $$n^{th}$$ observation taken at time $$t_{n}$$, $$\sigma_{n}$$ is the single measurement uncertainty, and $$f$$ is the radial velocity spot model given our hyperparamers, $$\Theta$$, $$\phi_{m}$$ is the flux of the $$m^{th}$$ photometric observation happening at time $$t'$$, $$f'$$ is the photometric spot model given our same hyperparameters, $$\Theta$$, and $$\sigma_{m}^{'}$$ is the photometric uncertainty of the $$m^{th}$$ observation. The hyperparameters here are
 
-hih
+- the latitude of spot 1
+- the phase of spot 1
+- the fractional area of spot 1
+- the latitude of spot 2
+- the phase of spot 2
+- the fractional area of spot 2
 
-where is chi?
+This was then driven by minimizing the negative of the log likelihood:
 
-$\theta$
-
-hello theta?
-
-{% highlight latex %}
-$$\sigma$$
+{% highlight python %}
+#use the scipy optimize method:
+import scipy.optimize as op
+nll = lambda *args: -lnlike(*args)
+result = op.minimize(nll, theta_init, args=(t, v, verr, t2, f, ferr),
+                     method='Powell')
 {% endhighlight %}
+
+For a first pass we decided to include two spots. No spot growth or decay.
+No differential rotation. Just something quick and dirty, but it was clear
+at least two spots were needed. Below is an animation showing the result.
+
+![Spot Modeling Photometry and Spectroscopy Simultaneously]({{ site.baseurl }}/images/Show_ObsAnim12medPause.gif)
