@@ -62,4 +62,22 @@ this worked out. Otherwise, we'd need to take a weighted mean.
 
 For a first step in fitting the spectroscopic and photometric data to
 create a self-consistent spot model describing the star I used the maximum
-likelihood approach. 
+likelihood approach.
+
+`\[
+\sigma
+\]`
+
+$$\chi$$
+
+hih
+
+where is chi?
+
+$\theta$
+
+hello theta?
+
+{% highlight latex %}
+$$\sigma$$
+{% endhighlight %}
