@@ -74,7 +74,48 @@ the MOST photometry to a running mean in 8 hour bins. This greatly reduced
 the noise and made the number of observations comparable to the RV
 measurements.</p>
 
-<p>To downsample I used the <code>pandas</code> resample command.</p>
+<p>After finding out over the weekend that the times we stored in IDL data
+structures (and published over the last 6 years) were erroneous, I used
+the exposure meter midpoints from the MySQL database instead:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;SELECT emmnwob, mnvel, errvel FROM exposuremeter e &quot;</span>
+<span class="n">cmd</span> <span class="o">+=</span> <span class="s">&quot;INNER JOIN velocities v ON v.observation_id = e.observation_id &quot;</span>
+<span class="n">cmd</span> <span class="o">+=</span> <span class="s">&quot;INNER JOIN observations o ON o.observation_id = e.observation_id &quot;</span>
+<span class="n">cmd</span> <span class="o">+=</span> <span class="s">&quot;WHERE object=22049 AND tag=&#39;a&#39; AND mnvel IS NOT NULL&quot;</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">ccdb</span><span class="o">.</span><span class="n">connectChironDB</span><span class="p">()</span>
+
+<span class="n">eerv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql_query</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span></code></pre></div>
+
+<p>And converted the exposure meter midpoints to Julian Dates using
+the <code>pandas</code> <code>DatetimeIndex</code> and <code>to_julian_date()</code> methods:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">emmnwobjds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">eerv</span><span class="o">.</span><span class="n">emmnwob</span><span class="p">)</span>
+<span class="n">eerv</span><span class="p">[</span><span class="s">&#39;emmnwobjd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">emmnwobjds</span><span class="o">.</span><span class="n">to_julian_date</span><span class="p">()</span></code></pre></div>
+
+<p>The next step was to restore the MOST data from file and downsample by taking a
+running mean. Downsampling reduced the noise and provided a data set that could
+be combined with the RV measurements without completely dominating the solution.
+Both restoring the data and downsampling can also easily be accomplished in
+pandas with a little help from the <code>Time</code> method in <code>astropy</code>:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">astropy.time</span> <span class="kn">import</span> <span class="n">Time</span>
+<span class="c">#restore data</span>
+<span class="n">eeph</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">&#39;epsEriMost.txt&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c">#create JD astropy Time object for easy conversion to ISO format:</span>
+<span class="n">MostJds</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="n">eeph</span><span class="o">.</span><span class="n">MJD</span> <span class="o">+</span> <span class="mf">2451545.</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;jd&#39;</span><span class="p">)</span>
+<span class="c">#now store as DatetimeIndex</span>
+<span class="n">eeph</span><span class="p">[</span><span class="s">&#39;ObsDT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">MostJds</span><span class="o">.</span><span class="n">isot</span><span class="p">)</span>
+
+<span class="c">#next create a one column series of flux values with the observation</span>
+<span class="c">#time as the index:</span>
+<span class="n">eemr</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">eeph</span><span class="p">[</span><span class="s">&#39;flux&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">eeph</span><span class="p">[</span><span class="s">&#39;ObsDT&#39;</span><span class="p">])</span>
+<span class="n">mhc</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Mean&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">}</span>
+<span class="n">downsampledtimes</span> <span class="o">=</span> <span class="n">eemr</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&quot;480min&quot;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="n">mhc</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_julian_date</span><span class="p">()</span>
+<span class="n">downsampledflux</span> <span class="o">=</span> <span class="n">eemr</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&quot;480min&quot;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="n">mhc</span><span class="p">)</span></code></pre></div>
+
+<p>Since the MOST data have reported homoscedastic errors (a rarity in astronomy)
+this worked out.</p>
 
   </article>
 
