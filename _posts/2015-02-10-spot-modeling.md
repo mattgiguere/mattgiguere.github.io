@@ -58,4 +58,8 @@ downsampledflux = eemr.resample("480min", how = mhc)
 {% endhighlight %}
 
 Since the MOST data have reported homoscedastic errors (a rarity in astronomy)
-this worked out.
+this worked out. Otherwise, we'd need to take a weighted mean.
+
+For a first step in fitting the spectroscopic and photometric data to
+create a self-consistent spot model describing the star I used the maximum
+likelihood approach. 

@@ -115,7 +115,11 @@ pandas with a little help from the <code>Time</code> method in <code>astropy</co
 <span class="n">downsampledflux</span> <span class="o">=</span> <span class="n">eemr</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&quot;480min&quot;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="n">mhc</span><span class="p">)</span></code></pre></div>
 
 <p>Since the MOST data have reported homoscedastic errors (a rarity in astronomy)
-this worked out.</p>
+this worked out. Otherwise, we’d need to take a weighted mean.</p>
+
+<p>For a first step in fitting the spectroscopic and photometric data to
+create a self-consistent spot model describing the star I used the maximum
+likelihood approach. </p>
 
   </article>
 
