@@ -6,9 +6,35 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 10 Feb 2015 20:53:57 -0500</pubDate>
-    <lastBuildDate>Tue, 10 Feb 2015 20:53:57 -0500</lastBuildDate>
+    <pubDate>Thu, 12 Feb 2015 20:46:35 -0500</pubDate>
+    <lastBuildDate>Thu, 12 Feb 2015 20:46:35 -0500</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>More Spot Modeling</title>
+        <description>&lt;p&gt;Continuing from where I left off last time, I tested out a
+three spot model today. &lt;/p&gt;
+</description>
+        <pubDate>Thu, 12 Feb 2015 15:45:45 -0500</pubDate>
+        <link>http://mattgiguere.github.io/2015/02/12/more-spot-modeling.html</link>
+        <guid isPermaLink="true">http://mattgiguere.github.io/2015/02/12/more-spot-modeling.html</guid>
+        
+        <category>python,</category>
+        
+        <category>simulation,</category>
+        
+        <category>animation,</category>
+        
+        <category>pandas,</category>
+        
+        <category>map</category>
+        
+        <category>projections,</category>
+        
+        <category>aitoff</category>
+        
+        
+      </item>
     
       <item>
         <title>Stellar Spot Modeling</title>
