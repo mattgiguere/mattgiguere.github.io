@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 13 Feb 2015 20:31:33 -0500</pubDate>
-    <lastBuildDate>Fri, 13 Feb 2015 20:31:33 -0500</lastBuildDate>
+    <pubDate>Fri, 13 Feb 2015 20:36:42 -0500</pubDate>
+    <lastBuildDate>Fri, 13 Feb 2015 20:36:42 -0500</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -24,7 +24,21 @@ and relative sizes. And here’s the three spot solution:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/images/Show_ThreeSpotModel.png&quot; alt=&quot;Three Spot Model&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Note that the two rightmost spots in the three spot solution are very
-similar in size to the rightmost spot in the two spot solution.&lt;/p&gt;
+similar in size to the rightmost spot in the two spot solution. And
+the average latitude of those two rightmost spots in the three spot
+solution is approximately the latitude of the single rightmost spot
+in the two spot solution.&lt;/p&gt;
+
+&lt;p&gt;Including only three spots and we already see the degenerate
+dangers of spot modeling. On the two do list is to take a
+bayesian approach and use the &lt;code&gt;emcee&lt;/code&gt; MCMC sampler to further
+explore parameter space and make sure the two rightmost spots in
+the two spot solution are not both getting caught in the same
+local minimum.&lt;/p&gt;
+
+&lt;p&gt;We also have a lot of prior information we know for this problem
+that we’ll be able to include when taking the Bayesian approach.
+More on that later…&lt;/p&gt;
 </description>
         <pubDate>Thu, 12 Feb 2015 15:45:45 -0500</pubDate>
         <link>http://mattgiguere.github.io/2015/02/12/more-spot-modeling.html</link>
