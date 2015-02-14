@@ -5,7 +5,7 @@ date:   2015-02-12 20:45:45
 tags: python, simulation, animation, pandas, map projections, aitoff
 ---
 
-Continuing from where I left off last time, I tested out a
+Continuing from where I [left off last time][SpotModeling1], I tested out a
 three spot model today. Here's the Maximum Likelihood solution
 for the two spot model in two dimensions:
 
@@ -32,3 +32,5 @@ local minimum.
 We also have a lot of prior information we know for this problem
 that we'll be able to include when taking the Bayesian approach.
 More on that later...
+
+[SpotModeling1]: {% post_url 2015-02-10-spot-modeling %}
