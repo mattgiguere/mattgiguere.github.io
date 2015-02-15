@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Testing
-permalink: /about/
+permalink: /testing/
 ---
 
 This is just testing things out.
