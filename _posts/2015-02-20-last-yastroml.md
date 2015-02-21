@@ -21,6 +21,15 @@ and grew... I decided that instead I'd send an email out to the department
 to gauge interest in organizing something here at Yale. The response was
 overwhelming --- YastroML was born.
 
+We started meeting weekly in March of the Spring 2014 semester; we stuck to our
+weekly schedule fairly well until the end of the semester. Academics always
+seem to think they will have plenty of free time come summer. In practice,
+between conferences, workshops, summer schools, and extra curricular
+activities, that never seems to be the case. With the end of the Spring
+Semester came the end of our weekly schedule. We met sporadically since then,
+and our meeting yesterday marked the completion of the final chapter. 
+
+
 
 
 [YastroML]: https://github.com/YastroML/YastroML
