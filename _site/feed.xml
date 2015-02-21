@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 21 Feb 2015 14:19:27 -0500</pubDate>
-    <lastBuildDate>Sat, 21 Feb 2015 14:19:27 -0500</lastBuildDate>
+    <pubDate>Sat, 21 Feb 2015 15:06:32 -0500</pubDate>
+    <lastBuildDate>Sat, 21 Feb 2015 15:06:32 -0500</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -26,7 +26,7 @@ started crafting an email to inform other people in the Yale astronomy
 Department about the event, and my list of people to include grew, and grew,
 and grew… I decided that instead I’d send an email out to the department
 to gauge interest in organizing something here at Yale. The response was
-overwhelming — YastroML was born.&lt;/p&gt;
+overwhelming — &lt;a href=&quot;https://github.com/YastroML/YastroML&quot;&gt;YastroML&lt;/a&gt; was born.&lt;/p&gt;
 
 &lt;p&gt;We started meeting weekly in March of the Spring 2014 semester; we stuck to our
 weekly schedule fairly well until the end of the semester. Academics always
@@ -34,7 +34,37 @@ seem to think they will have plenty of free time come summer. In practice,
 between conferences, workshops, summer schools, and extra curricular
 activities, that never seems to be the case. With the end of the Spring
 Semester came the end of our weekly schedule. We met sporadically since then,
-and our meeting yesterday marked the completion of the final chapter. &lt;/p&gt;
+and our meeting yesterday marked the completion of the final chapter.&lt;/p&gt;
+
+&lt;p&gt;In this last meeting we covered time series analysis. Major topics included&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Discrete Fourier Transforms&lt;/li&gt;
+  &lt;li&gt;Periodograms&lt;/li&gt;
+  &lt;li&gt;Digital Filtering&lt;/li&gt;
+  &lt;li&gt;Wavelets and Matched Filtering&lt;/li&gt;
+  &lt;li&gt;Classification of periodic phenomena&lt;/li&gt;
+  &lt;li&gt;Analysis of arrival time data&lt;/li&gt;
+  &lt;li&gt;Analysis of Stochastic Processes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I put together an &lt;a href=&quot;http://nbviewer.ipython.org/github/YastroML/YastroML/blob/master/Session19_150219/Ch10_TimeSeries.ipynb&quot;&gt;IPython notebook&lt;/a&gt; to lead the discussion. Having
+dealt with time series analysis for the past several years while analyzing
+RV measurements and light curves, I was comfortable with a lot of the material,
+and added several examples and interactive components to the notebook to make
+the session a little more pedagogical.&lt;/p&gt;
+
+&lt;p&gt;Some of the highlights for me in this chapter were:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;seeing how easy it is to implement wavelets in python using &lt;a href=&quot;http://www.pybytes.com/pywavelets/&quot;&gt;PyWavelets&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;The use of truncated Fourier Series for searching for signals that may have
+multiple reoccurring features, such as eclipsing binaries&lt;/li&gt;
+  &lt;li&gt;The nonparametric Gregory-Loredo technique when dealing with sparse data sets&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Afterwards a few of us got together for a celebratory dram and to discuss how
+the discussion group can be improved for the next time around.&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 20 Feb 2015 12:30:48 -0500</pubDate>
@@ -42,6 +72,10 @@ and our meeting yesterday marked the completion of the final chapter. &lt;/p&gt;
         <guid isPermaLink="true">http://mattgiguere.github.io/2015/02/20/last-yastroml.html</guid>
         
         <category>python,</category>
+        
+        <category>IPython</category>
+        
+        <category>notebook,</category>
         
         <category>time</category>
         
