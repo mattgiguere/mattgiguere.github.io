@@ -11,12 +11,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Matt Giguere</title>
-  <meta name="description" content="Hi, I'm Matt Giguere, a graduate student searching for rocky planets and characterizing stellar activity of the stars that host them. In addition to working towards the discovery  of other rocky worlds, I am constantly working to defend my best dad  of the year title. I also enjoy learning new programming languages,  new statistical methods, and new visualization tools, and making  things in many different media.
-">
+  <title>Parallel Tempering</title>
+  <meta name="description" content="After a few days of working out the bugs in between other projects, Inow have the spot modeling code working with parallel tempering. Briefly,parallel temper...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://mattgiguere.github.io/blog.html">
+  <link rel="canonical" href="http://mattgiguere.github.io/2015/03/09/parallel-tempering.html">
   <link rel="alternate" type="application/rss+xml" title="Matt Giguere" href="http://mattgiguere.github.io/feed.xml" />
 </head>
 
@@ -66,103 +65,29 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home">
+        <div class="post">
 
-  <h1 class="page-heading">Posts</h1>
+  <header class="post-header">
+    <h1 class="post-title">Parallel Tempering</h1>
+    <p class="post-meta">Mar 9, 2015</p>
+  </header>
 
-  <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">Mar 10, 2015</span>
+  <article class="post-content">
+    <p>After a few days of working out the bugs in between other projects, I
+now have the spot modeling code working with parallel tempering. Briefly,
+<a href="https://en.wikipedia.org/wiki/Parallel_tempering">parallel tempering</a> allows for better exploration of the
+parameter space of multi-modal distributions. In my particular example, there
+may be (and probably are) many spots on the surface of a star. I am trying to
+find the most probable coordinates for the spots, as well as their sizes, and
+other properties of the star. When performing the normal Affine Invariant MCMC
+Ensemble sampling of <a href="http://dan.iel.fm/emcee/current/">emcee</a>, Markov chains will get stuck in local
+minima (e.g. smaller spot locations), and do not explore the full parameter
+space to find the larger spot locations. Parallel tempering reduces the
+height of the barriers between the posterior distribution, allowing chains
+to fully explore the parameter space, and find the dominant spot locations.</p>
 
-        <h2>
-          <a class="post-link" href="/2015/03/10/scaling-up-with-aws.html">Scaling Up With AWS</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Mar 9, 2015</span>
 
-        <h2>
-          <a class="post-link" href="/2015/03/09/parallel-tempering.html">Parallel Tempering</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Feb 20, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/2015/02/20/last-yastroml.html">The Last YastroML</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Feb 12, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/2015/02/12/more-spot-modeling.html">More Spot Modeling</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Feb 10, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/2015/02/10/spot-modeling.html">Stellar Spot Modeling</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Feb 8, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/2015/02/08/barycenter-results.html">Barycentric Correction Results</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Feb 5, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/2015/02/05/barycentric-correction.html">The CHIRON Barycentric Correction</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 27, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/2015/01/27/setting-up-mpi4py.html">Setting up mpi4py</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 4, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/2015/01/04/out-of-range-table.html">Out of Range Table</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 2, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/2015/01/02/quantifying-correlation.html">Quantifying Correlation</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 2, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/jekyll/update/2015/01/02/my-first-post-with-jekyll.html">Blogging with Jekyll</a>
-        </h2>
-      </li>
-    
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+  </article>
 
 </div>
 

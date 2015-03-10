@@ -6,9 +6,76 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 21 Feb 2015 15:06:32 -0500</pubDate>
-    <lastBuildDate>Sat, 21 Feb 2015 15:06:32 -0500</lastBuildDate>
+    <pubDate>Tue, 10 Mar 2015 19:03:18 -0400</pubDate>
+    <lastBuildDate>Tue, 10 Mar 2015 19:03:18 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Scaling Up With AWS</title>
+        <description>&lt;p&gt;As mentioned in a previous blog post, my parallel tempering code is
+now working&lt;/p&gt;
+</description>
+        <pubDate>Tue, 10 Mar 2015 14:39:10 -0400</pubDate>
+        <link>http://mattgiguere.github.io/2015/03/10/scaling-up-with-aws.html</link>
+        <guid isPermaLink="true">http://mattgiguere.github.io/2015/03/10/scaling-up-with-aws.html</guid>
+        
+        <category>python,</category>
+        
+        <category>IPython,</category>
+        
+        <category>time</category>
+        
+        <category>series</category>
+        
+        <category>analysis,</category>
+        
+        <category>AWS,</category>
+        
+        <category>EC2</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Parallel Tempering</title>
+        <description>&lt;p&gt;After a few days of working out the bugs in between other projects, I
+now have the spot modeling code working with parallel tempering. Briefly,
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Parallel_tempering&quot;&gt;parallel tempering&lt;/a&gt; allows for better exploration of the
+parameter space of multi-modal distributions. In my particular example, there
+may be (and probably are) many spots on the surface of a star. I am trying to
+find the most probable coordinates for the spots, as well as their sizes, and
+other properties of the star. When performing the normal Affine Invariant MCMC
+Ensemble sampling of &lt;a href=&quot;http://dan.iel.fm/emcee/current/&quot;&gt;emcee&lt;/a&gt;, Markov chains will get stuck in local
+minima (e.g. smaller spot locations), and do not explore the full parameter
+space to find the larger spot locations. Parallel tempering reduces the
+height of the barriers between the posterior distribution, allowing chains
+to fully explore the parameter space, and find the dominant spot locations.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 09 Mar 2015 16:21:08 -0400</pubDate>
+        <link>http://mattgiguere.github.io/2015/03/09/parallel-tempering.html</link>
+        <guid isPermaLink="true">http://mattgiguere.github.io/2015/03/09/parallel-tempering.html</guid>
+        
+        <category>python,</category>
+        
+        <category>time</category>
+        
+        <category>series</category>
+        
+        <category>analysis,</category>
+        
+        <category>MPI,</category>
+        
+        <category>Bayesian,</category>
+        
+        <category>MCMC,</category>
+        
+        <category>Parallel</category>
+        
+        <category>Tempering</category>
+        
+        
+      </item>
     
       <item>
         <title>The Last YastroML</title>
@@ -633,22 +700,6 @@ from an &lt;code&gt;INT&lt;/code&gt; type to &lt;code&gt;BIGINT&lt;/code&gt; was
         
         <category>frequentist</category>
         
-        
-      </item>
-    
-      <item>
-        <title>Blogging with Jekyll</title>
-        <description>&lt;p&gt;This is my first blog post that uses &lt;a href=&quot;http://jekyllrb.com&quot;&gt;jekyll&lt;/a&gt; to build the site. It was surprisingly easy to get up and running, and makes posting entries to my github page quick and painless.&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 02 Jan 2015 10:25:21 -0500</pubDate>
-        <link>http://mattgiguere.github.io/jekyll/update/2015/01/02/my-first-post-with-jekyll.html</link>
-        <guid isPermaLink="true">http://mattgiguere.github.io/jekyll/update/2015/01/02/my-first-post-with-jekyll.html</guid>
-        
-        
-        <category>jekyll</category>
-        
-        <category>update</category>
         
       </item>
     
