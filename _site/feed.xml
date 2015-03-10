@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 10 Mar 2015 19:03:18 -0400</pubDate>
-    <lastBuildDate>Tue, 10 Mar 2015 19:03:18 -0400</lastBuildDate>
+    <pubDate>Tue, 10 Mar 2015 19:11:28 -0400</pubDate>
+    <lastBuildDate>Tue, 10 Mar 2015 19:11:28 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -50,6 +50,19 @@ minima (e.g. smaller spot locations), and do not explore the full parameter
 space to find the larger spot locations. Parallel tempering reduces the
 height of the barriers between the posterior distribution, allowing chains
 to fully explore the parameter space, and find the dominant spot locations.&lt;/p&gt;
+
+&lt;p&gt;Here is the best fit solution employing a maximum likelihood method with an
+excellent initial guess based on a grid search:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Show_TwoSpotModelLinearTrendCrat.png&quot; alt=&quot;Maximum Likelihood&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And here are 100 random samples taken from the parallel tempering method:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/Show_eeTwoSpotParTmp100Samps.png&quot; alt=&quot;Parallel Tempering&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Note the standard deviation of the residuals for the photometry is unchanged,
+but the standard deviation of the residuals for the RV data benefited from
+a 62 cm/s improvement.&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 09 Mar 2015 16:21:08 -0400</pubDate>
