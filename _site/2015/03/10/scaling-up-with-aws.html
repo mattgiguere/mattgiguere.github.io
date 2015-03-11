@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Scaling Up With AWS</title>
-  <meta name="description" content="As mentioned in a previous blog post, my parallel tempering code isnow working">
+  <meta name="description" content="As mentioned in a previous blog post, my parallel tempering code isnow working. There is still work to be done in adding new physics,but I am now in a positi...">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://mattgiguere.github.io/2015/03/10/scaling-up-with-aws.html">
@@ -73,8 +73,51 @@
   </header>
 
   <article class="post-content">
-    <p>As mentioned in a previous blog post, my parallel tempering code is
-now working</p>
+    <p>As mentioned in a <a href="/2015/03/09/parallel-tempering.html">previous blog post</a>, my parallel tempering code is
+now working. There is still work to be done in adding new physics,
+but I am now in a position to benefit from some extra computing
+power. I’m going to try using <a href="http://aws.amazon.com/ec2/">Amazon EC2</a> for this project.</p>
+
+<p>First, I launched an instance running the Amazon Linux AMI (HVM).
+<a href="http://badhessian.org/2013/11/cluster-computing-for-027hr-using-amazon-ec2-and-ipython-notebook/">This blog post</a> may be helpful in setting things up.</p>
+
+<p>Once the instance was created, and my keys were all setup, I SSHed into my
+instance. My favorite distribution of scientific python is anaconda python.
+This can be easily downloaded onto the AWS virtual machine instance by</p>
+
+<ol>
+  <li>going to the Anaconda downloads page</li>
+  <li>selecting the linux OS</li>
+  <li>right-clicking in the browser on the “Linux 64-Bit - Python 2.7” button</li>
+  <li>copying the link to the downloadable package</li>
+  <li>and pasting the link after <code>wget</code> in the SSH session into the VMI.</li>
+</ol>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">ssh -p22 -i my-private-key ec2-user@my-public-ip
+mkdir tempDownloads
+<span class="nb">cd </span>tempDownloads
+wget http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-2.1.0-Linux-x86_64.sh</code></pre></div>
+
+<p>Once the download has completed, installation is as simple as typing ls to
+find out the name of the install script, running it, and following the
+on-screen instructions.</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">ls
+-rw-rw-r-- <span class="m">1</span> ec2-user ec2-user <span class="m">353806962</span> Sep <span class="m">30</span> 19:37 Anaconda-2.1.0-Linux-x86_64.sh
+bash Anaconda-2.1.0-Linux-x86_64.sh</code></pre></div>
+
+<p>If you said ‘yes’ at the end of installation to have the anaconda python path
+appended to your .bashrc file, then starting anaconda python is as simple as
+sourcing the changes to your .bashrc file and typing python:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">source</span> ~/.bashrc
+python</code></pre></div>
+
+<p>There are a few packages I need to run my parallel tempering code. I’ll use
+pip to install these:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">pip install emcee</code></pre></div>
+
 
   </article>
 
