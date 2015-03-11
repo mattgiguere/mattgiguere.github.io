@@ -50,7 +50,26 @@ Please enter your selection: 2
 ∞ emacs config
 {% endhighlight %}
 
+Modifying the configuration file to use my AWS_ACCESS_KEY_ID and
+AWS_SECRET_ACCESS_KEY was a bit tricky. Amazon changed the way it manages
+access keys and no longer allows them to be created at the root level. The
+[AWS IAM User documentation][AwsIamUsr] describes how to create a user and
+grab their access key. In a nutshell, do this:
 
+1. go to: https://console.aws.amazon.com/iam/
+2. In the left-hand navigation page
+  - click **Users**
+  - click the blue **Create New Users** button at the top
+  - enter a username in the field
+  - click the blue **Create** button at the bottom of the screen
+
+Your new access key and secret keys should then appear on the screen. Copy
+these into your .starcluster/config file. For the account number, use the
+"User Name" you just created.
+
+Scroll down a bit and modify the `KEY_LOCATION` to point to the SSH Key you use
+to connect to AWS (you had to create a key pair when you created an AWS
+  account).
 
 
 
@@ -60,3 +79,4 @@ Please enter your selection: 2
 [MpiEc2]: http://cs.smith.edu/dftwiki/index.php/Tutorial:_Create_an_MPI_Cluster_on_the_Amazon_Elastic_Cloud_(EC2)
 [StrClstrInst]: http://star.mit.edu/cluster/docs/latest/installation.html
 [StrClstrQuickStart]: http://star.mit.edu/cluster/docs/latest/quickstart.html
+[AwsIamUsr]: http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_SettingUpUser.html
