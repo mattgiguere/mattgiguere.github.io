@@ -6,18 +6,52 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 11 Mar 2015 14:11:21 -0400</pubDate>
-    <lastBuildDate>Wed, 11 Mar 2015 14:11:21 -0400</lastBuildDate>
+    <pubDate>Wed, 11 Mar 2015 15:26:42 -0400</pubDate>
+    <lastBuildDate>Wed, 11 Mar 2015 15:26:42 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
         <title>Creating an AWS EC2 Cluster</title>
         <description>&lt;p&gt;Today I decided to scale up my MPI MCMC sampling to use more nodes.In a
 &lt;a href=&quot;/2015/01/27/setting-up-mpi4py.html&quot;&gt;previous blog post&lt;/a&gt;, I showed how I installed MPI on our cluster. I
-was using about 50 cores from our cluster for my analysis. I could add more,
-but there is currently a lot of demand for CPUs in our research group. Instead,
+got it up to 96 cores, but I scaled back and was using about 50 cores from our
+cluster for my analysis. I could add more, but there is currently a lot of
+demand for CPUs in our research group. Instead,
 I’m going try out Amazon Web Services (AWS) Elastic Cloud Computing (EC2) for
 this project.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/2015/03/10/scaling-up-with-aws.html&quot;&gt;Yesterday&lt;/a&gt; I setup an AWS account and created an Amazon Machine
+Instance (AMI). Today, I’m going to create the cluster. I found
+&lt;a href=&quot;http://cs.smith.edu/dftwiki/index.php/Tutorial:_Create_an_MPI_Cluster_on_the_Amazon_Elastic_Cloud_(EC2)&quot;&gt;this post&lt;/a&gt; to be helpful.&lt;/p&gt;
+
+&lt;p&gt;First, I installed &lt;a href=&quot;http://star.mit.edu/cluster/docs/latest/installation.html&quot;&gt;StarCluster&lt;/a&gt;, a python package made
+specifically for creating and managing AWS EC2 distributed computing clusters.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install StarCluster&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I then opened a new Terminal window and followed the StarCluster
+&lt;a href=&quot;http://star.mit.edu/cluster/docs/latest/quickstart.html&quot;&gt;Quick start&lt;/a&gt; guide. The first thing is to create a config
+file:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;∞ starcluster &lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;
+StarCluster - &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://star.mit.edu/cluster&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;v. 0.95.6&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Software Tools &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Please submit bug reports to starcluster@mit.edu
+
+!!! ERROR - config file /home/matt/.starcluster/config does not exist
+
+Options:
+--------
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Show the StarCluster config template
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;2&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Write config template to /home/matt/.starcluster/config
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;q&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Quit
+
+Please enter your selection: 2
+
+&amp;gt;&amp;gt;&amp;gt; Config template written to /home/matt/.starcluster/config
+&amp;gt;&amp;gt;&amp;gt; Please customize the config template
+∞ &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; .starcluster/
+∞ emacs config&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 </description>
         <pubDate>Wed, 11 Mar 2015 09:58:53 -0400</pubDate>
