@@ -126,7 +126,7 @@ after receiving the start email message.
 
 If all went well, congratulations!
 
-####Setting up Python and MPI on Omega
+###Setting up Python and MPI on Omega
 Now comes the fun part. Omega uses a module system. To print all available
 modules in the Terminal window type the following:
 
@@ -179,7 +179,7 @@ As can be seen in the included output above, `modulefind` is case insensitive.
 There are many versions of python available, but the only packages that I
 wanted to uses were numpy and scipy.
 
-####Adding Python Packages Using `pip`
+####Loading Modules and Adding Python Packages Using `pip`
 
 Adding more packages to your path can be a little tricky.
 I wanted to use python 2.7.9, but when I loaded that module,
@@ -198,9 +198,53 @@ where to install the libraries you need:
 [mjg22@login-0-0 ~]$pip install --install-option="--prefix=~/local/" argparse
 {% endhighlight %}
 
+###Setting up your .bashrc file
 
+Now that we have the python libraries we want to use with our code, we can
+modify our bash startup file to load the other modules we want and modify
+our python path to include the libraries we installed in ~/local:
 
+{% highlight sh %}
+# .bashrc
 
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+# User specific aliases and functions
+
+export PATH=/home/fas/fischer/mjg22/local/bin:$PATH
+
+module load Langs/Python/2.7.9
+module load Libs/NUMPY/1.9.1
+module load Libraries/SCIPY/0.14.1
+module load MPI/OpenMPI/1.6.5
+module load Libs/MPI4PY/1.3.1
+
+### Add custom installed python packages to my python path
+### To install these, you need to use Python 2.7.3 because
+### pip does not exist in the more recent modules
+### module load Compilers/Python/2.7.3
+### pip install --install-option="--prefix=~/local/" package_name
+###for example
+### pip install --install-option="--prefix=~/local/" argparse
+export PYTHONPATH=/home/fas/fischer/mjg22/local/lib/python2.7/site-packages:$PYTHONPATH
+
+{% endhighlight %}
+
+###Testing the real code
+That should be everything. You should test your code on a single node before
+attempting to run it on many cores. `fas_devel`, as shown in the test script
+above, is the queue you want to use for that. To see what other queues are
+available click [here][FASQueues]. Note there are 8 cores per node for
+Omega, and 36 GB of RAM per node, as mentioned in the [Hardware][Hardware]
+section.
+
+I hope you found this post on getting started with MPI and python on the Yale
+ Omega cluster was helpful!
 
 [YaleHPC]: http://westcampus.yale.edu/research/science-medicine-engineering/core-facililties/high-performance-computing-center
 [OmegaDocs]: https://hpc.research.yale.edu/hpc_user_wiki/index.php/Omega
+[FASQueues]: https://hpc.research.yale.edu/hpc_user_wiki/index.php/Omega#FAS_Queues
+[Hardware]: https://hpc.research.yale.edu/hpc_user_wiki/index.php/Omega#Hardware
