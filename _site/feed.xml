@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 12 Mar 2015 11:16:14 -0400</pubDate>
-    <lastBuildDate>Thu, 12 Mar 2015 11:16:14 -0400</lastBuildDate>
+    <pubDate>Thu, 12 Mar 2015 11:26:58 -0400</pubDate>
+    <lastBuildDate>Thu, 12 Mar 2015 11:26:58 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -174,7 +174,26 @@ RH6/Langs/Python/2.7.4rc2_experimental
 RH6/Langs/Python/3.2
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;As can be seen in the included output above, &lt;code&gt;modulefind&lt;/code&gt; is case insensitive.&lt;/p&gt;
+&lt;p&gt;As can be seen in the included output above, &lt;code&gt;modulefind&lt;/code&gt; is case insensitive.
+There are many versions of python available, but the only packages that I
+wanted to uses were numpy and scipy.&lt;/p&gt;
+
+&lt;h4 id=&quot;adding-python-packages-using-pip&quot;&gt;Adding Python Packages Using &lt;code&gt;pip&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;Adding more packages to your path can be a little tricky.
+I wanted to use python 2.7.9, but when I loaded that module,
+the &lt;code&gt;pip&lt;/code&gt; command was not in my path. I loaded several others, and it looks
+like the most recent python 2 version to include &lt;code&gt;pip&lt;/code&gt; on Omega is 2.7.3.
+Another problem is that you won’t have write access to install packages to
+the default site-packages directory, so you will need to create a subdirectory
+in your home directory, and specify an optional argument to pip telling it
+where to install the libraries you need:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$mkdir&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;local&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$module&lt;/span&gt; load Langs/Python/2.7.3
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$module&lt;/span&gt; load Libs/NUMPY/1.9.1
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$pip&lt;/span&gt; install --install-option&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;--prefix=~/local/&amp;quot;&lt;/span&gt; pandas
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$pip&lt;/span&gt; install --install-option&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;--prefix=~/local/&amp;quot;&lt;/span&gt; argparse&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 </description>
         <pubDate>Thu, 12 Mar 2015 06:06:07 -0400</pubDate>

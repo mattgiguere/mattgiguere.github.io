@@ -176,6 +176,29 @@ RH6/Langs/Python/3.2
 {% endhighlight %}
 
 As can be seen in the included output above, `modulefind` is case insensitive.
+There are many versions of python available, but the only packages that I
+wanted to uses were numpy and scipy.
+
+####Adding Python Packages Using `pip`
+
+Adding more packages to your path can be a little tricky.
+I wanted to use python 2.7.9, but when I loaded that module,
+the `pip` command was not in my path. I loaded several others, and it looks
+like the most recent python 2 version to include `pip` on Omega is 2.7.3.
+Another problem is that you won't have write access to install packages to
+the default site-packages directory, so you will need to create a subdirectory
+in your home directory, and specify an optional argument to pip telling it
+where to install the libraries you need:
+
+{% highlight sh %}
+[mjg22@login-0-0 ~]$mkdir local
+[mjg22@login-0-0 ~]$module load Langs/Python/2.7.3
+[mjg22@login-0-0 ~]$module load Libs/NUMPY/1.9.1
+[mjg22@login-0-0 ~]$pip install --install-option="--prefix=~/local/" pandas
+[mjg22@login-0-0 ~]$pip install --install-option="--prefix=~/local/" argparse
+{% endhighlight %}
+
+
 
 
 

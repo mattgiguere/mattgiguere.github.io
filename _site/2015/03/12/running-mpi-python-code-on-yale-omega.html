@@ -235,7 +235,26 @@ RH6/Langs/Python/2.7.4rc2_experimental
 RH6/Langs/Python/3.2
 <span class="o">[</span>mjg22@login-0-0 ~<span class="o">]</span><span class="err">$</span></code></pre></div>
 
-<p>As can be seen in the included output above, <code>modulefind</code> is case insensitive.</p>
+<p>As can be seen in the included output above, <code>modulefind</code> is case insensitive.
+There are many versions of python available, but the only packages that I
+wanted to uses were numpy and scipy.</p>
+
+<h4 id="adding-python-packages-using-pip">Adding Python Packages Using <code>pip</code></h4>
+
+<p>Adding more packages to your path can be a little tricky.
+I wanted to use python 2.7.9, but when I loaded that module,
+the <code>pip</code> command was not in my path. I loaded several others, and it looks
+like the most recent python 2 version to include <code>pip</code> on Omega is 2.7.3.
+Another problem is that you won’t have write access to install packages to
+the default site-packages directory, so you will need to create a subdirectory
+in your home directory, and specify an optional argument to pip telling it
+where to install the libraries you need:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="o">[</span>mjg22@login-0-0 ~<span class="o">]</span><span class="nv">$mkdir</span> <span class="nb">local</span>
+<span class="o">[</span>mjg22@login-0-0 ~<span class="o">]</span><span class="nv">$module</span> load Langs/Python/2.7.3
+<span class="o">[</span>mjg22@login-0-0 ~<span class="o">]</span><span class="nv">$module</span> load Libs/NUMPY/1.9.1
+<span class="o">[</span>mjg22@login-0-0 ~<span class="o">]</span><span class="nv">$pip</span> install --install-option<span class="o">=</span><span class="s2">&quot;--prefix=~/local/&quot;</span> pandas
+<span class="o">[</span>mjg22@login-0-0 ~<span class="o">]</span><span class="nv">$pip</span> install --install-option<span class="o">=</span><span class="s2">&quot;--prefix=~/local/&quot;</span> argparse</code></pre></div>
 
 
   </article>
