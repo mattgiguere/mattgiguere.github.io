@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 12 Mar 2015 11:43:56 -0400</pubDate>
-    <lastBuildDate>Thu, 12 Mar 2015 11:43:56 -0400</lastBuildDate>
+    <pubDate>Thu, 12 Mar 2015 11:49:39 -0400</pubDate>
+    <lastBuildDate>Thu, 12 Mar 2015 11:49:39 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -236,7 +236,7 @@ Omega, and 36 GB of RAM per node, as mentioned in the &lt;a href=&quot;https://h
 section.&lt;/p&gt;
 
 &lt;p&gt;I hope you found this post on getting started with MPI and python on the Yale
- Omega cluster was helpful!&lt;/p&gt;
+ Omega cluster helpful!&lt;/p&gt;
 
 </description>
         <pubDate>Thu, 12 Mar 2015 06:06:07 -0400</pubDate>

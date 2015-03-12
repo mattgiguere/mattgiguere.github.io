@@ -242,7 +242,7 @@ Omega, and 36 GB of RAM per node, as mentioned in the [Hardware][Hardware]
 section.
 
 I hope you found this post on getting started with MPI and python on the Yale
- Omega cluster was helpful!
+ Omega cluster helpful!
 
 [YaleHPC]: http://westcampus.yale.edu/research/science-medicine-engineering/core-facililties/high-performance-computing-center
 [OmegaDocs]: https://hpc.research.yale.edu/hpc_user_wiki/index.php/Omega
