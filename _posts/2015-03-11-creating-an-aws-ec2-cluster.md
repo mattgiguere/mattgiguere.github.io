@@ -71,6 +71,112 @@ Scroll down a bit and modify the `KEY_LOCATION` to point to the SSH Key you use
 to connect to AWS (you had to create a key pair when you created an AWS
   account).
 
+For me, I also had to modify my `AWS_REGION_NAME` and `AWS_REGION_HOST`.
+Although I'm on the East  coast, for some reason amazon made my instances on
+the west coast. After [looking at my instances][instances], here's what I put
+in my config file for those two values:
+
+{% highlight sh %}
+AWS_REGION_NAME = us-west-2a
+AWS_REGION_HOST = ec2.us-west-2.compute.amazonaws.com
+{% endhighlight %}
+
+Next, I attempted to start up my cluster
+{% highlight sh %}
+starcluster start mycluster
+{% endhighlight %}
+
+After a long pause, I got an error message:
+
+>∞ starcluster start mycluster
+>StarCluster - (http://star.mit.edu/cluster) (v. 0.95.6)
+>Software Tools for Academics and Researchers (STAR)
+>Please submit bug reports to starcluster@mit.edu
+>
+>
+>!!! ERROR - Connection error:
+>Traceback (most recent call last):
+>  File "/Applications/anaconda/lib/python2.7/site-packages/starcluster/cli.py", line 274, in main
+>    sc.execute(args)
+>  File "/Applications/anaconda/lib/python2.7/site-packages/starcluster/commands/start.py", line 189, in execute
+>    scluster = self.cm.get_cluster_group_or_none(tag)
+  File "/Applications/anaconda/lib/python2.7/site-packages/starcluster/cluster.py", line 244, in >get_cluster_group_or_none
+>    return self.get_cluster_security_group(group_name)
+  File "/Applications/anaconda/lib/python2.7/site-packages/starcluster/cluster.py", line 240, in >get_cluster_security_group
+>    return self.ec2.get_security_group(gname)
+>  File "/Applications/anaconda/lib/python2.7/site-packages/starcluster/awsutils.py", line 357, in get_security_group
+>    filters={'group-name': groupname})[0]
+>  File "/Applications/anaconda/lib/python2.7/site-packages/starcluster/awsutils.py", line 369, in get_security_groups
+>    return self.conn.get_all_security_groups(filters=filters)
+>  File "/Applications/anaconda/lib/python2.7/site-packages/boto/ec2/connection.py", line 2970, in get_all_security_groups
+>    [('item', SecurityGroup)], verb='POST')
+>  File "/Applications/anaconda/lib/python2.7/site-packages/boto/connection.py", line 1150, in get_list
+>    response = self.make_request(action, params, path, verb)
+>  File "/Applications/anaconda/lib/python2.7/site-packages/boto/connection.py", line 1096, in make_request
+>    return self._mexe(http_request)
+>  File "/Applications/anaconda/lib/python2.7/site-packages/boto/connection.py", line 926, in _mexe
+>    request.body, request.headers)
+>  File "/Applications/anaconda/lib/python2.7/httplib.py", line 1001, in request
+>    self._send_request(method, url, body, headers)
+>  File "/Applications/anaconda/lib/python2.7/httplib.py", line 1035, in _send_request
+>    self.endheaders(body)
+>  File "/Applications/anaconda/lib/python2.7/httplib.py", line 997, in endheaders
+>    self._send_output(message_body)
+>  File "/Applications/anaconda/lib/python2.7/httplib.py", line 850, in _send_output
+>    self.send(msg)
+>  File "/Applications/anaconda/lib/python2.7/httplib.py", line 812, in send
+>    self.connect()
+>  File "/Applications/anaconda/lib/python2.7/site-packages/boto/https_connection.py", line 116, in connect
+>    sock = socket.create_connection((self.host, self.port), self.timeout)
+>  File "/Applications/anaconda/lib/python2.7/socket.py", line 553, in create_connection
+>    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+>gaierror: [Errno 8] nodename nor servname provided, or not known
+>!!! ERROR - Check your internet connection?
+
+There were some other options I changed. I'm using the free AMI, a t2.micro, so
+I changed the `NODE_INSTANCE_TYPE`:
+{% highlight sh %}
+NODE_INSTANCE_TYPE = t2.micro
+{% endhighlight %}
+
+I also setup my instance with the default Amazon Linxu HVM at the top of the
+list of instance types. I therefore needed to change the `NODE_IMAGE_ID` as
+well. This information was given in the comments above that field in the
+default ~/.starcluster/config file:
+{% highlight sh %}
+NODE_IMAGE_ID = ami-6b211202
+{% endhighlight %}
+
+This was caused by me changing the `AWS_REGION_NAME` and `AWS_REGION_HOST`.
+Once I changed it back, I could connect, but I got error messages along the
+lines of:
+
+>!!! ERROR - UnauthorizedOperation: You are not authorized to perform this operation.
+>Traceback (most recent call last):
+>  File "/Applications/anaconda/lib/python2.7/site-packages/starcluster/cli.py", line 274, in main
+>    sc.execute(args)
+>  File "/Applications/anaconda/lib/python2.7/site-packages/starcluster/commands/start.py", line 189, in execute
+>    scluster = self.cm.get_cluster_group_or_none(tag)
+  File "/Applications/anaconda/lib/python2.7/site-packages/starcluster/cluster.py", line 244, in >get_cluster_group_or_none
+>    return self.get_cluster_security_group(group_name)
+  File "/Applications/anaconda/lib/python2.7/site-packages/starcluster/cluster.py", line 240, in >get_cluster_security_group
+>    return self.ec2.get_security_group(gname)
+>  File "/Applications/anaconda/lib/python2.7/site-packages/starcluster/awsutils.py", line 357, in get_security_group
+>    filters={'group-name': groupname})[0]
+>  File "/Applications/anaconda/lib/python2.7/site-packages/starcluster/awsutils.py", line 369, in get_security_groups
+>    return self.conn.get_all_security_groups(filters=filters)
+>  File "/Applications/anaconda/lib/python2.7/site-packages/boto/ec2/connection.py", line 2929, in get_all_security_groups
+>    [('item', SecurityGroup)], verb='POST')
+>  File "/Applications/anaconda/lib/python2.7/site-packages/boto/connection.py", line 1157, in get_list
+>    raise self.ResponseError(response.status, response.reason, body)
+>EC2ResponseError: EC2ResponseError: 403 Forbidden
+><?xml version="1.0" encoding="UTF-8"?>
+><Response><Errors><Error><Code>UnauthorizedOperation</Code><Message>You are not authorized to perform this >operation.</Message></Error></Errors><RequestID>ccb6c947-8c96-4c41-bd0b-08af6866d50b</RequestID></Response>
+
+To fix this problem, I needed to create a new group that has EC2 permissions,
+and add my IAM user to that group. This can be done through the Identity and
+Access Management (IAM) [Dashboard][IAMDash].
+
 
 
 
@@ -81,3 +187,5 @@ to connect to AWS (you had to create a key pair when you created an AWS
 [StrClstrQuickStart]: http://star.mit.edu/cluster/docs/latest/quickstart.html
 [AwsIamUsr]: http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_SettingUpUser.html
 [AcctSttngs]: https://console.aws.amazon.com/billing/home#/account
+[instances]: https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#Instances:sort=monitoring
+[IAMDash]: https://console.aws.amazon.com/iam/home#home
