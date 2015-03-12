@@ -11,12 +11,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Matt Giguere</title>
-  <meta name="description" content="Hi, I'm Matt Giguere, a graduate student searching for rocky planets and characterizing stellar activity of the stars that host them. In addition to working towards the discovery  of other rocky worlds, I am constantly working to defend my best dad  of the year title. I also enjoy learning new programming languages,  new statistical methods, and new visualization tools, and making  things in many different media.
-">
+  <title>Running MPI Python Code on Yale Omega</title>
+  <meta name="description" content="Yesterday I got my Parallel Tempering MCMC code working on Yale’sOmega Cluster. I found the “documentation” to be farout of date, and not very helpful. Fortu...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://mattgiguere.github.io/blog.html">
+  <link rel="canonical" href="http://mattgiguere.github.io/2015/03/12/running-mpi-python-code-on-yale-omega.html">
   <link rel="alternate" type="application/rss+xml" title="Matt Giguere" href="http://mattgiguere.github.io/feed.xml" />
 </head>
 
@@ -66,119 +65,58 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home">
+        <div class="post">
 
-  <h1 class="page-heading">Posts</h1>
+  <header class="post-header">
+    <h1 class="post-title">Running MPI Python Code on Yale Omega</h1>
+    <p class="post-meta">Mar 12, 2015</p>
+  </header>
 
-  <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">Mar 12, 2015</span>
+  <article class="post-content">
+    <p>Yesterday I got my Parallel Tempering MCMC code working on Yale’s
+<a href="http://westcampus.yale.edu/research/science-medicine-engineering/core-facililties/high-performance-computing-center">Omega Cluster</a>. I found <a href="https://hpc.research.yale.edu/hpc_user_wiki/index.php/Omega">the “documentation”</a> to be far
+out of date, and not very helpful. Fortunately, there were several people in
+the department that could help me out (thanks Kaylea, Duncan, and Andys!!). In
+the hopes of easing the reducing the setup time for others that may be
+interested in using Omega for their research, I decided to write this blog post
+detailing my setup.</p>
 
-        <h2>
-          <a class="post-link" href="/2015/03/12/running-mpi-python-code-on-yale-omega.html">Running MPI Python Code on Yale Omega</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Mar 11, 2015</span>
+<h3 id="welcome-email">Welcome Email</h3>
 
-        <h2>
-          <a class="post-link" href="/2015/03/11/creating-an-aws-ec2-cluster.html">Creating an AWS EC2 Cluster</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Mar 10, 2015</span>
+<p>When your account is first created, you will receive an email that starts off
+like this:</p>
 
-        <h2>
-          <a class="post-link" href="/2015/03/10/scaling-up-with-aws.html">Scaling Up With AWS</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Mar 9, 2015</span>
+<blockquote>
+  <p>Welcome to Omega - Yale High Performance Cluster</p>
 
-        <h2>
-          <a class="post-link" href="/2015/03/09/parallel-tempering.html">Parallel Tempering</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Feb 20, 2015</span>
+  <p>An account has been created for you on omega.hpc.yale.edu.</p>
 
-        <h2>
-          <a class="post-link" href="/2015/02/20/last-yastroml.html">The Last YastroML</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Feb 12, 2015</span>
+  <p>Details about the cluster and its usage can be found at
+* http://hpc.research.yale.edu/wiki/index.php/Omega</p>
 
-        <h2>
-          <a class="post-link" href="/2015/02/12/more-spot-modeling.html">More Spot Modeling</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Feb 10, 2015</span>
+  <p>Before you can login you will need to create and upload your ssh key here:
+* http://gold.hpc.yale.internal/cgi-bin/sshkeys.py</p>
 
-        <h2>
-          <a class="post-link" href="/2015/02/10/spot-modeling.html">Stellar Spot Modeling</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Feb 8, 2015</span>
+  <p>For additional information about ssh please visit:
+* http://hpc.yale.edu/faq/secure-shell-faq/</p>
 
-        <h2>
-          <a class="post-link" href="/2015/02/08/barycenter-results.html">Barycentric Correction Results</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Feb 5, 2015</span>
+  <p>There are several queues to choose from, each serving a different purpose
+* http://hpc.research.yale.edu/wiki/index.php/Omega#FAS_Queues</p>
 
-        <h2>
-          <a class="post-link" href="/2015/02/05/barycentric-correction.html">The CHIRON Barycentric Correction</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 27, 2015</span>
+  <p>When submitting jobs, some of the qsub terms have changed; most
+importantly when selecting the number of nodes or number of
+processors:
+* http://hpc.research.yale.edu/wiki/index.php/Omega#Scheduling_your_Programs_to_run</p>
 
-        <h2>
-          <a class="post-link" href="/2015/01/27/setting-up-mpi4py.html">Setting up mpi4py</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 4, 2015</span>
+</blockquote>
 
-        <h2>
-          <a class="post-link" href="/2015/01/04/out-of-range-table.html">Out of Range Table</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 2, 2015</span>
+<h4 id="ssh-keys">SSH Keys</h4>
+<p>The first thing to note that is not mentioned in the welcome email message (and
+I could not find mentioned in the online documentation) is that the link given
+to upload your SSH key does not work in the Safari browser. Use Google Chrome.</p>
 
-        <h2>
-          <a class="post-link" href="/2015/01/02/quantifying-correlation.html">Quantifying Correlation</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Jan 2, 2015</span>
 
-        <h2>
-          <a class="post-link" href="/jekyll/update/2015/01/02/my-first-post-with-jekyll.html">Blogging with Jekyll</a>
-        </h2>
-      </li>
-    
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+  </article>
 
 </div>
 
