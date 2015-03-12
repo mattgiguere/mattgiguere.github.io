@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 12 Mar 2015 10:47:58 -0400</pubDate>
-    <lastBuildDate>Thu, 12 Mar 2015 10:47:58 -0400</lastBuildDate>
+    <pubDate>Thu, 12 Mar 2015 11:01:04 -0400</pubDate>
+    <lastBuildDate>Thu, 12 Mar 2015 11:01:04 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -53,6 +53,56 @@ processors:
 &lt;p&gt;The first thing to note that is not mentioned in the welcome email message (and
 I could not find mentioned in the online documentation) is that the link given
 to upload your SSH key does not work in the Safari browser. Use Google Chrome.&lt;/p&gt;
+
+&lt;h4 id=&quot;sshing-into-omega&quot;&gt;SSHing Into Omega&lt;/h4&gt;
+&lt;p&gt;Next, to SSH into omega, I used the command:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ssh -p22 -i ~/.ssh/myomegakey netid@omega.hpc.yale.edu&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;creating-a-test-script&quot;&gt;Creating a Test Script&lt;/h4&gt;
+&lt;p&gt;Now comes the fun stuff. All jobs submitted for processing need to be wrapped
+in a shell script. Before you do anything else, create a test script and see
+if it works. The sample script on the HPC site is out of date and results in
+error messages. Here’s a sample script that works (as of March 12, 2015):&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;###fas_devel: for compiling and testing code,&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;###restricted to one job per user32 max cores, 4 hours max walltime&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;###name of job&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#PBS -N mytestjob&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;###-q queue_name&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#PBS -q fas_devel&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;###PBS -l procs=1, tpn=1&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#PBS -l nodes=1:ppn=8,mem=35gb&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#PBS -l walltime=4:00:00&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;##oe: stdout(o) and stderr(e)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#PBS -j oe&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;##where to put the output&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#PBS -o output_dir/$PBS_JOBNAME.$PBS_JOBID&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;##what you get emails for ((a)borted, (b)egin, (e)nd)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#PBS -m abe&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;###email yourself status messages about your job:&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#PBS -M firstname.lastname@yale.edu&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;##Import terminal env variables&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#PBS -V&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;OMP_NUM_THREADS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8
+
+&lt;span class=&quot;c&quot;&gt;###run from directory the job is submitted from&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$PBS_O_WORKDIR&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;##Command to execute:&lt;/span&gt;
+date&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 </description>
         <pubDate>Thu, 12 Mar 2015 06:06:07 -0400</pubDate>

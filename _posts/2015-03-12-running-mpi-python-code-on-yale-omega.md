@@ -45,6 +45,59 @@ The first thing to note that is not mentioned in the welcome email message (and
 I could not find mentioned in the online documentation) is that the link given
 to upload your SSH key does not work in the Safari browser. Use Google Chrome.
 
+####SSHing Into Omega
+Next, to SSH into omega, I used the command:
+
+{% highlight sh %}
+ssh -p22 -i ~/.ssh/myomegakey netid@omega.hpc.yale.edu
+{% endhighlight %}
+
+####Creating a Test Script
+Now comes the fun stuff. All jobs submitted for processing need to be wrapped
+in a shell script. Before you do anything else, create a test script and see
+if it works. The sample script on the HPC site is out of date and results in
+error messages. Here's a sample script that works (as of March 12, 2015):
+
+{% highlight sh %}
+#!/bin/bash
+
+###fas_devel: for compiling and testing code,
+###restricted to one job per user32 max cores, 4 hours max walltime
+
+###name of job
+#PBS -N mytestjob
+
+###-q queue_name
+#PBS -q fas_devel
+
+###PBS -l procs=1, tpn=1
+#PBS -l nodes=1:ppn=8,mem=35gb
+
+#PBS -l walltime=4:00:00
+
+##oe: stdout(o) and stderr(e)
+#PBS -j oe
+
+##where to put the output
+#PBS -o output_dir/$PBS_JOBNAME.$PBS_JOBID
+
+##what you get emails for ((a)borted, (b)egin, (e)nd)
+#PBS -m abe
+
+###email yourself status messages about your job:
+#PBS -M firstname.lastname@yale.edu
+
+##Import terminal env variables
+#PBS -V
+
+export OMP_NUM_THREADS=8
+
+###run from directory the job is submitted from
+cd $PBS_O_WORKDIR
+
+##Command to execute:
+date
+{% endhighlight %}
 
 
 
