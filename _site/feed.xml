@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 12 Mar 2015 11:01:04 -0400</pubDate>
-    <lastBuildDate>Thu, 12 Mar 2015 11:01:04 -0400</lastBuildDate>
+    <pubDate>Thu, 12 Mar 2015 11:09:31 -0400</pubDate>
+    <lastBuildDate>Thu, 12 Mar 2015 11:09:31 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -63,7 +63,9 @@ to upload your SSH key does not work in the Safari browser. Use Google Chrome.&l
 &lt;p&gt;Now comes the fun stuff. All jobs submitted for processing need to be wrapped
 in a shell script. Before you do anything else, create a test script and see
 if it works. The sample script on the HPC site is out of date and results in
-error messages. Here’s a sample script that works (as of March 12, 2015):&lt;/p&gt;
+error messages. Below is a sample script that works (as of March 12, 2015).&lt;/p&gt;
+
+&lt;p&gt;Contents of &lt;code&gt;my_test_script.sh&lt;/code&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
 
@@ -103,6 +105,26 @@ error messages. Here’s a sample script that works (as of March 12, 2015):&lt;/
 
 &lt;span class=&quot;c&quot;&gt;##Command to execute:&lt;/span&gt;
 date&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Most of what I wrote above is probably self-explanatory through the comments.
+Yes, the ‘#’ signs should be in front of the PBS commands. The &lt;code&gt;$PBS_JOBNAME&lt;/code&gt;
+and &lt;code&gt;$PBS_JOBID&lt;/code&gt; are handy variables that can be used to ensure your output is
+printed to unique directories (i.e., you’re not overwriting previous results).&lt;/p&gt;
+
+&lt;p&gt;To submit this job, type the following at the command line:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;qsub my_test_script.sh&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You should receive an email message when your script has begun execution. You
+can see the status of it by typing &lt;code&gt;showq&lt;/code&gt;. The list is usually quite long, so
+you might find it useful to pipe the results to grep and search for just lines
+that contain your netid:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;showq &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep netid&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that this test script is simply printing the date, so it won’t take long
+to run, and you should receive a finished email with exit 0 status shortly
+after receiving the start email message.&lt;/p&gt;
 
 </description>
         <pubDate>Thu, 12 Mar 2015 06:06:07 -0400</pubDate>

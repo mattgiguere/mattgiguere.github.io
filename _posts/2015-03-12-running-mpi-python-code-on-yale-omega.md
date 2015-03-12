@@ -56,8 +56,9 @@ ssh -p22 -i ~/.ssh/myomegakey netid@omega.hpc.yale.edu
 Now comes the fun stuff. All jobs submitted for processing need to be wrapped
 in a shell script. Before you do anything else, create a test script and see
 if it works. The sample script on the HPC site is out of date and results in
-error messages. Here's a sample script that works (as of March 12, 2015):
+error messages. Below is a sample script that works (as of March 12, 2015).
 
+Contents of `my_test_script.sh`:
 {% highlight sh %}
 #!/bin/bash
 
@@ -98,6 +99,30 @@ cd $PBS_O_WORKDIR
 ##Command to execute:
 date
 {% endhighlight %}
+
+Most of what I wrote above is probably self-explanatory through the comments.
+Yes, the '#' signs should be in front of the PBS commands. The `$PBS_JOBNAME`
+and `$PBS_JOBID` are handy variables that can be used to ensure your output is
+printed to unique directories (i.e., you're not overwriting previous results).
+
+To submit this job, type the following at the command line:
+
+{% highlight sh %}
+qsub my_test_script.sh
+{% endhighlight %}
+
+You should receive an email message when your script has begun execution. You
+can see the status of it by typing `showq`. The list is usually quite long, so
+you might find it useful to pipe the results to grep and search for just lines
+that contain your netid:
+
+{% highlight sh %}
+showq | grep netid
+{% endhighlight %}
+
+Note that this test script is simply printing the date, so it won't take long
+to run, and you should receive a finished email with exit 0 status shortly
+after receiving the start email message.
 
 
 
