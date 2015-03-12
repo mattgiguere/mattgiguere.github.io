@@ -64,8 +64,8 @@ grab their access key. In a nutshell, do this:
   - click the blue **Create** button at the bottom of the screen
 
 Your new access key and secret keys should then appear on the screen. Copy
-these into your .starcluster/config file. For the account number, use the
-"User Name" you just created.
+these into your .starcluster/config file. For the account number, use your
+Account Id, which can be found at the top of ["Account Settings"][AcctSttngs].
 
 Scroll down a bit and modify the `KEY_LOCATION` to point to the SSH Key you use
 to connect to AWS (you had to create a key pair when you created an AWS
@@ -80,3 +80,4 @@ to connect to AWS (you had to create a key pair when you created an AWS
 [StrClstrInst]: http://star.mit.edu/cluster/docs/latest/installation.html
 [StrClstrQuickStart]: http://star.mit.edu/cluster/docs/latest/quickstart.html
 [AwsIamUsr]: http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_SettingUpUser.html
+[AcctSttngs]: https://console.aws.amazon.com/billing/home#/account
