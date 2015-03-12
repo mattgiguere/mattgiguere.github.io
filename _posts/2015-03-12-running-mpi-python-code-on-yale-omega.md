@@ -124,6 +124,59 @@ Note that this test script is simply printing the date, so it won't take long
 to run, and you should receive a finished email with exit 0 status shortly
 after receiving the start email message.
 
+If all went well, congratulations!
+
+####Setting up Python and MPI on Omega
+Now comes the fun part. Omega uses a module system. To print all available
+modules in the Terminal window type the following:
+
+{% highlight sh %}
+module avail
+{% endhighlight %}
+
+To find specific modules, use the `modulefind` command:
+{% highlight sh %}
+[mjg22@login-0-0 ~]$ modulefind python
+/home/apps/fas/Modules:
+Applications/PythonPackages/numpy/numpy-GCC-ATLAS
+Applications/PythonPackages/scipy/scipy-GCC-ATLAS
+Applications/PythonPackages/wxPython/2.8
+Apps/PythonPackages/numpy/numpy-GCC-ATLAS
+Apps/PythonPackages/scipy/scipy-GCC-ATLAS
+Apps/PythonPackages/wxPython/2.8
+Compilers/Python/2.7.2
+Compilers/Python/2.7.3
+Compilers/Python/2.7.4rc2_experimental
+Compilers/Python/2.7.5
+Compilers/Python/2.7.6
+Compilers/Python/2.7.9
+Compilers/Python/3.2
+Compilers/Python/3.3.5
+Compilers/Python/OLD-2.7.5
+Langs/Python/2.7.2
+Langs/Python/2.7.3
+Langs/Python/2.7.4rc2_experimental
+Langs/Python/2.7.5
+Langs/Python/2.7.6
+Langs/Python/2.7.9
+Langs/Python/3.2
+Langs/Python/3.3.5
+Langs/Python/OLD-2.7.5
+Libraries/IPYTHON/1.1.0
+Libraries/NETCDF4-PYTHON/1.1.0
+Libraries/WXPYTHON/3.0.0
+Libs/IPYTHON/1.1.0
+Libs/NETCDF4-PYTHON/1.1.0
+Libs/WXPYTHON/3.0.0
+RH6/Langs/Python/2.7.2
+RH6/Langs/Python/2.7.3
+RH6/Langs/Python/2.7.4rc2_experimental
+RH6/Langs/Python/3.2
+[mjg22@login-0-0 ~]$
+{% endhighlight %}
+
+As can be seen in the included output above, `modulefind` is case insensitive.
+
 
 
 [YaleHPC]: http://westcampus.yale.edu/research/science-medicine-engineering/core-facililties/high-performance-computing-center
