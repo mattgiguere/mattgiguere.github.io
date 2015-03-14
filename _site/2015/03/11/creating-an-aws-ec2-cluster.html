@@ -244,6 +244,37 @@ EC2ResponseError: EC2ResponseError: 403 Forbidden
 and add my IAM user to that group. This can be done through the Identity and
 Access Management (IAM) <a href="https://console.aws.amazon.com/iam/home#home">Dashboard</a>.</p>
 
+<ul>
+  <li>Click on <strong>Groups</strong> in the left-hand navigation bar</li>
+  <li>Click on the <strong>Create New Group</strong> button</li>
+  <li>Add a group with EC2 permissions.</li>
+</ul>
+
+<p>Once this was done, I started receiving a new error message:</p>
+
+<blockquote>
+  <p>∞ starcluster start mycluster
+StarCluster - (http://star.mit.edu/cluster) (v. 0.95.6)
+Software Tools for Academics and Researchers (STAR)
+Please submit bug reports to starcluster@mit.edu</p>
+
+  <blockquote>
+    <blockquote>
+      <blockquote>
+        <p>Using default cluster template: smallcluster
+Validating cluster template settings…
+!!! ERROR - Cluster settings are not valid:
+!!! ERROR - Keypair ‘myawskey’ does not exist in region ‘us-east-1’</p>
+      </blockquote>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<p>At that point I attempted to create a new key using the starcluster
+command</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster createkey mysckey -o ~/.ssh/mysckey.rsa</code></pre></div>
+
 
   </article>
 

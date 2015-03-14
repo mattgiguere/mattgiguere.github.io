@@ -177,6 +177,28 @@ To fix this problem, I needed to create a new group that has EC2 permissions,
 and add my IAM user to that group. This can be done through the Identity and
 Access Management (IAM) [Dashboard][IAMDash].
 
+ - Click on **Groups** in the left-hand navigation bar
+ - Click on the **Create New Group** button
+ - Add a group with EC2 permissions.
+
+Once this was done, I started receiving a new error message:
+
+> ∞ starcluster start mycluster
+> StarCluster - (http://star.mit.edu/cluster) (v. 0.95.6)
+> Software Tools for Academics and Researchers (STAR)
+> Please submit bug reports to starcluster@mit.edu
+>
+> >>> Using default cluster template: smallcluster
+> >>> Validating cluster template settings...
+> !!! ERROR - Cluster settings are not valid:
+> !!! ERROR - Keypair 'myawskey' does not exist in region 'us-east-1'
+
+At that point I attempted to create a new key using the starcluster
+command
+
+{% highlight sh %}
+starcluster createkey mysckey -o ~/.ssh/mysckey.rsa
+{% endhighlight %}
 
 
 
