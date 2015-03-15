@@ -6,9 +6,36 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 13 Mar 2015 21:28:46 -0400</pubDate>
-    <lastBuildDate>Fri, 13 Mar 2015 21:28:46 -0400</lastBuildDate>
+    <pubDate>Sun, 15 Mar 2015 16:25:05 -0400</pubDate>
+    <lastBuildDate>Sun, 15 Mar 2015 16:25:05 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Electric Rates By State</title>
+        <description>&lt;p&gt;I was talking with my mother-in-law the other day, and we were wondering what
+the highest electric rates in the country are. The US Energy Information
+Administration does an excellent job of collecting this information and
+displaying it in tabular form on their website. Click &lt;a href=&quot;http://www.eia.gov/electricity/monthly/epm_table_grapher.cfm?t=epmt_5_6_a&quot;&gt;here&lt;/a&gt; to see
+what the answer is for the latest month. However, there is enough data there
+that it took me a few minutes to skim through the table to get the answer. To
+our surprise, Hawai’i has a far higher electric rate than any other state —
+twice the electric rate of California!&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 15 Mar 2015 12:19:59 -0400</pubDate>
+        <link>http://mattgiguere.github.io/2015/03/15/electric-rates-by-state.html</link>
+        <guid isPermaLink="true">http://mattgiguere.github.io/2015/03/15/electric-rates-by-state.html</guid>
+        
+        <category>csvkit,</category>
+        
+        <category>javascript,</category>
+        
+        <category>bootstrap,</category>
+        
+        <category>d3.js</category>
+        
+        
+      </item>
     
       <item>
         <title>Running MPI Python Code on Yale Omega</title>
@@ -1034,112 +1061,6 @@ The highest peak is at a period of 117.79 days, and the second highest peak is a
         <category>barycentric</category>
         
         <category>correction</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Setting up mpi4py</title>
-        <description>&lt;p&gt;Today I’ve been trying to get &lt;code&gt;emcee&lt;/code&gt; up and running and to use it with MPI. There were a number of obstacles that I needed to overcome to get MPI working on multiple machines.&lt;/p&gt;
-
-&lt;p&gt;I have an anaconda installation of python, and mpi4py is one of the packages they support (more below), so I installed mpi4py using the following command:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;conda install mpi4py&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;But when I tried running it I got the following error:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;/opt/anaconda1anaconda2anaconda3/share/openmpi/help-opal-runtime.txt&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Fortunately for me, &lt;a href=&quot;https://groups.google.com/a/continuum.io/forum/#!topic/anaconda/7CsGQKNvcdQ&quot;&gt;someone else encountered a similar error&lt;/a&gt;. Until anaconda fixes their bug, an inelegant hack is to make a symbolic link pointing from /opt/ana… to the correct path. I have anaconda python installed for all users, so instead of pointing the symbolic link to my home directory, I pointed it to the directory containing the anaconda python distribution, the Applications directory:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;sudo ln -s /Applications/anaconda/ /opt/anaconda1anaconda2anaconda3&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;I did this on all 5 machines that I plan on testing MPI on. The next step is to create a hostfile containing the names or IP addresses of all hosts that will be used for computing. This is just a simple text file containing nothing more than the name of the host and the number of slots, or threads, to run on it at any given time:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;host1.example.edu &lt;span class=&quot;nv&quot;&gt;slots&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;12
-host2.example.edu &lt;span class=&quot;nv&quot;&gt;slots&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The example tests in the &lt;a href=&quot;http://mpi4py.scipy.org/docs/usrman/install.html&quot;&gt;mpi4py documentation&lt;/a&gt; failed for me, but @jbornschein put together a nice &lt;a href=&quot;https://github.com/jbornschein/mpi4py-examples&quot;&gt;github repository with some example code&lt;/a&gt;. I ran the 01-helloworld example, specifying the hosts I wanted to distribute the jobs to:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;projects/mpi4pyexamples
-mpirun --hostfile myhostfile.txt ./01-helloworld&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;After a rather long delay in returning a result, an error was returned saying it could connect on the default port. That makes sense since we use non-default ports for our machines. After some searching, it doesn’t seem like there’s any way to specify the port in the hostfile, instead I used an ssh config file. I’m using Mac OS X 10.10, and setting a config file up was quite quick and easy to do:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;emacs ~/.ssh/config&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;and for contents add&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;Host host1.example.edu
-   Hostname host1.example.edu
-   Port 2400
-
-Host host2.example.edu
-   Hostname host2.example.edu
-   Port 2400&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;After adding the hosts and ports to the &lt;code&gt;config&lt;/code&gt; file, I didn’t need to restart, or open a new terminal window or anything else that might be expected. Reissuing the same command in the same terminal window returned an immediate result:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;∞ mpirun --hostfile myhostfile ./01-hello-world
-Hello! I&lt;span class=&quot;s1&quot;&gt;&amp;#39;m rank 1 from 8 running in total...&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Hello! I&amp;#39;&lt;/span&gt;m rank &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt; from &lt;span class=&quot;m&quot;&gt;8&lt;/span&gt; running in total...
-Hello! I&lt;span class=&quot;s1&quot;&gt;&amp;#39;m rank 0 from 8 running in total...&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Hello! I&amp;#39;&lt;/span&gt;m rank &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; from &lt;span class=&quot;m&quot;&gt;8&lt;/span&gt; running in total...
-Hello! I&lt;span class=&quot;s1&quot;&gt;&amp;#39;m rank 7 from 8 running in total...&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Hello! I&amp;#39;&lt;/span&gt;m rank &lt;span class=&quot;m&quot;&gt;4&lt;/span&gt; from &lt;span class=&quot;m&quot;&gt;8&lt;/span&gt; running in total...
-Hello! I&lt;span class=&quot;s1&quot;&gt;&amp;#39;m rank 5 from 8 running in total...&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Hello! I&amp;#39;&lt;/span&gt;m rank &lt;span class=&quot;m&quot;&gt;6&lt;/span&gt; from &lt;span class=&quot;m&quot;&gt;8&lt;/span&gt; running in total...
-^Cmpirun: killing job...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;However, as you can see things didn’t end very well. I had to kill the job, otherwise I end up with a strange error:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;∞ mpirun --hostfile hostfile ./01-hello-world
-Hello! I&lt;span class=&quot;s1&quot;&gt;&amp;#39;m rank 0 from 8 running in total...&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Hello! I&amp;#39;&lt;/span&gt;m rank &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt; from &lt;span class=&quot;m&quot;&gt;8&lt;/span&gt; running in total...
-Hello! I&lt;span class=&quot;s1&quot;&gt;&amp;#39;m rank 1 from 8 running in total...&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Hello! I&amp;#39;&lt;/span&gt;m rank &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; from &lt;span class=&quot;m&quot;&gt;8&lt;/span&gt; running in total...
-Hello! I&lt;span class=&quot;s1&quot;&gt;&amp;#39;m rank 4 from 8 running in total...&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Hello! I&amp;#39;&lt;/span&gt;m rank &lt;span class=&quot;m&quot;&gt;5&lt;/span&gt; from &lt;span class=&quot;m&quot;&gt;8&lt;/span&gt; running in total...
-Hello! I&lt;span class=&quot;s1&quot;&gt;&amp;#39;m rank 6 from 8 running in total...&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Hello! I&amp;#39;&lt;/span&gt;m rank &lt;span class=&quot;m&quot;&gt;7&lt;/span&gt; from &lt;span class=&quot;m&quot;&gt;8&lt;/span&gt; running in total...
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;host2.example.edu&lt;span class=&quot;o&quot;&gt;][[&lt;/span&gt;7061,1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,4&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; connect&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; to 128.5.5.6 failed: Operation timed out &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;60&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;host2.example.edu&lt;span class=&quot;o&quot;&gt;][[&lt;/span&gt;7061,1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,5&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; connect&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; to 128.5.5.6 failed: Operation timed out &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;60&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;host2.example.edu&lt;span class=&quot;o&quot;&gt;][[&lt;/span&gt;7061,1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,6&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; connect&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; to 128.5.5.6 failed: Operation timed out &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;60&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;host2.example.edu&lt;span class=&quot;o&quot;&gt;][[&lt;/span&gt;7061,1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,7&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; connect&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; to 128.5.5.6 failed: Operation timed out &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;60&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;host1.example.edu&lt;span class=&quot;o&quot;&gt;][[&lt;/span&gt;7061,1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,0&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; connect&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; to 128.5.5.5 failed: Operation timed out &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;60&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;host1.example.edu&lt;span class=&quot;o&quot;&gt;][[&lt;/span&gt;7061,1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,1&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; connect&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; to 128.5.5.5 failed: Operation timed out &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;60&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;host1.example.edu&lt;span class=&quot;o&quot;&gt;][[&lt;/span&gt;7061,1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,2&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; connect&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; to 128.5.5.5 failed: Operation timed out &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;60&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;host1.example.edu&lt;span class=&quot;o&quot;&gt;][[&lt;/span&gt;7061,1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;,3&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; connect&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; to 128.5.5.5 failed: Operation timed out &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;60&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;I downloaded the &lt;a href=&quot;https://bitbucket.org/mpi4py/mpi4py/downloads&quot;&gt;source code&lt;/a&gt; for mpi4py, changed directories into the downloaded directory and tried running their tests:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;mpiexec --hostfile hostfile python &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt;/runtests.py&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Running &lt;code&gt;runtests.py&lt;/code&gt; when the &lt;code&gt;hostfile&lt;/code&gt; contains only &lt;code&gt;host1.example.edu&lt;/code&gt; or &lt;code&gt;host2.example.edu&lt;/code&gt; works fine. However, when I include both hosts I end up with the same error as the &lt;code&gt;helloworld.py&lt;/code&gt; example. This error doesn’t crop up with the &lt;code&gt;mpi4py&lt;/code&gt; &lt;code&gt;helloworld&lt;/code&gt; example, just the &lt;code&gt;mpi4py-examples&lt;/code&gt; &lt;code&gt;helloworld&lt;/code&gt;. The difference between the failed and successful versions being that the version that fails waits for all jobs to finish up at the end through &lt;code&gt;comm.Barrier()&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/questions/15072563/running-mpi-on-two-hosts&quot;&gt;This article&lt;/a&gt;, which discusses the communication was helpful — it appears the two computers, host1 and host2, can communicate with the machine I am running the commands from, but they cannot communicate with eachother.&lt;/p&gt;
-
-&lt;p&gt;I disabled the firewall through System Preferences -&amp;gt; Security &amp;amp; Privacy. This worked for the &lt;code&gt;helloworld.py&lt;/code&gt; example, but not for &lt;code&gt;tests/runtests.py&lt;/code&gt;. I should also mention that &lt;code&gt;host1&lt;/code&gt; has 12 cores and &lt;code&gt;host2&lt;/code&gt; has 8 cores. While testing out my hostfile I had reduced the number of “slots” on each to 4 and it worked. When I increased the number of slots on either host above 4, the connection failed error message reappeared when running &lt;code&gt;helloworld.py&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;It looks like part of the problem may be that &lt;code&gt;host1&lt;/code&gt; and &lt;code&gt;host2&lt;/code&gt; are using different SSH ports, and therefore cannot communicate between each other. I switched to using two host machines that are using the same ports for SSH, and both &lt;code&gt;helloworld.py&lt;/code&gt; and &lt;code&gt;runtests.py&lt;/code&gt; finished up successfully.&lt;/p&gt;
-
-&lt;p&gt;However, adding a third machine is now causing issues…&lt;/p&gt;
-
-&lt;p&gt;This turned out to be that the firewall was still on despite turning it off through the GUI in system preferences. Simply turning the firewall off through the System Preferences GUI worked on 2 of the 3 machines, so I’m not sure why it got hung up on the third. If you’re having similar problems, try taking a look at either “All Messages” or “secure.log” in the console (or /var/log/secure.log) on the mac host. If you see lines stating that the Firewall refused connection, this is your problem too. Simply restarting the system did the trick. I’ve now added several more machines and have executed &lt;code&gt;helloworld.py&lt;/code&gt; and &lt;code&gt;tests/runtests.py&lt;/code&gt; successfully on 96 cores!&lt;/p&gt;
-</description>
-        <pubDate>Tue, 27 Jan 2015 13:25:09 -0500</pubDate>
-        <link>http://mattgiguere.github.io/2015/01/27/setting-up-mpi4py.html</link>
-        <guid isPermaLink="true">http://mattgiguere.github.io/2015/01/27/setting-up-mpi4py.html</guid>
-        
-        <category>python,</category>
-        
-        <category>mpi4py,</category>
-        
-        <category>mcmc,</category>
-        
-        <category>osx,</category>
-        
-        <category>anaconda</category>
         
         
       </item>
