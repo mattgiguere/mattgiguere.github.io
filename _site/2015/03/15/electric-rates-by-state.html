@@ -85,9 +85,23 @@ deserved a better visualization, so I created it.</p>
 <script type="text/javascript" src="https://public.tableau.com/javascripts/api/viz_v1.js"></script>
 <div class="tableauPlaceholder" style="width: 1004px; height: 675px;"><noscript><a href="#"><img alt="Dashboard 1 " src="https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;el&#47;electricRatesByState201411&#47;Dashboard1&#47;1_rss.png" style="border: none" /></a></noscript><object class="tableauViz" width="1004" height="675" style="display:none;"><param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" /> <param name="site_root" value="" /><param name="name" value="electricRatesByState201411&#47;Dashboard1" /><param name="tabs" value="no" /><param name="toolbar" value="yes" /><param name="static_image" value="https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;el&#47;electricRatesByState201411&#47;Dashboard1&#47;1.png" /> <param name="animate_transition" value="yes" /><param name="display_static_image" value="yes" /><param name="display_spinner" value="yes" /><param name="display_overlay" value="yes" /><param name="display_count" value="yes" /><param name="showVizHome" value="no" /><param name="showTabs" value="y" /></object></div>
 
-<p>Hawai’i has by far the highest average electric rate at 37.6 ¢/kWh. The
-state with the cheapest average electric rate is Washington (at 8.8 ¢/kWh),
-which was also surprising to me.</p>
+<p>I was surprised by both the state with the highest and the state with the
+lowest electric rates. Hawai’i has by far the highest average electric rate,
+ at 37.6 ¢/kWh, and Washington State has the lowest rate, at only 8.8 ¢/kWh.</p>
+
+<p>The US EIA also provides a trove of data on many different parameters. I was
+then interested to find out who spends the largest fraction of their income
+on electric. The US EIA does not provide that information directly, but they
+do publish the total retail sales per state.</p>
+
+<p>The <a href="http://www.census.gov/popest/data/national/totals/2014/index.html">US Census Bureau publish</a> another excellent data set tabulating the
+estimated population per state per year. I combined these two data sets using
+<code>pandas</code> in Python (see bottom of post for details),
+and the resulting average energy use per resident by state can be seen below.</p>
+
+<h3 id="appendix">Appendix</h3>
+
+<h4 id="combining-energy-use-and-population-data">Combining Energy Use and Population Data</h4>
 
 
   </article>
