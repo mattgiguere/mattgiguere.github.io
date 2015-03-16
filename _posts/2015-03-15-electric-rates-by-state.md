@@ -37,51 +37,61 @@ and the resulting average per capita energy use by state can be seen below.
 It's interesting to see that the states with some of
 the highest energy prices use the least amount of energy, and some of the
 states with the lowest energy prices use the highest amount of energy per
-capita. I later realized that the US EIA does indeed provide information on
-the [average amount spent per customer by state][useiapercust], but
-not the average amount spent per capita by state. They calculate that
-the average Hawaii customer uses the least amount of energy and the average
-Louisianan customer uses the most energy. This qualitatively agrees with my
-findings, but I calculated the result per resident rather than per customer.
-The average customer uses more energy than the average resident, which makes
-sense since there is usually only one customer per household, but multiple
-people per household.
+capita.
 
-###Fraction of Median Income Used Towards Electric
+I later realized that the US EIA does indeed provide information on
+the [average amount spent per customer by state][useiapercust], but
+not the average amount spent per capita by state. They calculated that
+the average Hawaii resident customer uses the least amount of energy and the
+average Louisianan customer uses the most energy. This qualitatively agrees
+with my findings, but I calculated the result per resident (not per
+customer like the EIA).
+The average *customer* purchases a lot more energy than the average
+*resident* uses. This makes sense since more than 1 person lives in the
+average household.
+
+###Percent of Income Spent on Electric
 
 The next question I would like to address is what is the fraction of income
-that is used towards electric by state. To answer this I used the results
+that is used towards electricity by state. To answer this I used the results
 from the above analysis in addition to the Annual Social and Economic
 Supplement Current Income of Households by State Using 2-Year-Average
 Medians from the US Census Bureau, which can be downloaded [here][uscbincome].
-Below is the result.
 
-<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 982px; height: 742px;'><noscript><a href='#'><img alt='Percent of Income Spent on Electric By State ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;el&#47;electricPercentSpent&#47;Sheet1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='982' height='742' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='electricPercentSpent&#47;Sheet1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;el&#47;electricPercentSpent&#47;Sheet1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showVizHome' value='no' /><param name='showTabs' value='y' /></object></div>
+The percent of income spent on electric was calculated by taking the average
+per capita energy use by state, multiplying it by the average persons per
+household in the US (retrieved from [here][uscbpph]), multiplying that by the
+average residential electric rate by state for 2014, and dividing by the 2012 -
+ 2013 2-Year Averaged Median Household income. If you prefer mathematical
+notation, that is
 
+ `\[
+ f_{I} = \frac{E_{C} H_{p} R_{E}}{I}
+ \]`
 
+- $$f_{I}$$: fraction of income spent on electric
+- $$E_{C}$$: Average energy usage per capita by state ([source][eiamon])
+- $$H_{p}$$: The average persons per household in the US ([source][uscbpph])
+- $$R_{E}$$: The average electric rate per kWh by state ([source][eiamon])
+- $$I$$: The median household income by state ([source][uscbincome])
 
+ Below is the result.
+
+<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 1004px; height: 675px;'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;el&#47;electricPercentSpent&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='1004' height='675' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='electricPercentSpent&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;el&#47;electricPercentSpent&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showVizHome' value='no' /><param name='showTabs' value='y' /></object></div>
+
+This shows that despite having some of the lowest energy rates in the country,
+a combination of the lowest median annual income and the highest energy usage
+has driven many southern states to spend the highest fraction of their income
+on electric. Mississipians spend the most on electric, at 4.5 % of their
+income, and Utahans spend the least, at only 1.3 %.
 
 ###Appendix
 
-All of the following code can be found in my
+All of the code and data used to create this blog post can be found in my
 [github repository][ghelectric]
- on energy consumption in the United States.
-
-The average persons per household over the years 2009-2013 in the US is 2.63.
-
-####Combining Energy Use and Population Data
-
-The US EIA provide data about energy use. The US Census Bureau provide data on
-the US population. To find the average kWh used per capita, we need to combine
-the two data sets. This can be done within Python easily with the pandas
-Library.
-
-{% highlight python %}
-import pandas as pd
-dfe = pd.read_excel('../data/january2015/Table_5_04_B.xlsx', skiprows=3, header=0)
-dfp =
-{% endhighlight %}
-
+ on energy consumption in the United States. Furthermore, the Tableau
+ workbooks that I used to create the above
+illustrations can be downloaded for my Tableau public profile [here][tabpub]
 
 
 [eiamon]: http://www.eia.gov/electricity/monthly/epm_table_grapher.cfm?t=epmt_5_6_a
@@ -90,3 +100,4 @@ dfp =
 [useiapercust]: http://www.eia.gov/tools/faqs/faq.cfm?id=97&t=3
 [uscbincome]: http://www.census.gov/hhes/www/income/data/statemedian/
 [uscbpph]: http://quickfacts.census.gov/qfd/states/00000.html
+[tabpub]: https://public.tableau.com/profile/mattgiguere#!/
