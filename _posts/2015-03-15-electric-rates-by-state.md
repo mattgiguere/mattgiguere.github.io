@@ -91,7 +91,7 @@ All of the code and data used to create this blog post can be found in my
 [github repository][ghelectric]
  on energy consumption in the United States. Furthermore, the Tableau
  workbooks that I used to create the above
-illustrations can be downloaded for my Tableau public profile [here][tabpub]
+illustrations can be downloaded for my Tableau public profile [here][tabpub].
 
 
 [eiamon]: http://www.eia.gov/electricity/monthly/epm_table_grapher.cfm?t=epmt_5_6_a
