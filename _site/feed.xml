@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 15 Mar 2015 20:13:52 -0400</pubDate>
-    <lastBuildDate>Sun, 15 Mar 2015 20:13:52 -0400</lastBuildDate>
+    <pubDate>Sun, 15 Mar 2015 22:17:40 -0400</pubDate>
+    <lastBuildDate>Sun, 15 Mar 2015 22:17:40 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -33,14 +33,35 @@ then interested to find out who spends the largest fraction of their income
 on electric. The US EIA does not provide that information directly, but they
 do publish the total retail sales per state.&lt;/p&gt;
 
-&lt;p&gt;The &lt;a href=&quot;http://www.census.gov/popest/data/national/totals/2014/index.html&quot;&gt;US Census Bureau publish&lt;/a&gt; another excellent data set tabulating the
-estimated population per state per year. I combined these two data sets using
-&lt;code&gt;pandas&lt;/code&gt; in Python (see bottom of post for details),
-and the resulting average energy use per resident by state can be seen below.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&quot;http://www.census.gov/popest/data/national/totals/2014/index.html&quot;&gt;US Census Bureau publish&lt;/a&gt; another excellent data set tabulating
+the estimated population per state per year. I combined these two data sets
+using &lt;code&gt;pandas&lt;/code&gt; in Python (see bottom of post for details),
+and the resulting average per capita energy use by state can be seen below.&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://public.tableau.com/javascripts/api/viz_v1.js&quot;&gt;&lt;/script&gt;
+&lt;div class=&quot;tableauPlaceholder&quot; style=&quot;width: 1004px; height: 675px;&quot;&gt;&lt;noscript&gt;&lt;a href=&quot;#&quot;&gt;&lt;img alt=&quot;Dashboard 1 &quot; src=&quot;https:&amp;#47;&amp;#47;public.tableau.com&amp;#47;static&amp;#47;images&amp;#47;en&amp;#47;energyUsagePerCap201411YTD&amp;#47;Dashboard1&amp;#47;1_rss.png&quot; style=&quot;border: none&quot; /&gt;&lt;/a&gt;&lt;/noscript&gt;&lt;object class=&quot;tableauViz&quot; width=&quot;1004&quot; height=&quot;675&quot; style=&quot;display:none;&quot;&gt;&lt;param name=&quot;host_url&quot; value=&quot;https%3A%2F%2Fpublic.tableau.com%2F&quot; /&gt; &lt;param name=&quot;site_root&quot; value=&quot;&quot; /&gt;&lt;param name=&quot;name&quot; value=&quot;energyUsagePerCap201411YTD&amp;#47;Dashboard1&quot; /&gt;&lt;param name=&quot;tabs&quot; value=&quot;no&quot; /&gt;&lt;param name=&quot;toolbar&quot; value=&quot;yes&quot; /&gt;&lt;param name=&quot;static_image&quot; value=&quot;https:&amp;#47;&amp;#47;public.tableau.com&amp;#47;static&amp;#47;images&amp;#47;en&amp;#47;energyUsagePerCap201411YTD&amp;#47;Dashboard1&amp;#47;1.png&quot; /&gt; &lt;param name=&quot;animate_transition&quot; value=&quot;yes&quot; /&gt;&lt;param name=&quot;display_static_image&quot; value=&quot;yes&quot; /&gt;&lt;param name=&quot;display_spinner&quot; value=&quot;yes&quot; /&gt;&lt;param name=&quot;display_overlay&quot; value=&quot;yes&quot; /&gt;&lt;param name=&quot;display_count&quot; value=&quot;yes&quot; /&gt;&lt;param name=&quot;showVizHome&quot; value=&quot;no&quot; /&gt;&lt;param name=&quot;showTabs&quot; value=&quot;y&quot; /&gt;&lt;/object&gt;&lt;/div&gt;
+
+&lt;p&gt;It’s interesting to see that the states with some of
+the highest energy prices use the least amount of energy, and some of the
+states with the lowest energy prices use the highest amount of energy per
+capita.&lt;/p&gt;
 
 &lt;h3 id=&quot;appendix&quot;&gt;Appendix&lt;/h3&gt;
 
+&lt;p&gt;All of the following code can be found in my
+&lt;a href=&quot;https://github.com/mattgiguere/electric&quot;&gt;github repository&lt;/a&gt;
+ on energy consumption in the United States.&lt;/p&gt;
+
 &lt;h4 id=&quot;combining-energy-use-and-population-data&quot;&gt;Combining Energy Use and Population Data&lt;/h4&gt;
+
+&lt;p&gt;The US EIA provide data about energy use. The US Census Bureau provide data on
+the US population. To find the average kWh used per capita, we need to combine
+the two data sets. This can be done within Python easily with the pandas
+Library.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pd&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dfe&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_excel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;../data/january2015/Table_5_04_B.xlsx&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;skiprows&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dfp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 </description>
         <pubDate>Sun, 15 Mar 2015 12:19:59 -0400</pubDate>
