@@ -89,6 +89,8 @@ deserved a better visualization, so I created it.</p>
 lowest electric rates. Hawai’i has by far the highest average electric rate,
  at 37.6 ¢/kWh, and Washington State has the lowest rate, at only 8.8 ¢/kWh.</p>
 
+<h3 id="per-capita-energy-usage">Per Capita Energy Usage</h3>
+
 <p>The US EIA also provides a trove of data on many different parameters. I was
 then interested to find out who spends the largest fraction of their income
 on electric. The US EIA does not provide that information directly, but they
@@ -100,18 +102,55 @@ using <code>pandas</code> in Python (see bottom of post for details),
 and the resulting average per capita energy use by state can be seen below.</p>
 
 <script type="text/javascript" src="https://public.tableau.com/javascripts/api/viz_v1.js"></script>
-<div class="tableauPlaceholder" style="width: 1004px; height: 675px;"><noscript><a href="#"><img alt="Dashboard 1 " src="https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;en&#47;energyUsagePerCap201411YTD&#47;Dashboard1&#47;1_rss.png" style="border: none" /></a></noscript><object class="tableauViz" width="1004" height="675" style="display:none;"><param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" /> <param name="site_root" value="" /><param name="name" value="energyUsagePerCap201411YTD&#47;Dashboard1" /><param name="tabs" value="no" /><param name="toolbar" value="yes" /><param name="static_image" value="https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;en&#47;energyUsagePerCap201411YTD&#47;Dashboard1&#47;1.png" /> <param name="animate_transition" value="yes" /><param name="display_static_image" value="yes" /><param name="display_spinner" value="yes" /><param name="display_overlay" value="yes" /><param name="display_count" value="yes" /><param name="showVizHome" value="no" /><param name="showTabs" value="y" /></object></div>
+
+<div class="tableauPlaceholder" style="width: 95%; height: 675px;">
+<noscript>
+<a href="#">
+<img alt="Dashboard 1 " src="https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;en&#47;energyUsagePerCap201411YTD&#47;Dashboard1&#47;1_rss.png" style="border: none" />
+</a>
+</noscript>
+<object class="tableauViz" width="1004" height="675" style="display:none;">
+<param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+<param name="site_root" value="" />
+<param name="name" value="energyUsagePerCap201411YTD&#47;Dashboard1" />
+<param name="tabs" value="no" />
+<param name="toolbar" value="yes" />
+<param name="static_image" value="https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;en&#47;energyUsagePerCap201411YTD&#47;Dashboard1&#47;1.png" />
+<param name="animate_transition" value="yes" />
+<param name="display_static_image" value="yes" />
+<param name="display_spinner" value="yes" />
+<param name="display_overlay" value="yes" />
+<param name="display_count" value="yes" />
+<param name="showVizHome" value="no" />
+<param name="showTabs" value="y" />
+</object>
+</div>
 
 <p>It’s interesting to see that the states with some of
 the highest energy prices use the least amount of energy, and some of the
 states with the lowest energy prices use the highest amount of energy per
-capita.</p>
+capita. I later realized that the US EIA does indeed provide information on
+the <a href="http://www.eia.gov/tools/faqs/faq.cfm?id=97&amp;t=3">average amount spent per customer by state</a>, but
+not the average amount spent per capita by state. They calculate that
+the average Hawaii customer uses the least amount of energy and the average
+Louisianan customer uses the most energy. This qualitatively agrees with my
+findings, but I calculated the result per resident rather than per customer.
+The average customer uses more energy than the average resident, which makes
+sense since there is usually only one customer per household, but multiple
+people per household.</p>
+
+<h3 id="fraction-of-median-income-used-towards-electric">Fraction of Median Income Used Towards Electric</h3>
+
+<p>The next question I would like to address is what is the fraction of income
+that is used towards electric by state.</p>
 
 <h3 id="appendix">Appendix</h3>
 
 <p>All of the following code can be found in my
 <a href="https://github.com/mattgiguere/electric">github repository</a>
  on energy consumption in the United States.</p>
+
+<p>The average persons per household over the years 2009-2013 in the US is 2.63.</p>
 
 <h4 id="combining-energy-use-and-population-data">Combining Energy Use and Population Data</h4>
 
