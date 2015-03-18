@@ -122,6 +122,28 @@ path:</p>
 sudo ln -s /usr/local/Cellar/libvo-aacenc/0.1.2/lib/libvo-aacenc.0.dylib libvo-aacenc.0.dylib
 sudo ln -s /usr/local/Cellar/lame/3.99.5/lib/libmp3lame.0.dylib libmp3lame.0.dylib</code></pre></div>
 
+<p>Finally, <code>ffmpeg -h</code> returned the help, as expected.</p>
+
+<p>I found <a href="https://trac.ffmpeg.org/wiki/Create%20a%20video%20slideshow%20from%20images">this page</a>
+on the ffmpeg wiki to be helpful in creating the time lapse. And
+<a href="https://ffmpeg.org/ffmpeg.html#Video-and-Audio-file-format-conversion">Section 7.3</a> of the documentation too.</p>
+
+<p>The files I wanted to add were stored in a folder named Bench-View_JPG. They
+were in sequential order, but they didn’t start at 0. The easiest way to add
+them all to the movie was the use the <code>pattern_type</code> optional argument in
+conjunction with <code>glob</code>. The other options I used were:</p>
+
+<ul>
+  <li>-<em>framerate</em>: the number of frames per second to input
+ -<em>r</em>: the number of frames per second in the output video</li>
+  <li><em>s</em>: the size of the output video</li>
+</ul>
+
+<p>I wanted my video to be 1080p HD, and the final video to be called
+<code>BenchMovie1080p11fps.mp4</code>, so I used the following command:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">ffmpeg -framerate <span class="m">11</span> -pattern_type glob -i <span class="s1">&#39;Bench-View_JPG/*.jpg&#39;</span> -r <span class="m">11</span> -s 1620x1080 BenchMovie1080p11fps.mp4</code></pre></div>
+
 
   </article>
 

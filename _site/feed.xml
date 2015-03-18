@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 18 Mar 2015 14:56:18 -0400</pubDate>
-    <lastBuildDate>Wed, 18 Mar 2015 14:56:18 -0400</lastBuildDate>
+    <pubDate>Wed, 18 Mar 2015 15:34:45 -0400</pubDate>
+    <lastBuildDate>Wed, 18 Mar 2015 15:34:45 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -60,6 +60,28 @@ path:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;sudo ln -s /usr/local/Cellar/x264/r2495/lib/libx264.142.dylib libx264.142.dylib
 sudo ln -s /usr/local/Cellar/libvo-aacenc/0.1.2/lib/libvo-aacenc.0.dylib libvo-aacenc.0.dylib
 sudo ln -s /usr/local/Cellar/lame/3.99.5/lib/libmp3lame.0.dylib libmp3lame.0.dylib&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Finally, &lt;code&gt;ffmpeg -h&lt;/code&gt; returned the help, as expected.&lt;/p&gt;
+
+&lt;p&gt;I found &lt;a href=&quot;https://trac.ffmpeg.org/wiki/Create%20a%20video%20slideshow%20from%20images&quot;&gt;this page&lt;/a&gt;
+on the ffmpeg wiki to be helpful in creating the time lapse. And
+&lt;a href=&quot;https://ffmpeg.org/ffmpeg.html#Video-and-Audio-file-format-conversion&quot;&gt;Section 7.3&lt;/a&gt; of the documentation too.&lt;/p&gt;
+
+&lt;p&gt;The files I wanted to add were stored in a folder named Bench-View_JPG. They
+were in sequential order, but they didn’t start at 0. The easiest way to add
+them all to the movie was the use the &lt;code&gt;pattern_type&lt;/code&gt; optional argument in
+conjunction with &lt;code&gt;glob&lt;/code&gt;. The other options I used were:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;-&lt;em&gt;framerate&lt;/em&gt;: the number of frames per second to input
+ -&lt;em&gt;r&lt;/em&gt;: the number of frames per second in the output video&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;s&lt;/em&gt;: the size of the output video&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I wanted my video to be 1080p HD, and the final video to be called
+&lt;code&gt;BenchMovie1080p11fps.mp4&lt;/code&gt;, so I used the following command:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ffmpeg -framerate &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt; -pattern_type glob -i &lt;span class=&quot;s1&quot;&gt;&amp;#39;Bench-View_JPG/*.jpg&amp;#39;&lt;/span&gt; -r &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt; -s 1620x1080 BenchMovie1080p11fps.mp4&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 </description>
         <pubDate>Wed, 18 Mar 2015 08:22:10 -0400</pubDate>
