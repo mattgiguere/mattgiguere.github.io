@@ -148,7 +148,8 @@ conjunction with <code>glob</code>. The other options I used were:</p>
 
 <video width="100%" height="auto" controls="">
   <source src="/images/BenchMovie1080p11fps.mp4" type="video/mp4" />
-Your browser does not support the video tag.
+  Note: You are missing out on our time lapse video!
+  Upgrade your browser to one that supports the video tag.
 </video>
 
 <p>For embedding the video into the web page, I used the HTML5 <code>&lt;video&gt;</code> tag. I
@@ -164,6 +165,14 @@ Upgrade your browser to one that supports the video tag.
 <p>The message, of course, only appears in unsupported browsers. Chrome,
 Firefox, Internet Explore, Opera, and Safari all support mp4 in the
 video tag.</p>
+
+<p>The result is something that looks great on any browser and any device! I
+also created a time lapse video from stills taken with the other camera using
+the following command:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">ffmpeg -framerate <span class="m">11</span> -pattern_type glob -i <span class="s1">&#39;Full-View_JPG/_CAM*.jpg&#39;</span> -r <span class="m">11</span> -s 1620x1080 FullMovie1080p11fps.mp4</code></pre></div>
+
+<p>The results can be seen on MAO page of the <a href="http://exoplanets.astro.yale.edu/instrumentation/mao.php">Exoplanets Web Site</a>.</p>
 
 
   </article>

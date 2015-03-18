@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 18 Mar 2015 15:50:09 -0400</pubDate>
-    <lastBuildDate>Wed, 18 Mar 2015 15:50:09 -0400</lastBuildDate>
+    <pubDate>Wed, 18 Mar 2015 17:00:26 -0400</pubDate>
+    <lastBuildDate>Wed, 18 Mar 2015 17:00:26 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -87,7 +87,8 @@ conjunction with &lt;code&gt;glob&lt;/code&gt;. The other options I used were:&l
 
 &lt;video width=&quot;100%&quot; height=&quot;auto&quot; controls=&quot;&quot;&gt;
   &lt;source src=&quot;/images/BenchMovie1080p11fps.mp4&quot; type=&quot;video/mp4&quot; /&gt;
-Your browser does not support the video tag.
+  Note: You are missing out on our time lapse video!
+  Upgrade your browser to one that supports the video tag.
 &lt;/video&gt;
 
 &lt;p&gt;For embedding the video into the web page, I used the HTML5 &lt;code&gt;&amp;lt;video&amp;gt;&lt;/code&gt; tag. I
@@ -103,6 +104,14 @@ Upgrade your browser to one that supports the video tag.
 &lt;p&gt;The message, of course, only appears in unsupported browsers. Chrome,
 Firefox, Internet Explore, Opera, and Safari all support mp4 in the
 video tag.&lt;/p&gt;
+
+&lt;p&gt;The result is something that looks great on any browser and any device! I
+also created a time lapse video from stills taken with the other camera using
+the following command:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ffmpeg -framerate &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt; -pattern_type glob -i &lt;span class=&quot;s1&quot;&gt;&amp;#39;Full-View_JPG/_CAM*.jpg&amp;#39;&lt;/span&gt; -r &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt; -s 1620x1080 FullMovie1080p11fps.mp4&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The results can be seen on MAO page of the &lt;a href=&quot;http://exoplanets.astro.yale.edu/instrumentation/mao.php&quot;&gt;Exoplanets Web Site&lt;/a&gt;.&lt;/p&gt;
 
 </description>
         <pubDate>Wed, 18 Mar 2015 08:22:10 -0400</pubDate>
