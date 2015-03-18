@@ -95,6 +95,24 @@ The result can be seen below.
 Your browser does not support the video tag.
 </video>
 
+For embedding the video into the web page, I used the HTML5 `<video>` tag. I
+also set the width to "100%"" and the height to "auto" to make sure it was
+responsive and scaled properly. Here's the code that made the above video:
+
+{% highlight html %}
+<video width="100%" height="auto" controls>
+  <source src="/images/BenchMovie1080p11fps.mp4" type="video/mp4">
+Note: You are missing out on our time lapse video!
+Upgrade your browser to one that supports the video tag.
+</video>
+{% endhighlight %}
+
+The message, of course, only appears in unsupported browsers. Chrome,
+Firefox, Internet Explore, Opera, and Safari all support mp4 in the
+video tag.
+
+
+
 
 [ffmpegwiki]: https://trac.ffmpeg.org/wiki/Create%20a%20video%20slideshow%20from%20images
 [ffmpeg]: https://ffmpeg.org/ffmpeg.html#Video-and-Audio-file-format-conversion

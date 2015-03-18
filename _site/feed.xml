@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 18 Mar 2015 15:44:39 -0400</pubDate>
-    <lastBuildDate>Wed, 18 Mar 2015 15:44:39 -0400</lastBuildDate>
+    <pubDate>Wed, 18 Mar 2015 15:50:09 -0400</pubDate>
+    <lastBuildDate>Wed, 18 Mar 2015 15:50:09 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -89,6 +89,20 @@ conjunction with &lt;code&gt;glob&lt;/code&gt;. The other options I used were:&l
   &lt;source src=&quot;/images/BenchMovie1080p11fps.mp4&quot; type=&quot;video/mp4&quot; /&gt;
 Your browser does not support the video tag.
 &lt;/video&gt;
+
+&lt;p&gt;For embedding the video into the web page, I used the HTML5 &lt;code&gt;&amp;lt;video&amp;gt;&lt;/code&gt; tag. I
+also set the width to “100%”” and the height to “auto” to make sure it was
+responsive and scaled properly. Here’s the code that made the above video:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;video&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;100%&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;auto&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;controls&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;source&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/images/BenchMovie1080p11fps.mp4&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;video/mp4&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+Note: You are missing out on our time lapse video!
+Upgrade your browser to one that supports the video tag.
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/video&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The message, of course, only appears in unsupported browsers. Chrome,
+Firefox, Internet Explore, Opera, and Safari all support mp4 in the
+video tag.&lt;/p&gt;
 
 </description>
         <pubDate>Wed, 18 Mar 2015 08:22:10 -0400</pubDate>
