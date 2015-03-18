@@ -4,6 +4,61 @@
    Author's custom styles
    ========================================================================== */
 
+.footer {
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 100px;
+  margin-top: 100px;
+}
+.footer {
+  color: #7e7e7e;
+  background-color: #333;
+}
+.footer a {
+  color: #9af7fe;
+}
+
+.footer .glyphicon {
+  font-size: 14px;
+}
+
+#footer .social a {
+    border: 2px solid;
+    border-color: transparent;
+}
+
+#footer .social a {
+    border: 2px solid;
+    border-color: transparent;
+    padding: 4px 3px 8px;
+    color: #777;
+    /*color: rgba(0,0,0,.3); */
+    margin-left: 4px;
+    display: inline-block;
+    -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -ms-transition: all .3s ease-out;
+    -o-transition: all .3s ease-out;
+    transition: all .3s ease-out;
+}
+
+#footer .social a:hover {
+    color: #999;
+}
+
+#footer .social i {
+    font-size: 20px;
+}
+
+
+.spacer {
+  margin-top: 40px;
+}
+
+.spacer-bottom {
+  margin-bottom: 150px;
+}
 
 
 
