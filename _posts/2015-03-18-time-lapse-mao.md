@@ -88,7 +88,12 @@ I wanted my video to be 1080p HD, and the final video to be called
 ffmpeg -framerate 11 -pattern_type glob -i 'Bench-View_JPG/*.jpg' -r 11 -s 1620x1080 BenchMovie1080p11fps.mp4
 {% endhighlight %}
 
+The result can be seen below.
 
+<video width="100%" height="auto" controls>
+  <source src="/images/BenchMovie1080p11fps.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
 
 [ffmpegwiki]: https://trac.ffmpeg.org/wiki/Create%20a%20video%20slideshow%20from%20images

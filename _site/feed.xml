@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 18 Mar 2015 15:34:45 -0400</pubDate>
-    <lastBuildDate>Wed, 18 Mar 2015 15:34:45 -0400</lastBuildDate>
+    <pubDate>Wed, 18 Mar 2015 15:44:39 -0400</pubDate>
+    <lastBuildDate>Wed, 18 Mar 2015 15:44:39 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -82,6 +82,13 @@ conjunction with &lt;code&gt;glob&lt;/code&gt;. The other options I used were:&l
 &lt;code&gt;BenchMovie1080p11fps.mp4&lt;/code&gt;, so I used the following command:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ffmpeg -framerate &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt; -pattern_type glob -i &lt;span class=&quot;s1&quot;&gt;&amp;#39;Bench-View_JPG/*.jpg&amp;#39;&lt;/span&gt; -r &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt; -s 1620x1080 BenchMovie1080p11fps.mp4&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The result can be seen below.&lt;/p&gt;
+
+&lt;video width=&quot;100%&quot; height=&quot;auto&quot; controls=&quot;&quot;&gt;
+  &lt;source src=&quot;/images/BenchMovie1080p11fps.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+Your browser does not support the video tag.
+&lt;/video&gt;
 
 </description>
         <pubDate>Wed, 18 Mar 2015 08:22:10 -0400</pubDate>
