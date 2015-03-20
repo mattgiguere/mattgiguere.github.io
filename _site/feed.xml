@@ -6,9 +6,140 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 18 Mar 2015 18:29:20 -0400</pubDate>
-    <lastBuildDate>Wed, 18 Mar 2015 18:29:20 -0400</lastBuildDate>
+    <pubDate>Fri, 20 Mar 2015 14:41:33 -0400</pubDate>
+    <lastBuildDate>Fri, 20 Mar 2015 14:41:33 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Better Python Coding Practices</title>
+        <description>&lt;p&gt;Recently I’ve been interested in improving my coding practices, as
+everyone should be. There are a few new tools that I have been
+implementing that have already paid off in improving my end product.
+In this blog post, I will describe some of these tools and show how
+I got them up and running.&lt;/p&gt;
+
+&lt;h3 id=&quot;unit-testing&quot;&gt;Unit Testing&lt;/h3&gt;
+&lt;p&gt;The first thing that &lt;strong&gt;everyone&lt;/strong&gt; should do is &lt;a href=&quot;http://en.wikipedia.org/wiki/Unit_testing&quot;&gt;unit testing&lt;/a&gt;.
+Unit testing ensures that bits of the code behave the way they are
+expected to behave. This is done by writing simple test routines
+that analyze the output of the code of interest.&lt;/p&gt;
+
+&lt;p&gt;Below is a simple example.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Routine to test:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;multiply_numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Test routine:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_multiply_numbers_with_scalars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;multiply_numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;assert&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This test ensures that the result the &lt;code&gt;multiply_numbers&lt;/code&gt; function
+is the length that we would expect it to be. For simple one-liners
+ like &lt;code&gt;multiply_numbers&lt;/code&gt;, there’s no need to test, but functions
+ and methods in the real world are almost always more complicated,
+ and as the complexity increases testing can save a ton of time
+ that would otherwise be spent debugging.&lt;/p&gt;
+
+&lt;p&gt;There are many libraries out there for testing python code, but
+&lt;a href=&quot;https://nose.readthedocs.org/en/latest/&quot;&gt;nose&lt;/a&gt; looked the most appealing to me. How to set nose up
+is detailed in their documentation. Personally, I used &lt;code&gt;pip&lt;/code&gt; to
+install it:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install nose&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I then created a “tests” directory in my repository root directory
+and started filling it with short test routines to test out every
+function and possibility of my code. Then to test your code with
+nose, simply type &lt;code&gt;nosetests&lt;/code&gt; at the command line at the repository
+root level. nose searches through your repository looking for test
+code and executes the tests it finds. Here’s an example of nose
+successfully executing all 12 of test routines it found in my
+repository path:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;my_project&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nosetests
+............
+----------------------------------------------------------------------
+Ran &lt;span class=&quot;m&quot;&gt;12&lt;/span&gt; tests in 0.014s
+
+OK
+my_project&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you’re curious what other testing packages exist out there for
+python, I found the
+&lt;a href=&quot;http://docs.python-guide.org/en/latest/writing/tests/&quot;&gt;Hitchhiker’s Guide to Python&lt;/a&gt; to give an excellent
+introduction to unit testing in python.&lt;/p&gt;
+
+&lt;h3 id=&quot;travis-ci&quot;&gt;Travis-CI&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://travis-ci.org&quot;&gt;Travis-CI&lt;/a&gt; is a continuous integration service. This allows for
+automated testing of code upon pushes to a &lt;a href=&quot;https://github.com&quot;&gt;github&lt;/a&gt; repository.
+This free tool for open source projects is great if you forget to run
+&lt;code&gt;nosetests&lt;/code&gt; after adding new functionality to your code and also if
+your collaborating with others. It will probably take a little time
+to get travis setup for your particular needs. The Travis-CI
+&lt;a href=&quot;http://docs.travis-ci.com/user/languages/python/&quot;&gt;docs&lt;/a&gt; are a good place to start, but I found their built
+in python versions did not satisfy all of the dependencies for just
+about any of my projects. Instead of building python and the
+dependencies from scratch (e.g. numpy, scipy, pandas, etc),
+continuum.io has a terrific solution with miniconda. I found
+&lt;a href=&quot;http://conda.pydata.org/docs/travis.html&quot;&gt;this documentation&lt;/a&gt; to be quite helpful in setting up
+travis-ci to work with my code. Once you get it working Travis-CI
+provides a pretty badge that you can put in your repository README
+to tell the world that your code has been tested, and (hopefully)
+it passed!&lt;/p&gt;
+
+&lt;p&gt;Here’s an example from one of my repositories of what the badge looks
+like.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://travis-ci.org/mattgiguere/pyutil&quot;&gt;&lt;img src=&quot;https://travis-ci.org/mattgiguere/pyutil.svg?branch=master&quot; alt=&quot;Build Status&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;If you push a commit to github that doesn’t pass testing, it turns
+red and says “failed”. Don’t worry, you’ll also receive an email
+notification informing you of the change in status so you can
+quickly repair the damages.&lt;/p&gt;
+
+&lt;h3 id=&quot;coveralls&quot;&gt;Coveralls&lt;/h3&gt;
+
+&lt;p&gt;Now you have testing setup, and you have travis-ci setup to
+perform continuous integration and make sure your latest commit
+is performing the way you expect it to! But &lt;em&gt;how much&lt;/em&gt; of the
+code is actually being tested? Travis-CI will tell you if all
+of the tests you made ran successfully, but what if you are only
+testing a tiny fraction of one of your routines? That’s where
+&lt;a href=&quot;https://coveralls.io&quot;&gt;coveralls&lt;/a&gt; comes in to play. Coveralls automatically
+analyzes your tests and code to see what fraction of your code
+is actually being covered by your tests. Not only does it check
+to see if all of your subroutines and methods are being tested,
+but if actually looks into all of the conditional cases to make
+sure all of the exceptional cases are being handled (i.e., it
+looks to make sure you’re testing all of the
+&lt;a href=&quot;http://en.wikipedia.org/wiki/Edge_case&quot;&gt;edge cases&lt;/a&gt;).&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 20 Mar 2015 09:20:35 -0400</pubDate>
+        <link>http://mattgiguere.github.io/2015/03/20/better-python-coding-practices.html</link>
+        <guid isPermaLink="true">http://mattgiguere.github.io/2015/03/20/better-python-coding-practices.html</guid>
+        
+        <category>codacy,</category>
+        
+        <category>coveralls,</category>
+        
+        <category>travis-ci,</category>
+        
+        <category>read</category>
+        
+        <category>the</category>
+        
+        <category>docs,</category>
+        
+        <category>python</category>
+        
+        
+      </item>
     
       <item>
         <title>Time Lapse MAO</title>
@@ -1074,38 +1205,6 @@ at least two spots were needed. Below is an animation showing the result.&lt;/p&
         <category>animation,</category>
         
         <category>pandas</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Barycentric Correction Results</title>
-        <description>&lt;p&gt;I spent some time this weekend looking more into the barycentric correction.
-I couldn’t figure out why the barycentric corrections from barycorr were so
-much worse than from the old barycentric correction code. It turned out it
-was because there was a bug with the CF structures — the modified julian
-dates in the CF structures were stored as doubles, but somewhere in the
-reduction pipeline they are treated as FLOATs, which only have precision
-to about the minute level. This corresponds to introducing an error at
-about the 2 m/s level. &lt;/p&gt;
-</description>
-        <pubDate>Sun, 08 Feb 2015 17:13:45 -0500</pubDate>
-        <link>http://mattgiguere.github.io/2015/02/08/barycenter-results.html</link>
-        <guid isPermaLink="true">http://mattgiguere.github.io/2015/02/08/barycenter-results.html</guid>
-        
-        <category>python,</category>
-        
-        <category>mpi4py,</category>
-        
-        <category>mcmc,</category>
-        
-        <category>osx,</category>
-        
-        <category>emcee,</category>
-        
-        <category>barycentric</category>
-        
-        <category>correction</category>
         
         
       </item>
