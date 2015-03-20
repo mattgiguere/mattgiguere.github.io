@@ -118,9 +118,50 @@ to see if all of your subroutines and methods are being tested,
 but if actually looks into all of the conditional cases to make
 sure all of the exceptional cases are being handled (i.e., it
 looks to make sure you're testing all of the
-[edge cases][edges]).
+[edge cases][edges]). Once you get coveralls up and running,
+not only will it tell you what percent of your code you are
+actually testing, but through its site you can zoom in and easily
+see what parts of your code you are missing with your tests. This is
+a great tool for checking to make sure you are covering all
+cases with your tests.
 
+Coveralls can be integrated with travis to run once travis finishes
+with its tests. Like travis, coveralls comes with another pretty
+badge to show the world what percent of your code has been tested.
 
+[![Coverage Status](https://coveralls.io/repos/mattgiguere/pyutil/badge.svg?branch=master)](https://coveralls.io/r/mattgiguere/pyutil?branch=master)
+
+###Codacy
+
+Lastly, there's [codacy][codacy], another great tool that is
+free for open source software projects. Like coveralls and
+travis, codacy works with github repositories (and many others)
+and looks for commits to your repository. Upon new commits, it
+regrades your coding and provides a report card on how your
+code stacks up in several categories. These categories are
+
+- Code Complexity
+- Code Style
+- Compatibility
+- Documentation
+- Error Prone
+- Performance
+- Security
+- Unused Code
+
+If any of factors are less than perfect, you can zoom in and
+it provides details on how to improve your code. Like all great
+tools, Codacy makes pretty badges to show off your skills.
+
+[![Codacy Badge](https://www.codacy.com/project/badge/24f412c6b6c443f8b6693936594811a1)](https://www.codacy.com/public/matthewgiguere/pyutil)
+
+###Other Badges
+
+I hope you find the above tools useful and implement them in your own
+projects. If you are looking for other ways to decorate your
+repository README files, you should check out
+[shields.io](http://shields.io) to find other useful badges, or create
+your own.
 
 
 [travis]: https://travis-ci.org
@@ -132,3 +173,4 @@ looks to make sure you're testing all of the
 [condatravis]: http://conda.pydata.org/docs/travis.html
 [coveralls]: https://coveralls.io
 [edges]: http://en.wikipedia.org/wiki/Edge_case
+[codacy]: https://www.codacy.com/login
