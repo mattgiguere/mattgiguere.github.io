@@ -200,6 +200,16 @@ command
 starcluster createkey mysckey -o ~/.ssh/mysckey.rsa
 {% endhighlight %}
 
+This didn't work either. Later, I noticed that in the top right corner of the Amazon AWS Web Interface the region can be changed. My region defaulted to "Oregon" for some reason. I clicked the name and changed it to "N. Virginia". It is odd that Amazon chose to write "N. Virginia" instead of just "Virginia" since there is no option for "S. Virginia" and "North Virginia" is not a state. Did they get Virginia confused with the Carolinas?
+
+After switching to the "US East (N. Virginia)" region, I could then setup instances and create keys for the US East region. I changed the `~/.starcluster/config` file back to its defaults and tried again. I could now create keypairs through starcluster:
+
+{% highlight sh %}
+starcluster createkey myStarClusterKey -o ~/.ssh/myStarClusterKey.rsa
+{% endhighlight %}
+
+And looking at the **Key Pairs** under **Network & Security** on the AWS Web Interface, I could see that StarCluster generated the key properly. I updated my config file, but was still getting an error message:
+
 
 
 [MpiBlog]: {% post_url 2015-01-27-setting-up-mpi4py %}
