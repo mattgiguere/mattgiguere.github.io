@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Setting up Python and MPI on EC2</title>
-  <meta name="description" content="">
+  <meta name="description" content="In a previous post, I described how to setup a cluster using the Amazon EC2 service and the starcluster package. In this post I will describe getting Python ...">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://mattgiguere.github.io/2015/03/26/setting-up-python-on-ec2.html">
@@ -73,7 +73,18 @@
   </header>
 
   <article class="post-content">
-    
+    <p>In a <a href="/2015/03/11/creating-an-aws-ec2-cluster.html">previous post</a>, I described how to setup a cluster using the Amazon EC2 service and the starcluster package. In this post I will describe getting Python and MPI up and running on a <a href="http://star.mit.edu/cluster">Starcluster</a> cluster instance on Amazon EC2.</p>
+
+<h4 id="starting-up-the-cluster">Starting up the cluster</h4>
+
+<p>First, we need to start our cluster instance. This can easily be done using starcluster by typing the following command:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster start mycluster</code></pre></div>
+
+<h4 id="setting-up-python">Setting up python</h4>
+
+<p>Next, we want to get python installed on our cluster. The easiest and fastest way to do this is to use <a href="http://conda.pydata.org/miniconda.html">miniconda</a>, a lightweight package that only contains conda and python, and then install only the needed dependencies. This was covered briefly in <a href="/2015/03/20/better-python-coding-practices.html">this post</a>, where I went over better coding practices. However, I’ll go over all the relevant sections pertaining to setting up python for a cloud service with conda here too.</p>
+
 
   </article>
 

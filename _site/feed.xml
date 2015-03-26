@@ -6,13 +6,24 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 26 Mar 2015 12:03:55 -0400</pubDate>
-    <lastBuildDate>Thu, 26 Mar 2015 12:03:55 -0400</lastBuildDate>
+    <pubDate>Thu, 26 Mar 2015 13:05:20 -0400</pubDate>
+    <lastBuildDate>Thu, 26 Mar 2015 13:05:20 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
         <title>Setting up Python and MPI on EC2</title>
-        <description>
+        <description>&lt;p&gt;In a &lt;a href=&quot;/2015/03/11/creating-an-aws-ec2-cluster.html&quot;&gt;previous post&lt;/a&gt;, I described how to setup a cluster using the Amazon EC2 service and the starcluster package. In this post I will describe getting Python and MPI up and running on a &lt;a href=&quot;http://star.mit.edu/cluster&quot;&gt;Starcluster&lt;/a&gt; cluster instance on Amazon EC2.&lt;/p&gt;
+
+&lt;h4 id=&quot;starting-up-the-cluster&quot;&gt;Starting up the cluster&lt;/h4&gt;
+
+&lt;p&gt;First, we need to start our cluster instance. This can easily be done using starcluster by typing the following command:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster start mycluster&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;setting-up-python&quot;&gt;Setting up python&lt;/h4&gt;
+
+&lt;p&gt;Next, we want to get python installed on our cluster. The easiest and fastest way to do this is to use &lt;a href=&quot;http://conda.pydata.org/miniconda.html&quot;&gt;miniconda&lt;/a&gt;, a lightweight package that only contains conda and python, and then install only the needed dependencies. This was covered briefly in &lt;a href=&quot;/2015/03/20/better-python-coding-practices.html&quot;&gt;this post&lt;/a&gt;, where I went over better coding practices. However, I’ll go over all the relevant sections pertaining to setting up python for a cloud service with conda here too.&lt;/p&gt;
+
 </description>
         <pubDate>Thu, 26 Mar 2015 08:03:55 -0400</pubDate>
         <link>http://mattgiguere.github.io/2015/03/26/setting-up-python-on-ec2.html</link>
