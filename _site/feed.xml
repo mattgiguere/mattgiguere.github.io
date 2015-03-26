@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 25 Mar 2015 12:16:52 -0400</pubDate>
-    <lastBuildDate>Wed, 25 Mar 2015 12:16:52 -0400</lastBuildDate>
+    <pubDate>Thu, 26 Mar 2015 12:02:14 -0400</pubDate>
+    <lastBuildDate>Thu, 26 Mar 2015 12:02:14 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -894,22 +894,44 @@ Please submit bug reports to starcluster@mit.edu
 
 &lt;p&gt;My problem ended up being in the name I gave the key in the ~/.starcluster/config file.&lt;/p&gt;
 
-&lt;p&gt;[key myStarClusterKey]
-KEY_LOCATION=/home/matt/.ssh/myStarClusterKey.rsa                                                                                            # You can of course have multiple keypair sections&lt;/p&gt;
+&lt;p&gt;Here is the snippet from my ~/.starcluster/config file that &lt;strong&gt;&lt;em&gt;did
+not work&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;h1 id=&quot;starcluster-start--c-mediumcluster-mycluster&quot;&gt;$ starcluster start -c mediumcluster mycluster&lt;/h1&gt;
-&lt;p&gt;#
-# If a template is not specified then the template defined by DEFAULT_TEMPLATE
-# in the [global] section above is used. Below is the “default” template named
-# “smallcluster”. You can rename it but dont forget to update the
-# DEFAULT_TEMPLATE setting in the [global] section above. See the next section
-# on defining multiple templates.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;key myawskey&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;KEY_LOCATION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/matt/.ssh/myStarClusterKey.rsa                                                                                            &lt;span class=&quot;c&quot;&gt;# You can of course have multiple keypair sections&lt;/span&gt;
 
-&lt;p&gt;[cluster smallcluster]
-# change this to the name of one of the keypair sections defined above
-KEYNAME = myStarClusterKey&lt;/p&gt;
+&lt;span class=&quot;c&quot;&gt;#     $ starcluster start -c mediumcluster mycluster&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# If a template is not specified then the template defined by DEFAULT_TEMPLATE&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# in the [global] section above is used. Below is the &amp;quot;default&amp;quot; template named&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# &amp;quot;smallcluster&amp;quot;. You can rename it but dont forget to update the&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# DEFAULT_TEMPLATE setting in the [global] section above. See the next section&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# on defining multiple templates.&lt;/span&gt;
 
-&lt;p&gt;**The keyname needs to be **&lt;/p&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;cluster smallcluster&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# change this to the name of one of the keypair sections defined above&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;KEYNAME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; myawskey&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And here is the snippet from my ~/.starcluster/config file that &lt;strong&gt;&lt;em&gt;worked&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;key myStarClusterKey&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;KEY_LOCATION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/matt/.ssh/myStarClusterKey.rsa                                                                                            &lt;span class=&quot;c&quot;&gt;# You can of course have multiple keypair sections&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#     $ starcluster start -c mediumcluster mycluster&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# If a template is not specified then the template defined by DEFAULT_TEMPLATE&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# in the [global] section above is used. Below is the &amp;quot;default&amp;quot; template named&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# &amp;quot;smallcluster&amp;quot;. You can rename it but dont forget to update the&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# DEFAULT_TEMPLATE setting in the [global] section above. See the next section&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# on defining multiple templates.&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;cluster smallcluster&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# change this to the name of one of the keypair sections defined above&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;KEYNAME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; myStarClusterKey&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;An important point: The keyname needs to be the same name as the name of the key in AWS!&lt;/strong&gt; I thought &lt;code&gt;KEYNAME&lt;/code&gt; was just a local variable that was used in the starcluster code to point to the correct [key] section in the config file. That is NOT the case! &lt;code&gt;KEYNAME&lt;/code&gt; needs to be the same as the filename of the .rsa file.&lt;/p&gt;
+
+&lt;p&gt;Once I changed the keyname as shown in the above example, I could then successfully start a cluster using the starcluster code following the &lt;a href=&quot;http://star.mit.edu/cluster/docs/latest/quickstart.html&quot;&gt;Starcluster Quick Start Guide&lt;/a&gt;.&lt;/p&gt;
 
 </description>
         <pubDate>Wed, 11 Mar 2015 09:58:53 -0400</pubDate>

@@ -224,6 +224,28 @@ Please submit bug reports to starcluster@mit.edu
 
 My problem ended up being in the name I gave the key in the ~/.starcluster/config file.
 
+Here is the snippet from my ~/.starcluster/config file that ***did
+not work***:
+{% highlight sh %}
+[key myawskey]
+KEY_LOCATION=/home/matt/.ssh/myStarClusterKey.rsa                                                                                            # You can of course have multiple keypair sections
+
+#     $ starcluster start -c mediumcluster mycluster
+#
+# If a template is not specified then the template defined by DEFAULT_TEMPLATE
+# in the [global] section above is used. Below is the "default" template named
+# "smallcluster". You can rename it but dont forget to update the
+# DEFAULT_TEMPLATE setting in the [global] section above. See the next section
+# on defining multiple templates.
+
+[cluster smallcluster]
+# change this to the name of one of the keypair sections defined above
+KEYNAME = myawskey
+{% endhighlight %}
+
+
+And here is the snippet from my ~/.starcluster/config file that ***worked***:
+{% highlight sh %}
 [key myStarClusterKey]
 KEY_LOCATION=/home/matt/.ssh/myStarClusterKey.rsa                                                                                            # You can of course have multiple keypair sections
 
@@ -238,10 +260,11 @@ KEY_LOCATION=/home/matt/.ssh/myStarClusterKey.rsa                               
 [cluster smallcluster]
 # change this to the name of one of the keypair sections defined above
 KEYNAME = myStarClusterKey
+{% endhighlight %}
 
+**An important point: The keyname needs to be the same name as the name of the key in AWS!** I thought `KEYNAME` was just a local variable that was used in the starcluster code to point to the correct [key] section in the config file. That is NOT the case! `KEYNAME` needs to be the same as the filename of the .rsa file.
 
-
-**The keyname needs to be **
+Once I changed the keyname as shown in the above example, I could then successfully start a cluster using the starcluster code following the [Starcluster Quick Start Guide][StrClstrQuickStart].
 
 [MpiBlog]: {% post_url 2015-01-27-setting-up-mpi4py %}
 [AwsAmiBlog]: {% post_url 2015-03-10-scaling-up-with-aws %}
