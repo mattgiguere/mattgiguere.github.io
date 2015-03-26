@@ -2,7 +2,7 @@
 layout: post
 title: Creating an AWS EC2 Cluster
 date:   2015-03-11 13:58:53
-tags: python, mpi4py, mcmc, aws, amazon, ec2
+tags: aws, amazon, ec2, starcluster
 ---
 
 Today I decided to scale up my MPI MCMC sampling to use more nodes.In a
