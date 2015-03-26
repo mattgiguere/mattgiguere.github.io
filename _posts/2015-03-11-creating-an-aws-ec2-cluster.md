@@ -210,7 +210,38 @@ starcluster createkey myStarClusterKey -o ~/.ssh/myStarClusterKey.rsa
 
 And looking at the **Key Pairs** under **Network & Security** on the AWS Web Interface, I could see that StarCluster generated the key properly. I updated my config file, but was still getting an error message:
 
+{% highlight sh %}
+starcluster start mycluster
+StarCluster - (http://star.mit.edu/cluster) (v. 0.95.6)
+Software Tools for Academics and Researchers (STAR)
+Please submit bug reports to starcluster@mit.edu
 
+>>> Using default cluster template: smallcluster
+>>> Validating cluster template settings...
+!!! ERROR - Cluster settings are not valid:
+!!! ERROR - Keypair 'myKey' does not exist in region 'us-east-1'
+{% endhighlight %}
+
+My problem ended up being in the name I gave the key in the ~/.starcluster/config file.
+
+[key myStarClusterKey]
+KEY_LOCATION=/home/matt/.ssh/myStarClusterKey.rsa                                                                                            # You can of course have multiple keypair sections
+
+#     $ starcluster start -c mediumcluster mycluster
+#
+# If a template is not specified then the template defined by DEFAULT_TEMPLATE
+# in the [global] section above is used. Below is the "default" template named
+# "smallcluster". You can rename it but dont forget to update the
+# DEFAULT_TEMPLATE setting in the [global] section above. See the next section
+# on defining multiple templates.
+
+[cluster smallcluster]
+# change this to the name of one of the keypair sections defined above
+KEYNAME = myStarClusterKey
+
+
+
+**The keyname needs to be **
 
 [MpiBlog]: {% post_url 2015-01-27-setting-up-mpi4py %}
 [AwsAmiBlog]: {% post_url 2015-03-10-scaling-up-with-aws %}

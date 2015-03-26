@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 25 Mar 2015 12:11:29 -0400</pubDate>
-    <lastBuildDate>Wed, 25 Mar 2015 12:11:29 -0400</lastBuildDate>
+    <pubDate>Wed, 25 Mar 2015 12:16:52 -0400</pubDate>
+    <lastBuildDate>Wed, 25 Mar 2015 12:16:52 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -881,6 +881,35 @@ command&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster createkey myStarClusterKey -o ~/.ssh/myStarClusterKey.rsa&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;And looking at the &lt;strong&gt;Key Pairs&lt;/strong&gt; under &lt;strong&gt;Network &amp;amp; Security&lt;/strong&gt; on the AWS Web Interface, I could see that StarCluster generated the key properly. I updated my config file, but was still getting an error message:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster start mycluster
+StarCluster - &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://star.mit.edu/cluster&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;v. 0.95.6&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Software Tools &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Please submit bug reports to starcluster@mit.edu
+
+&amp;gt;&amp;gt;&amp;gt; Using default cluster template: smallcluster
+&amp;gt;&amp;gt;&amp;gt; Validating cluster template settings...
+!!! ERROR - Cluster settings are not valid:
+!!! ERROR - Keypair &lt;span class=&quot;s1&quot;&gt;&amp;#39;myKey&amp;#39;&lt;/span&gt; does not exist in region &lt;span class=&quot;s1&quot;&gt;&amp;#39;us-east-1&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;My problem ended up being in the name I gave the key in the ~/.starcluster/config file.&lt;/p&gt;
+
+&lt;p&gt;[key myStarClusterKey]
+KEY_LOCATION=/home/matt/.ssh/myStarClusterKey.rsa                                                                                            # You can of course have multiple keypair sections&lt;/p&gt;
+
+&lt;h1 id=&quot;starcluster-start--c-mediumcluster-mycluster&quot;&gt;$ starcluster start -c mediumcluster mycluster&lt;/h1&gt;
+&lt;p&gt;#
+# If a template is not specified then the template defined by DEFAULT_TEMPLATE
+# in the [global] section above is used. Below is the “default” template named
+# “smallcluster”. You can rename it but dont forget to update the
+# DEFAULT_TEMPLATE setting in the [global] section above. See the next section
+# on defining multiple templates.&lt;/p&gt;
+
+&lt;p&gt;[cluster smallcluster]
+# change this to the name of one of the keypair sections defined above
+KEYNAME = myStarClusterKey&lt;/p&gt;
+
+&lt;p&gt;**The keyname needs to be **&lt;/p&gt;
 
 </description>
         <pubDate>Wed, 11 Mar 2015 09:58:53 -0400</pubDate>

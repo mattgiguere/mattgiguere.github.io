@@ -283,6 +283,35 @@ command</p>
 
 <p>And looking at the <strong>Key Pairs</strong> under <strong>Network &amp; Security</strong> on the AWS Web Interface, I could see that StarCluster generated the key properly. I updated my config file, but was still getting an error message:</p>
 
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster start mycluster
+StarCluster - <span class="o">(</span>http://star.mit.edu/cluster<span class="o">)</span> <span class="o">(</span>v. 0.95.6<span class="o">)</span>
+Software Tools <span class="k">for</span> Academics and Researchers <span class="o">(</span>STAR<span class="o">)</span>
+Please submit bug reports to starcluster@mit.edu
+
+&gt;&gt;&gt; Using default cluster template: smallcluster
+&gt;&gt;&gt; Validating cluster template settings...
+!!! ERROR - Cluster settings are not valid:
+!!! ERROR - Keypair <span class="s1">&#39;myKey&#39;</span> does not exist in region <span class="s1">&#39;us-east-1&#39;</span></code></pre></div>
+
+<p>My problem ended up being in the name I gave the key in the ~/.starcluster/config file.</p>
+
+<p>[key myStarClusterKey]
+KEY_LOCATION=/home/matt/.ssh/myStarClusterKey.rsa                                                                                            # You can of course have multiple keypair sections</p>
+
+<h1 id="starcluster-start--c-mediumcluster-mycluster">$ starcluster start -c mediumcluster mycluster</h1>
+<p>#
+# If a template is not specified then the template defined by DEFAULT_TEMPLATE
+# in the [global] section above is used. Below is the “default” template named
+# “smallcluster”. You can rename it but dont forget to update the
+# DEFAULT_TEMPLATE setting in the [global] section above. See the next section
+# on defining multiple templates.</p>
+
+<p>[cluster smallcluster]
+# change this to the name of one of the keypair sections defined above
+KEYNAME = myStarClusterKey</p>
+
+<p>**The keyname needs to be **</p>
+
 
   </article>
 
