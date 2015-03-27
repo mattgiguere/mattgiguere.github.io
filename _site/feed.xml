@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 26 Mar 2015 16:23:40 -0400</pubDate>
-    <lastBuildDate>Thu, 26 Mar 2015 16:23:40 -0400</lastBuildDate>
+    <pubDate>Fri, 27 Mar 2015 10:31:47 -0400</pubDate>
+    <lastBuildDate>Fri, 27 Mar 2015 10:31:47 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -33,11 +33,61 @@ Please submit bug reports to starcluster@mit.edu
 
 ssh: connect to host ec2-25-3-89-123.compute-1.amazonaws.com port 2234: Operation timed out&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;The solution was fairly simple. After the first failed attempt connecting to EC2, I changed the &lt;code&gt;~/.ssh/config&lt;/code&gt; file to contain a new entry for the master node:&lt;/p&gt;
+&lt;p&gt;One solution to this is to add an entry in &lt;code&gt;~/.ssh/config&lt;/code&gt; to specify the port to the master node:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;Host ec2-25-3-89-123.compute-1.amazonaws.com
    Hostname ec2-25-3-89-123.compute-1.amazonaws.com
    Port 22&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;But this means adding a new entry every time a new cluster is started! That’s not an acceptable solution.&lt;/p&gt;
+
+&lt;p&gt;I ended up changing the SSH port in &lt;code&gt;/etc/services&lt;/code&gt; &lt;em&gt;back&lt;/em&gt; to 22, and then modifying the &lt;code&gt;/System/Library/LaunchDaemons/ssh.plist&lt;/code&gt; file to a port other than 22.&lt;/p&gt;
+
+&lt;p&gt;Here’s what that looks like in OS X Yosemite:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&amp;lt;?xml &lt;span class=&quot;nv&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;?&amp;gt;
+&amp;lt;!DOCTYPE plist PUBLIC &lt;span class=&quot;s2&quot;&gt;&amp;quot;-//Apple//DTD PLIST 1.0//EN&amp;quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&amp;quot;&lt;/span&gt;&amp;gt;
+&amp;lt;plist &lt;span class=&quot;nv&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt;&amp;gt;
+&amp;lt;dict&amp;gt;
+	&amp;lt;key&amp;gt;Disabled&amp;lt;/key&amp;gt;
+	&amp;lt;&lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;/&amp;gt;
+	&amp;lt;key&amp;gt;Label&amp;lt;/key&amp;gt;
+	&amp;lt;string&amp;gt;com.openssh.sshd&amp;lt;/string&amp;gt;
+	&amp;lt;key&amp;gt;Program&amp;lt;/key&amp;gt;
+	&amp;lt;string&amp;gt;/usr/libexec/sshd-keygen-wrapper&amp;lt;/string&amp;gt;
+	&amp;lt;key&amp;gt;ProgramArguments&amp;lt;/key&amp;gt;
+	&amp;lt;array&amp;gt;
+		&amp;lt;string&amp;gt;/usr/sbin/sshd&amp;lt;/string&amp;gt;
+		&amp;lt;string&amp;gt;-i&amp;lt;/string&amp;gt;
+	&amp;lt;/array&amp;gt;
+	&amp;lt;key&amp;gt;Sockets&amp;lt;/key&amp;gt;
+	&amp;lt;dict&amp;gt;
+		&amp;lt;key&amp;gt;Listeners&amp;lt;/key&amp;gt;
+		&amp;lt;dict&amp;gt;
+			&amp;lt;key&amp;gt;SockServiceName&amp;lt;/key&amp;gt;
+			&amp;lt;string&amp;gt;2123&amp;lt;/string&amp;gt;
+			&amp;lt;key&amp;gt;Bonjour&amp;lt;/key&amp;gt;
+			&amp;lt;array&amp;gt;
+				&amp;lt;string&amp;gt;ssh&amp;lt;/string&amp;gt;
+				&amp;lt;string&amp;gt;2123&amp;lt;/string&amp;gt;
+			&amp;lt;/array&amp;gt;
+		&amp;lt;/dict&amp;gt;
+	&amp;lt;/dict&amp;gt;
+	&amp;lt;key&amp;gt;inetdCompatibility&amp;lt;/key&amp;gt;
+	&amp;lt;dict&amp;gt;
+		&amp;lt;key&amp;gt;Wait&amp;lt;/key&amp;gt;
+		&amp;lt;&lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;/&amp;gt;
+	&amp;lt;/dict&amp;gt;
+	&amp;lt;key&amp;gt;StandardErrorPath&amp;lt;/key&amp;gt;
+	&amp;lt;string&amp;gt;/dev/null&amp;lt;/string&amp;gt;
+	&amp;lt;key&amp;gt;SHAuthorizationRight&amp;lt;/key&amp;gt;
+	&amp;lt;string&amp;gt;system.preferences&amp;lt;/string&amp;gt;
+	&amp;lt;key&amp;gt;POSIXSpawnType&amp;lt;/key&amp;gt;
+	&amp;lt;string&amp;gt;Interactive&amp;lt;/string&amp;gt;
+&amp;lt;/dict&amp;gt;
+&amp;lt;/plist&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Changing the port number to 2123 in the ssh.plist makes it so that my computer only allows incoming connections to port 2123, but the default port when trying to connect to other machines is still 22. Perfect!&lt;/p&gt;
 
 &lt;h4 id=&quot;setting-up-python&quot;&gt;Setting up python&lt;/h4&gt;
 
@@ -48,8 +98,6 @@ StarCluster - &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://star.mit.edu/
 Software Tools &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 Please submit bug reports to starcluster@mit.edu
 
-keyname is: myStarClusterKey
-keypair is: KeyPair:myStarClusterKey
 The authenticity of host &lt;span class=&quot;s1&quot;&gt;&amp;#39;ec2-25-3-89-123.compute-1.amazonaws.com (25.3.89.123)&amp;#39;&lt;/span&gt; can&lt;span class=&quot;s1&quot;&gt;&amp;#39;t be established.&lt;/span&gt;
 &lt;span class=&quot;s1&quot;&gt;RSA key fingerprint is ab:ef:d8:2f:3c:78:b3:a2:a2:2c:4d:8e:3f:7e:2a:8c.&lt;/span&gt;
 &lt;span class=&quot;s1&quot;&gt;Are you sure you want to continue connecting (yes/no)? yes&lt;/span&gt;
@@ -106,7 +154,9 @@ root@master:~#&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install pandas --upgrade&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;One down side is that took about 15 minutes to execute. If you’re willing to wait 15 minutes every time you start your cluster, then that is probably the best option for you. To save some time on startup another option is to use &lt;a href=&quot;http://conda.pydata.org/miniconda.html&quot;&gt;miniconda&lt;/a&gt;, a lightweight package that only contains conda and python, and then install only the necessary dependencies. This was covered briefly in &lt;a href=&quot;/2015/03/20/better-python-coding-practices.html&quot;&gt;this post&lt;/a&gt;, where I went over better coding practices. However, I’ll go over all the relevant sections pertaining to setting up python for a cloud service with conda here too.&lt;/p&gt;
+&lt;p&gt;One down side is that it takes a little over 9 minutes to execute. If you’re willing to wait 9 minutes every time you start your cluster, then that is probably the best option for you. If not, another option is to use &lt;a href=&quot;http://conda.pydata.org/miniconda.html&quot;&gt;miniconda&lt;/a&gt;, a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in &lt;a href=&quot;/2015/03/20/better-python-coding-practices.html&quot;&gt;this post&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For now, I’m fine with waiting 9 minutes to startup the cluster. I made a script that will start up the cluster, and copy over all of the code and input data I want to use. Here’s what that script looks like:&lt;/p&gt;
 
 </description>
         <pubDate>Thu, 26 Mar 2015 08:03:55 -0400</pubDate>

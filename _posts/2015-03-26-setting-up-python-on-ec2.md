@@ -31,14 +31,66 @@ Please submit bug reports to starcluster@mit.edu
 ssh: connect to host ec2-25-3-89-123.compute-1.amazonaws.com port 2234: Operation timed out
 {% endhighlight %}
 
-
-The solution was fairly simple. After the first failed attempt connecting to EC2, I changed the `~/.ssh/config` file to contain a new entry for the master node:
+One solution to this is to add an entry in `~/.ssh/config` to specify the port to the master node:
 
 {% highlight sh %}
 Host ec2-25-3-89-123.compute-1.amazonaws.com
    Hostname ec2-25-3-89-123.compute-1.amazonaws.com
    Port 22
 {% endhighlight %}
+
+But this means adding a new entry every time a new cluster is started! That's not an acceptable solution.
+
+I ended up changing the SSH port in `/etc/services` *back* to 22, and then modifying the `/System/Library/LaunchDaemons/ssh.plist` file to a port other than 22.
+
+Here's what that looks like in OS X Yosemite:
+
+{% highlight sh %}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<true/>
+	<key>Label</key>
+	<string>com.openssh.sshd</string>
+	<key>Program</key>
+	<string>/usr/libexec/sshd-keygen-wrapper</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/sbin/sshd</string>
+		<string>-i</string>
+	</array>
+	<key>Sockets</key>
+	<dict>
+		<key>Listeners</key>
+		<dict>
+			<key>SockServiceName</key>
+			<string>2123</string>
+			<key>Bonjour</key>
+			<array>
+				<string>ssh</string>
+				<string>2123</string>
+			</array>
+		</dict>
+	</dict>
+	<key>inetdCompatibility</key>
+	<dict>
+		<key>Wait</key>
+		<false/>
+	</dict>
+	<key>StandardErrorPath</key>
+	<string>/dev/null</string>
+	<key>SHAuthorizationRight</key>
+	<string>system.preferences</string>
+	<key>POSIXSpawnType</key>
+	<string>Interactive</string>
+</dict>
+</plist>
+{% endhighlight %}
+
+
+Changing the port number to 2123 in the ssh.plist makes it so that my computer only allows incoming connections to port 2123, but the default port when trying to connect to other machines is still 22. Perfect!
 
 
 ####Setting up python
@@ -51,8 +103,6 @@ StarCluster - (http://star.mit.edu/cluster) (v. 0.95.6)
 Software Tools for Academics and Researchers (STAR)
 Please submit bug reports to starcluster@mit.edu
 
-keyname is: myStarClusterKey
-keypair is: KeyPair:myStarClusterKey
 The authenticity of host 'ec2-25-3-89-123.compute-1.amazonaws.com (25.3.89.123)' can't be established.
 RSA key fingerprint is ab:ef:d8:2f:3c:78:b3:a2:a2:2c:4d:8e:3f:7e:2a:8c.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -113,7 +163,11 @@ This is really great, but a lot of the versions listed here are dated, and the A
 pip install pandas --upgrade
 {% endhighlight %}
 
-One down side is that took about 15 minutes to execute. If you're willing to wait 15 minutes every time you start your cluster, then that is probably the best option for you. To save some time on startup another option is to use [miniconda][miniconda], a lightweight package that only contains conda and python, and then install only the necessary dependencies. This was covered briefly in [this post][bettercode], where I went over better coding practices. However, I'll go over all the relevant sections pertaining to setting up python for a cloud service with conda here too.
+One down side is that it takes a little over 9 minutes to execute. If you're willing to wait 9 minutes every time you start your cluster, then that is probably the best option for you. If not, another option is to use [miniconda][miniconda], a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in [this post][bettercode].
+
+For now, I'm fine with waiting 9 minutes to startup the cluster. I made a script that will start up the cluster, and copy over all of the code and input data I want to use. Here's what that script looks like:
+
+
 
 
 
