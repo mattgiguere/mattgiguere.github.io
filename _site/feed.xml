@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 26 Mar 2015 13:05:20 -0400</pubDate>
-    <lastBuildDate>Thu, 26 Mar 2015 13:05:20 -0400</lastBuildDate>
+    <pubDate>Thu, 26 Mar 2015 16:23:40 -0400</pubDate>
+    <lastBuildDate>Thu, 26 Mar 2015 16:23:40 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -20,9 +20,93 @@
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster start mycluster&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;p&gt;To SSH into the master node of the cluster:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster sshmaster mycluster&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The SSH port on my machine is different from the default port, and it caused some problems with starcluster.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster sshmaster mycluster
+StarCluster - &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://star.mit.edu/cluster&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;v. 0.95.6&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Software Tools &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Please submit bug reports to starcluster@mit.edu
+
+ssh: connect to host ec2-25-3-89-123.compute-1.amazonaws.com port 2234: Operation timed out&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The solution was fairly simple. After the first failed attempt connecting to EC2, I changed the &lt;code&gt;~/.ssh/config&lt;/code&gt; file to contain a new entry for the master node:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;Host ec2-25-3-89-123.compute-1.amazonaws.com
+   Hostname ec2-25-3-89-123.compute-1.amazonaws.com
+   Port 22&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 &lt;h4 id=&quot;setting-up-python&quot;&gt;Setting up python&lt;/h4&gt;
 
-&lt;p&gt;Next, we want to get python installed on our cluster. The easiest and fastest way to do this is to use &lt;a href=&quot;http://conda.pydata.org/miniconda.html&quot;&gt;miniconda&lt;/a&gt;, a lightweight package that only contains conda and python, and then install only the needed dependencies. This was covered briefly in &lt;a href=&quot;/2015/03/20/better-python-coding-practices.html&quot;&gt;this post&lt;/a&gt;, where I went over better coding practices. However, I’ll go over all the relevant sections pertaining to setting up python for a cloud service with conda here too.&lt;/p&gt;
+&lt;p&gt;Next, we want to get the proper version of python installed on our cluster. The instances that come with starcluster by default have a ton of useful tools already built in. Immediately after SSHing into the master node, the available tools are listed:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster sshmaster mycluster
+StarCluster - &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://star.mit.edu/cluster&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;v. 0.95.6&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Software Tools &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Please submit bug reports to starcluster@mit.edu
+
+keyname is: myStarClusterKey
+keypair is: KeyPair:myStarClusterKey
+The authenticity of host &lt;span class=&quot;s1&quot;&gt;&amp;#39;ec2-25-3-89-123.compute-1.amazonaws.com (25.3.89.123)&amp;#39;&lt;/span&gt; can&lt;span class=&quot;s1&quot;&gt;&amp;#39;t be established.&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;RSA key fingerprint is ab:ef:d8:2f:3c:78:b3:a2:a2:2c:4d:8e:3f:7e:2a:8c.&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;Are you sure you want to continue connecting (yes/no)? yes&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;Warning: Permanently added &amp;#39;&lt;/span&gt;ec2-25-3-89-123.compute-1.amazonaws.com,25.3.89.123&lt;span class=&quot;s1&quot;&gt;&amp;#39; (RSA) to the list of known hosts.&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;          _                 _           _&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;__/\_____| |_ __ _ _ __ ___| |_   _ ___| |_ ___ _ __&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;\    / __| __/ _` | &amp;#39;&lt;/span&gt;__/ __&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; / __&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; __/ _ &lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;__|&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;/_  _\__ \ || (_| | | | (__| | |_| \__ \ ||  __/ |&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  \/ |___/\__\__,_|_|  \___|_|\__,_|___/\__\___|_|&lt;/span&gt;
+
+&lt;span class=&quot;s1&quot;&gt;StarCluster Ubuntu 13.04 AMI&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;Software Tools for Academics and Researchers (STAR)&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;Homepage: http://star.mit.edu/cluster&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;Documentation: http://star.mit.edu/cluster/docs/latest&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;Code: https://github.com/jtriley/StarCluster&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;Mailing list: http://star.mit.edu/cluster/mailinglist.html&lt;/span&gt;
+
+&lt;span class=&quot;s1&quot;&gt;This AMI Contains:&lt;/span&gt;
+
+&lt;span class=&quot;s1&quot;&gt;  * NVIDIA Driver 331.38&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  * NVIDIA CUDA Toolkit 5.5.22&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  * PyCuda 2013.1.1 and PyOpenCL 2013.2&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  * MAGMA 1.4.1&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  * Intel Ethernet Driver 2.11.3 (ixgbevf)&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  * Open Grid Scheduler (OGS - formerly SGE) queuing system&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  * Condor workload management system&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  * OpenMPI compiled with Open Grid Scheduler support&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  * OpenBLAS - Highly optimized Basic Linear Algebra Routines&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  * NumPy/SciPy linked against OpenBlas&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  * Pandas - Data Analysis Library&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  * IPython 1.1.0 with parallel and notebook support&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  * Julia 0.3pre&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;  * and more! (use &amp;#39;&lt;/span&gt;dpkg -l&lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt; to show all installed packages&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+Open Grid Scheduler/Condor cheat sheet:
+
+  * qstat/condor_q - show status of batch &lt;span class=&quot;nb&quot;&gt;jobs&lt;/span&gt;
+  * qhost/condor_status- show status of hosts, queues, and &lt;span class=&quot;nb&quot;&gt;jobs&lt;/span&gt;
+  * qsub/condor_submit - submit batch &lt;span class=&quot;nb&quot;&gt;jobs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;e.g. qsub -cwd ./job.sh&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+  * qdel/condor_rm - delete batch &lt;span class=&quot;nb&quot;&gt;jobs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;e.g. qdel 7&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+  * qconf - configure Open Grid Scheduler system
+
+Current System Stats:
+
+  System load:  0.0               Processes:           94
+  Usage of /:   63.3% of 7.74GB   Users logged in:     0
+  Memory usage: 11%               IP address &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; eth0: 123.45.6.78
+  Swap usage:   0%
+
+    https://landscape.canonical.com/
+root@master:~#&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This is really great, but a lot of the versions listed here are dated, and the APIs have changed considerably. One option is to upgrade some of these libraries with pip:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install pandas --upgrade&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;One down side is that took about 15 minutes to execute. If you’re willing to wait 15 minutes every time you start your cluster, then that is probably the best option for you. To save some time on startup another option is to use &lt;a href=&quot;http://conda.pydata.org/miniconda.html&quot;&gt;miniconda&lt;/a&gt;, a lightweight package that only contains conda and python, and then install only the necessary dependencies. This was covered briefly in &lt;a href=&quot;/2015/03/20/better-python-coding-practices.html&quot;&gt;this post&lt;/a&gt;, where I went over better coding practices. However, I’ll go over all the relevant sections pertaining to setting up python for a cloud service with conda here too.&lt;/p&gt;
 
 </description>
         <pubDate>Thu, 26 Mar 2015 08:03:55 -0400</pubDate>

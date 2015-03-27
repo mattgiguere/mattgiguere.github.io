@@ -81,9 +81,93 @@
 
 <div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster start mycluster</code></pre></div>
 
+<p>To SSH into the master node of the cluster:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster sshmaster mycluster</code></pre></div>
+
+<p>The SSH port on my machine is different from the default port, and it caused some problems with starcluster.</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster sshmaster mycluster
+StarCluster - <span class="o">(</span>http://star.mit.edu/cluster<span class="o">)</span> <span class="o">(</span>v. 0.95.6<span class="o">)</span>
+Software Tools <span class="k">for</span> Academics and Researchers <span class="o">(</span>STAR<span class="o">)</span>
+Please submit bug reports to starcluster@mit.edu
+
+ssh: connect to host ec2-25-3-89-123.compute-1.amazonaws.com port 2234: Operation timed out</code></pre></div>
+
+<p>The solution was fairly simple. After the first failed attempt connecting to EC2, I changed the <code>~/.ssh/config</code> file to contain a new entry for the master node:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">Host ec2-25-3-89-123.compute-1.amazonaws.com
+   Hostname ec2-25-3-89-123.compute-1.amazonaws.com
+   Port 22</code></pre></div>
+
 <h4 id="setting-up-python">Setting up python</h4>
 
-<p>Next, we want to get python installed on our cluster. The easiest and fastest way to do this is to use <a href="http://conda.pydata.org/miniconda.html">miniconda</a>, a lightweight package that only contains conda and python, and then install only the needed dependencies. This was covered briefly in <a href="/2015/03/20/better-python-coding-practices.html">this post</a>, where I went over better coding practices. However, I’ll go over all the relevant sections pertaining to setting up python for a cloud service with conda here too.</p>
+<p>Next, we want to get the proper version of python installed on our cluster. The instances that come with starcluster by default have a ton of useful tools already built in. Immediately after SSHing into the master node, the available tools are listed:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster sshmaster mycluster
+StarCluster - <span class="o">(</span>http://star.mit.edu/cluster<span class="o">)</span> <span class="o">(</span>v. 0.95.6<span class="o">)</span>
+Software Tools <span class="k">for</span> Academics and Researchers <span class="o">(</span>STAR<span class="o">)</span>
+Please submit bug reports to starcluster@mit.edu
+
+keyname is: myStarClusterKey
+keypair is: KeyPair:myStarClusterKey
+The authenticity of host <span class="s1">&#39;ec2-25-3-89-123.compute-1.amazonaws.com (25.3.89.123)&#39;</span> can<span class="s1">&#39;t be established.</span>
+<span class="s1">RSA key fingerprint is ab:ef:d8:2f:3c:78:b3:a2:a2:2c:4d:8e:3f:7e:2a:8c.</span>
+<span class="s1">Are you sure you want to continue connecting (yes/no)? yes</span>
+<span class="s1">Warning: Permanently added &#39;</span>ec2-25-3-89-123.compute-1.amazonaws.com,25.3.89.123<span class="s1">&#39; (RSA) to the list of known hosts.</span>
+<span class="s1">          _                 _           _</span>
+<span class="s1">__/\_____| |_ __ _ _ __ ___| |_   _ ___| |_ ___ _ __</span>
+<span class="s1">\    / __| __/ _` | &#39;</span>__/ __<span class="p">|</span> <span class="p">|</span> <span class="p">|</span> <span class="p">|</span> / __<span class="p">|</span> __/ _ <span class="se">\ </span><span class="s1">&#39;__|</span>
+<span class="s1">/_  _\__ \ || (_| | | | (__| | |_| \__ \ ||  __/ |</span>
+<span class="s1">  \/ |___/\__\__,_|_|  \___|_|\__,_|___/\__\___|_|</span>
+
+<span class="s1">StarCluster Ubuntu 13.04 AMI</span>
+<span class="s1">Software Tools for Academics and Researchers (STAR)</span>
+<span class="s1">Homepage: http://star.mit.edu/cluster</span>
+<span class="s1">Documentation: http://star.mit.edu/cluster/docs/latest</span>
+<span class="s1">Code: https://github.com/jtriley/StarCluster</span>
+<span class="s1">Mailing list: http://star.mit.edu/cluster/mailinglist.html</span>
+
+<span class="s1">This AMI Contains:</span>
+
+<span class="s1">  * NVIDIA Driver 331.38</span>
+<span class="s1">  * NVIDIA CUDA Toolkit 5.5.22</span>
+<span class="s1">  * PyCuda 2013.1.1 and PyOpenCL 2013.2</span>
+<span class="s1">  * MAGMA 1.4.1</span>
+<span class="s1">  * Intel Ethernet Driver 2.11.3 (ixgbevf)</span>
+<span class="s1">  * Open Grid Scheduler (OGS - formerly SGE) queuing system</span>
+<span class="s1">  * Condor workload management system</span>
+<span class="s1">  * OpenMPI compiled with Open Grid Scheduler support</span>
+<span class="s1">  * OpenBLAS - Highly optimized Basic Linear Algebra Routines</span>
+<span class="s1">  * NumPy/SciPy linked against OpenBlas</span>
+<span class="s1">  * Pandas - Data Analysis Library</span>
+<span class="s1">  * IPython 1.1.0 with parallel and notebook support</span>
+<span class="s1">  * Julia 0.3pre</span>
+<span class="s1">  * and more! (use &#39;</span>dpkg -l<span class="err">&#39;</span> to show all installed packages<span class="o">)</span>
+
+Open Grid Scheduler/Condor cheat sheet:
+
+  * qstat/condor_q - show status of batch <span class="nb">jobs</span>
+  * qhost/condor_status- show status of hosts, queues, and <span class="nb">jobs</span>
+  * qsub/condor_submit - submit batch <span class="nb">jobs</span> <span class="o">(</span>e.g. qsub -cwd ./job.sh<span class="o">)</span>
+  * qdel/condor_rm - delete batch <span class="nb">jobs</span> <span class="o">(</span>e.g. qdel 7<span class="o">)</span>
+  * qconf - configure Open Grid Scheduler system
+
+Current System Stats:
+
+  System load:  0.0               Processes:           94
+  Usage of /:   63.3% of 7.74GB   Users logged in:     0
+  Memory usage: 11%               IP address <span class="k">for</span> eth0: 123.45.6.78
+  Swap usage:   0%
+
+    https://landscape.canonical.com/
+root@master:~#</code></pre></div>
+
+<p>This is really great, but a lot of the versions listed here are dated, and the APIs have changed considerably. One option is to upgrade some of these libraries with pip:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">pip install pandas --upgrade</code></pre></div>
+
+<p>One down side is that took about 15 minutes to execute. If you’re willing to wait 15 minutes every time you start your cluster, then that is probably the best option for you. To save some time on startup another option is to use <a href="http://conda.pydata.org/miniconda.html">miniconda</a>, a lightweight package that only contains conda and python, and then install only the necessary dependencies. This was covered briefly in <a href="/2015/03/20/better-python-coding-practices.html">this post</a>, where I went over better coding practices. However, I’ll go over all the relevant sections pertaining to setting up python for a cloud service with conda here too.</p>
 
 
   </article>
