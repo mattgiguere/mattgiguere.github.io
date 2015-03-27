@@ -73,7 +73,7 @@
   </header>
 
   <article class="post-content">
-    <p>In a <a href="/2015/03/11/creating-an-aws-ec2-cluster.html">previous post</a>, I described how to setup a cluster using the Amazon EC2 service and the starcluster package. In this post I will describe getting Python and MPI up and running on a <a href="http://star.mit.edu/cluster">Starcluster</a> cluster instance on Amazon EC2.</p>
+    <p>In a <a href="/2015/03/11/creating-an-aws-ec2-cluster.html">previous post</a>, I described how to setup a cluster using the Amazon EC2 service and the starcluster package. In this post I will describe getting Python code up and running on a <a href="http://star.mit.edu/cluster">Starcluster</a> cluster instance on Amazon EC2 with MPI.</p>
 
 <h4 id="starting-up-the-cluster">Starting up the cluster</h4>
 
@@ -218,6 +218,62 @@ root@master:~#</code></pre></div>
 <p>One down side is that it takes a little over 9 minutes to execute. If you’re willing to wait 9 minutes every time you start your cluster, then that is probably the best option for you. If not, another option is to use <a href="http://conda.pydata.org/miniconda.html">miniconda</a>, a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in <a href="/2015/03/20/better-python-coding-practices.html">this post</a>.</p>
 
 <p>For now, I’m fine with waiting 9 minutes to startup the cluster. I made a script that will start up the cluster, and copy over all of the code and input data I want to use. Here’s what that script looks like:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#!/usr/bin/env bash</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;Starting cluster...&quot;</span>
+starcluster start mycluster
+
+<span class="nb">echo</span> <span class="s2">&quot;Now upgrading pandas and numexpr...&quot;</span>
+<span class="c">#upgrade numpy and pandas:</span>
+starcluster sshmaster mycluster <span class="s1">&#39;pip install pandas --upgrade&#39;</span>
+starcluster sshmaster mycluster <span class="s1">&#39;pip install numexpr --upgrade&#39;</span>
+
+<span class="c">#install dependencies:</span>
+starcluster sshmaster mycluster <span class="s1">&#39;pip install emcee&#39;</span>
+
+<span class="c">#append my projects directory to the Python path:</span>
+starcluster sshmaster mycluster <span class="s1">&#39;echo &quot; &quot; &gt;&gt; .bashrc&#39;</span>
+starcluster sshmaster mycluster <span class="s1">&#39;echo &quot;#Add my projects dir to python path:&quot; &gt;&gt; .bashrc&#39;</span>
+starcluster sshmaster mycluster <span class="s1">&#39;echo &quot;export PYTHONPATH=/root/projects:\$PYTHONPATH&quot; &gt;&gt; .bashrc&#39;</span>
+
+<span class="c">#add directories and copy over code:</span>
+<span class="nb">echo</span> <span class="s2">&quot;Creating projects directory...&quot;</span>
+starcluster sshmaster mycluster mkdir projects
+<span class="nb">echo</span> <span class="s2">&quot;Creating MOST directory...&quot;</span>
+starcluster sshmaster mycluster mkdir projects/MOST
+<span class="nb">echo</span> <span class="s2">&quot;Copying over module files...&quot;</span>
+starcluster put mycluster /home/matt/projects/MOST/__init__.py projects/MOST/
+starcluster put mycluster /home/matt/projects/MOST/setup.py projects/MOST/
+<span class="nb">echo</span> <span class="s2">&quot;Creating code directory...&quot;</span>
+starcluster sshmaster mycluster mkdir projects/MOST/code
+<span class="nb">echo</span> <span class="s2">&quot;Copying over the code...&quot;</span>
+starcluster put mycluster /home/matt/projects/MOST/code projects/MOST/
+
+
+<span class="c">#now add the data directories and input data:</span>
+<span class="nb">echo</span> <span class="s2">&quot;Creating data directories...&quot;</span>
+starcluster sshmaster mycluster mkdir projects/MOST/data
+starcluster sshmaster mycluster mkdir projects/MOST/data/chiron
+starcluster sshmaster mycluster mkdir projects/MOST/data/most
+starcluster sshmaster mycluster mkdir projects/MOST/data/MCMC
+<span class="nb">echo</span> <span class="s2">&quot;Copying over CHIRON data...&quot;</span>
+starcluster put mycluster /home/matt/projects/MOST/data/chiron/epsEriChironSepDec2014.txt projects/MOST/data/chiron/
+<span class="nb">echo</span> <span class="s2">&quot;Copying over MOST data...&quot;</span>
+starcluster put mycluster /home/matt/projects/MOST/data/most/epsEriMostFullRedResamp.txt projects/MOST/data/most/
+
+<span class="c">#now run the job</span>
+starcluster sshmaster mycluster <span class="s1">&#39;cd projects/MOST/code; qsub -cwd -pe orte 4 ./evol_starcluster_qsub_test.sh&#39;</span>
+
+starcluster sshmaster mycluster <span class="s1">&#39;qstat&#39;</span></code></pre></div>
+
+<p>In the line that I use to run the job, I change directories into the directory with my code, and then call on qsub to execute my routine. The -cwd option tells qsub to start the code from the current working directory, and the -pe orte 4 tells it to use the orte parallel environment with 4 cores. The contents of <code>evol_starcluster_qsub_test.sh</code> are just the program to be executed with MPI.</p>
+
+<p>Contents of evol_starcluster_qsub_test.sh:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#!/bin/bash</span>
+
+mpiexec python eeTwoSptParTmpDfRtEvol.py <span class="m">3</span> <span class="m">90</span> <span class="m">100</span> --thin 2</code></pre></div>
 
 
   </article>

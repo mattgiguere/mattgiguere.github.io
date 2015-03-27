@@ -5,7 +5,7 @@ date:   2015-03-26 12:03:55
 tags: python, mpi4py, mcmc, aws, amazon, ec2, starcluster
 ---
 
-In a [previous post][AwsStarclusterBlog], I described how to setup a cluster using the Amazon EC2 service and the starcluster package. In this post I will describe getting Python and MPI up and running on a [Starcluster][StrClstr] cluster instance on Amazon EC2.
+In a [previous post][AwsStarclusterBlog], I described how to setup a cluster using the Amazon EC2 service and the starcluster package. In this post I will describe getting Python code up and running on a [Starcluster][StrClstr] cluster instance on Amazon EC2 with MPI.
 
 ####Starting up the cluster
 
@@ -167,7 +167,64 @@ One down side is that it takes a little over 9 minutes to execute. If you're wil
 
 For now, I'm fine with waiting 9 minutes to startup the cluster. I made a script that will start up the cluster, and copy over all of the code and input data I want to use. Here's what that script looks like:
 
+{% highlight sh %}
+#!/usr/bin/env bash
 
+echo "Starting cluster..."
+starcluster start mycluster
+
+echo "Now upgrading pandas and numexpr..."
+#upgrade numpy and pandas:
+starcluster sshmaster mycluster 'pip install pandas --upgrade'
+starcluster sshmaster mycluster 'pip install numexpr --upgrade'
+
+#install dependencies:
+starcluster sshmaster mycluster 'pip install emcee'
+
+#append my projects directory to the Python path:
+starcluster sshmaster mycluster 'echo " " >> .bashrc'
+starcluster sshmaster mycluster 'echo "#Add my projects dir to python path:" >> .bashrc'
+starcluster sshmaster mycluster 'echo "export PYTHONPATH=/root/projects:\$PYTHONPATH" >> .bashrc'
+
+#add directories and copy over code:
+echo "Creating projects directory..."
+starcluster sshmaster mycluster mkdir projects
+echo "Creating MOST directory..."
+starcluster sshmaster mycluster mkdir projects/MOST
+echo "Copying over module files..."
+starcluster put mycluster /home/matt/projects/MOST/__init__.py projects/MOST/
+starcluster put mycluster /home/matt/projects/MOST/setup.py projects/MOST/
+echo "Creating code directory..."
+starcluster sshmaster mycluster mkdir projects/MOST/code
+echo "Copying over the code..."
+starcluster put mycluster /home/matt/projects/MOST/code projects/MOST/
+
+
+#now add the data directories and input data:
+echo "Creating data directories..."
+starcluster sshmaster mycluster mkdir projects/MOST/data
+starcluster sshmaster mycluster mkdir projects/MOST/data/chiron
+starcluster sshmaster mycluster mkdir projects/MOST/data/most
+starcluster sshmaster mycluster mkdir projects/MOST/data/MCMC
+echo "Copying over CHIRON data..."
+starcluster put mycluster /home/matt/projects/MOST/data/chiron/epsEriChironSepDec2014.txt projects/MOST/data/chiron/
+echo "Copying over MOST data..."
+starcluster put mycluster /home/matt/projects/MOST/data/most/epsEriMostFullRedResamp.txt projects/MOST/data/most/
+
+#now run the job
+starcluster sshmaster mycluster 'cd projects/MOST/code; qsub -cwd -pe orte 4 ./evol_starcluster_qsub_test.sh'
+
+starcluster sshmaster mycluster 'qstat'
+{% endhighlight %}
+
+In the line that I use to run the job, I change directories into the directory with my code, and then call on qsub to execute my routine. The -cwd option tells qsub to start the code from the current working directory, and the -pe orte 4 tells it to use the orte parallel environment with 4 cores. The contents of `evol_starcluster_qsub_test.sh` are just the program to be executed with MPI.
+
+Contents of evol_starcluster_qsub_test.sh:
+{% highlight sh %}
+#!/bin/bash
+
+mpiexec python eeTwoSptParTmpDfRtEvol.py 3 90 100 --thin 2
+{% endhighlight %}
 
 
 
