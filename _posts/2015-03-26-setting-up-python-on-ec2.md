@@ -92,7 +92,6 @@ Here's what that looks like in OS X Yosemite:
 
 Changing the port number to 2123 in the ssh.plist makes it so that my computer only allows incoming connections to port 2123, but the default port when trying to connect to other machines is still 22. Perfect!
 
-
 ####Setting up python
 
 Next, we want to get the proper version of python installed on our cluster. The instances that come with starcluster by default have a ton of useful tools already built in. Immediately after SSHing into the master node, the available tools are listed:
@@ -226,6 +225,19 @@ Contents of evol_starcluster_qsub_test.sh:
 mpiexec python eeTwoSptParTmpDfRtEvol.py 3 90 100 --thin 2
 {% endhighlight %}
 
+When running this script, user interaction is still required at one point. When SSHing into the master node for the first time, SSH will ask to confirm the identity of the machine:
+
+{% highlight %}
+The authenticity of host 'ec2-22-3-444-55.compute-1.amazonaws.com (22.3.44.55)' can't be established.
+RSA key fingerprint is 12:34:56:78:90:aa:bb:cc:dd:ee:ff:11::22:33:44.
+Are you sure you want to continue connecting (yes/no)? yes
+{% endhighlight %}
+
+If you want to skip that, you can add the following to your `~/.ssh/config` file:
+
+{% highlight sh %}
+StrictHostKeyChecking no
+{% endhighlight %}
 
 
 

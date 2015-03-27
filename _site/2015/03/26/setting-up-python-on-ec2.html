@@ -275,6 +275,16 @@ starcluster sshmaster mycluster <span class="s1">&#39;qstat&#39;</span></code></
 
 mpiexec python eeTwoSptParTmpDfRtEvol.py <span class="m">3</span> <span class="m">90</span> <span class="m">100</span> --thin 2</code></pre></div>
 
+<p>When running this script, user interaction is still required at one point. When SSHing into the master node for the first time, SSH will ask to confirm the identity of the machine:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">The authenticity of host <span class="s1">&#39;ec2-22-3-444-55.compute-1.amazonaws.com (22.3.44.55)&#39;</span> can<span class="err">&#39;</span>t be established.
+RSA key fingerprint is 12:34:56:78:90:aa:bb:cc:dd:ee:ff:11::22:33:44.
+Are you sure you want to <span class="k">continue</span> connecting <span class="o">(</span>yes/no<span class="o">)</span>? yes</code></pre></div>
+
+<p>If you want to skip that, you can add the following to your <code>~/.ssh/config</code> file:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">StrictHostKeyChecking no</code></pre></div>
+
 
   </article>
 
