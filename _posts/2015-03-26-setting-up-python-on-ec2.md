@@ -227,7 +227,7 @@ mpiexec python eeTwoSptParTmpDfRtEvol.py 3 90 100 --thin 2
 
 When running this script, user interaction is still required at one point. When SSHing into the master node for the first time, SSH will ask to confirm the identity of the machine:
 
-{% highlight %}
+{% highlight sh %}
 The authenticity of host 'ec2-22-3-444-55.compute-1.amazonaws.com (22.3.44.55)' can't be established.
 RSA key fingerprint is 12:34:56:78:90:aa:bb:cc:dd:ee:ff:11::22:33:44.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -238,7 +238,6 @@ If you want to skip that, you can add the following to your `~/.ssh/config` file
 {% highlight sh %}
 StrictHostKeyChecking no
 {% endhighlight %}
-
 
 
 [AwsStarclusterBlog]: {% post_url 2015-03-11-creating-an-aws-ec2-cluster %}
