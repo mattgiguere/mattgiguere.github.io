@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 27 Mar 2015 15:43:44 -0400</pubDate>
-    <lastBuildDate>Fri, 27 Mar 2015 15:43:44 -0400</lastBuildDate>
+    <pubDate>Fri, 27 Mar 2015 17:10:05 -0400</pubDate>
+    <lastBuildDate>Fri, 27 Mar 2015 17:10:05 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -152,11 +152,24 @@ root@master:~#&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This is really great, but a lot of the versions listed here are dated, and the APIs have changed considerably. One option is to upgrade some of these libraries with pip:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install pandas --upgrade&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install pandas --upgrade
+pip install numexpr --upgrade&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;One down side is that it takes a little over 9 minutes to execute. If you’re willing to wait 9 minutes every time you start your cluster, then that is probably the best option for you. If not, another option is to use &lt;a href=&quot;http://conda.pydata.org/miniconda.html&quot;&gt;miniconda&lt;/a&gt;, a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in &lt;a href=&quot;/2015/03/20/better-python-coding-practices.html&quot;&gt;this post&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;One down side of simply upgrading the dependencies is that it takes ten minutes to execute. If you do not want to wait ten minutes every time you start up a cluster, another option is to use &lt;a href=&quot;http://conda.pydata.org/miniconda.html&quot;&gt;miniconda&lt;/a&gt;, a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in &lt;a href=&quot;/2015/03/20/better-python-coding-practices.html&quot;&gt;this post&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;For now, I’m fine with waiting 9 minutes to startup the cluster. I made a script that will start up the cluster, and copy over all of the code and input data I want to use. Here’s what that script looks like:&lt;/p&gt;
+&lt;p&gt;For now, I’m fine with waiting ten minutes to startup the cluster.&lt;/p&gt;
+
+&lt;h3 id=&quot;running-mpi-on-the-starcluster&quot;&gt;Running MPI on the starcluster&lt;/h3&gt;
+
+&lt;p&gt;Looking at the starcluster &lt;a href=&quot;http://star.mit.edu/cluster/docs/latest/manual/getting_started.html#compile-and-run-a-hello-world-openmpi-program&quot;&gt;Compile and run a “Hello World” OpenMPI program example&lt;/a&gt;, it looks like we need to run things as sgeadmin in order to use MPI. Indeed, when I tried running things as root, I got error message saying it couldn’t access things in the root directory:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;qrsh_starter: cannot change to directory /root/projects&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The /root directory only exists on the master node. We need to run our code from somewhere in the /home directory, since that’s the directory that is NFS mounted to all the nodes. This may also mean that upgrading pandas and numexpr only worked for the master node. &lt;/p&gt;
+
+&lt;h3 id=&quot;putting-it-all-together&quot;&gt;Putting it all together&lt;/h3&gt;
+
+&lt;p&gt;I made a script that will start up the cluster, and copy over all of the code and input data I want to use, then start an MPI job. Here’s what that script looks like:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env bash&lt;/span&gt;
 

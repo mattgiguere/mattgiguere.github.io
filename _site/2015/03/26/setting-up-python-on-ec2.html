@@ -213,11 +213,24 @@ root@master:~#</code></pre></div>
 
 <p>This is really great, but a lot of the versions listed here are dated, and the APIs have changed considerably. One option is to upgrade some of these libraries with pip:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">pip install pandas --upgrade</code></pre></div>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">pip install pandas --upgrade
+pip install numexpr --upgrade</code></pre></div>
 
-<p>One down side is that it takes a little over 9 minutes to execute. If you’re willing to wait 9 minutes every time you start your cluster, then that is probably the best option for you. If not, another option is to use <a href="http://conda.pydata.org/miniconda.html">miniconda</a>, a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in <a href="/2015/03/20/better-python-coding-practices.html">this post</a>.</p>
+<p>One down side of simply upgrading the dependencies is that it takes ten minutes to execute. If you do not want to wait ten minutes every time you start up a cluster, another option is to use <a href="http://conda.pydata.org/miniconda.html">miniconda</a>, a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in <a href="/2015/03/20/better-python-coding-practices.html">this post</a>.</p>
 
-<p>For now, I’m fine with waiting 9 minutes to startup the cluster. I made a script that will start up the cluster, and copy over all of the code and input data I want to use. Here’s what that script looks like:</p>
+<p>For now, I’m fine with waiting ten minutes to startup the cluster.</p>
+
+<h3 id="running-mpi-on-the-starcluster">Running MPI on the starcluster</h3>
+
+<p>Looking at the starcluster <a href="http://star.mit.edu/cluster/docs/latest/manual/getting_started.html#compile-and-run-a-hello-world-openmpi-program">Compile and run a “Hello World” OpenMPI program example</a>, it looks like we need to run things as sgeadmin in order to use MPI. Indeed, when I tried running things as root, I got error message saying it couldn’t access things in the root directory:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">qrsh_starter: cannot change to directory /root/projects</code></pre></div>
+
+<p>The /root directory only exists on the master node. We need to run our code from somewhere in the /home directory, since that’s the directory that is NFS mounted to all the nodes. This may also mean that upgrading pandas and numexpr only worked for the master node. </p>
+
+<h3 id="putting-it-all-together">Putting it all together</h3>
+
+<p>I made a script that will start up the cluster, and copy over all of the code and input data I want to use, then start an MPI job. Here’s what that script looks like:</p>
 
 <div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#!/usr/bin/env bash</span>
 

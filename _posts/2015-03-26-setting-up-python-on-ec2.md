@@ -160,11 +160,27 @@ This is really great, but a lot of the versions listed here are dated, and the A
 
 {% highlight sh %}
 pip install pandas --upgrade
+pip install numexpr --upgrade
 {% endhighlight %}
 
-One down side is that it takes a little over 9 minutes to execute. If you're willing to wait 9 minutes every time you start your cluster, then that is probably the best option for you. If not, another option is to use [miniconda][miniconda], a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in [this post][bettercode].
+One down side of simply upgrading the dependencies is that it takes ten minutes to execute. If you do not want to wait ten minutes every time you start up a cluster, another option is to use [miniconda][miniconda], a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in [this post][bettercode].
 
-For now, I'm fine with waiting 9 minutes to startup the cluster. I made a script that will start up the cluster, and copy over all of the code and input data I want to use. Here's what that script looks like:
+For now, I'm fine with waiting ten minutes to startup the cluster.
+
+###Running MPI on the starcluster
+
+Looking at the starcluster [Compile and run a "Hello World" OpenMPI program example][MpiHeWo], it looks like we need to run things as sgeadmin in order to use MPI. Indeed, when I tried running things as root, I got error message saying it couldn't access things in the root directory:
+
+{% highlight sh %}
+qrsh_starter: cannot change to directory /root/projects
+{% endhighlight %}
+
+The /root directory only exists on the master node. We need to run our code from somewhere in the /home directory, since that's the directory that is NFS mounted to all the nodes. This may also mean that upgrading pandas and numexpr only worked for the master node. 
+
+
+###Putting it all together
+
+I made a script that will start up the cluster, and copy over all of the code and input data I want to use, then start an MPI job. Here's what that script looks like:
 
 {% highlight sh %}
 #!/usr/bin/env bash
@@ -244,3 +260,4 @@ StrictHostKeyChecking no
 [StrClstr]: http://star.mit.edu/cluster
 [miniconda]: http://conda.pydata.org/miniconda.html
 [bettercode]: {% post_url 2015-03-20-better-python-coding-practices %}
+[MpiHeWo]: http://star.mit.edu/cluster/docs/latest/manual/getting_started.html#compile-and-run-a-hello-world-openmpi-program
