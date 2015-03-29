@@ -216,9 +216,20 @@ root@master:~#</code></pre></div>
 <div class="highlight"><pre><code class="language-sh" data-lang="sh">pip install pandas --upgrade
 pip install numexpr --upgrade</code></pre></div>
 
-<p>One down side of simply upgrading the dependencies is that it takes ten minutes to execute. If you do not want to wait ten minutes every time you start up a cluster, another option is to use <a href="http://conda.pydata.org/miniconda.html">miniconda</a>, a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in <a href="/2015/03/20/better-python-coding-practices.html">this post</a>.</p>
+<p>One down side of simply upgrading the dependencies is that it takes a while — it took me 10 minutes and 7 seconds to start up a cluster and upgrade numpy and pandas. If you do not want to wait ten minutes every time you start up a cluster, another option is to use <a href="http://conda.pydata.org/miniconda.html">miniconda</a>, a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in <a href="/2015/03/20/better-python-coding-practices.html">this post</a>.</p>
 
-<p>For now, I’m fine with waiting ten minutes to startup the cluster.</p>
+<p>When I switched from the version of python that comes built in with starcluster to miniconda, the total time to start up a cluster dropped from 10m7s to 4m57s. Switching to miniconda is not difficult; just type the following three lines once your cluster is started up and you have SSHed into the master node:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">cd</span> /home/sgeadmin<span class="p">;</span> wget http://repo.continuum.io/miniconda/Miniconda-3.9.1-Linux-x86_64.sh -O miniconda.sh<span class="p">;</span> bash miniconda.sh -b -p /home/sgeadmin/miniconda
+<span class="nb">echo</span> <span class="s2">&quot;export PATH=/home/sgeadmin/miniconda/bin:\$PATH&quot;</span> &gt;&gt; .bashrc<span class="p">;</span> <span class="nb">hash</span> -r
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/home/sgeadmin/miniconda/bin:<span class="nv">$PATH</span><span class="p">;</span> conda config --set always_yes yes --set changeps1 no</code></pre></div>
+
+<p>And then installing numpy and pandas is much faster than upgrading the starcluster version:</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">conda install numpy
+conda install pandas</code></pre></div>
+
+<p>I create a starcluster startup script that sets up my environment, uploads all my coda and input data to the cluster, updates and installs all python dependencies, and then submits the MPI job. See the end of this post for the script.</p>
 
 <h3 id="running-mpi-on-the-starcluster">Running MPI on the starcluster</h3>
 
@@ -226,7 +237,7 @@ pip install numexpr --upgrade</code></pre></div>
 
 <div class="highlight"><pre><code class="language-sh" data-lang="sh">qrsh_starter: cannot change to directory /root/projects</code></pre></div>
 
-<p>The /root directory only exists on the master node. We need to run our code from somewhere in the /home directory, since that’s the directory that is NFS mounted to all the nodes. This may also mean that upgrading pandas and numexpr only worked for the master node. </p>
+<p>The /root directory only exists on the master node. We need to run our code from somewhere in the /home directory, since that’s the directory that is NFS mounted to all the nodes. This may also mean that upgrading pandas and numexpr only worked for the master node.</p>
 
 <h3 id="putting-it-all-together">Putting it all together</h3>
 

@@ -163,9 +163,25 @@ pip install pandas --upgrade
 pip install numexpr --upgrade
 {% endhighlight %}
 
-One down side of simply upgrading the dependencies is that it takes ten minutes to execute. If you do not want to wait ten minutes every time you start up a cluster, another option is to use [miniconda][miniconda], a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in [this post][bettercode].
+One down side of simply upgrading the dependencies is that it takes a while --- it took me 10 minutes and 7 seconds to start up a cluster and upgrade numpy and pandas. If you do not want to wait ten minutes every time you start up a cluster, another option is to use [miniconda][miniconda], a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in [this post][bettercode].
 
-For now, I'm fine with waiting ten minutes to startup the cluster.
+When I switched from the version of python that comes built in with starcluster to miniconda, the total time to start up a cluster dropped from 10m7s to 4m57s. Switching to miniconda is not difficult; just type the following three lines once your cluster is started up and you have SSHed into the master node:
+
+{% highlight sh %}
+cd /home/sgeadmin; wget http://repo.continuum.io/miniconda/Miniconda-3.9.1-Linux-x86_64.sh -O miniconda.sh; bash miniconda.sh -b -p /home/sgeadmin/miniconda
+echo "export PATH=/home/sgeadmin/miniconda/bin:\$PATH" >> .bashrc; hash -r
+export PATH=/home/sgeadmin/miniconda/bin:$PATH; conda config --set always_yes yes --set changeps1 no
+{% endhighlight %}
+
+And then installing numpy and pandas is much faster than upgrading the starcluster version:
+
+{% highlight sh %}
+conda install numpy
+conda install pandas
+{% endhighlight %}
+
+I create a starcluster startup script that sets up my environment, uploads all my coda and input data to the cluster, updates and installs all python dependencies, and then submits the MPI job. See the end of this post for the script.
+
 
 ###Running MPI on the starcluster
 
@@ -175,7 +191,7 @@ Looking at the starcluster [Compile and run a "Hello World" OpenMPI program exam
 qrsh_starter: cannot change to directory /root/projects
 {% endhighlight %}
 
-The /root directory only exists on the master node. We need to run our code from somewhere in the /home directory, since that's the directory that is NFS mounted to all the nodes. This may also mean that upgrading pandas and numexpr only worked for the master node. 
+The /root directory only exists on the master node. We need to run our code from somewhere in the /home directory, since that's the directory that is NFS mounted to all the nodes. This may also mean that upgrading pandas and numexpr only worked for the master node.
 
 
 ###Putting it all together
