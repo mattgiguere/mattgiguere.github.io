@@ -6,9 +6,54 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 29 Apr 2015 16:57:42 -0400</pubDate>
-    <lastBuildDate>Wed, 29 Apr 2015 16:57:42 -0400</lastBuildDate>
+    <pubDate>Tue, 30 Jun 2015 18:30:12 -0400</pubDate>
+    <lastBuildDate>Tue, 30 Jun 2015 18:30:12 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Mac App Store Hanging While &quot;Checking for updates...&quot;</title>
+        <description>&lt;p&gt;For the past day the Mac App Store has hung on the “Updates” tab with a
+“Checking for updates…” message in the top right corner. The version
+of the OS was Mac OS X 10.10.3, and I’m using a MacBook Pro (Retina, Mid 2012)
+laptop.&lt;/p&gt;
+
+&lt;p&gt;I tried (in this order):&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;restarting the App Store App&lt;/li&gt;
+  &lt;li&gt;restarting the computer&lt;/li&gt;
+  &lt;li&gt;repairing disk permissions from the normal partition&lt;/li&gt;
+  &lt;li&gt;restarting while holding option to boot from the recovery partition, and then
+again “Repair Disk Permissions” and “Repair Disk”&lt;/li&gt;
+  &lt;li&gt;reseting the &lt;a href=&quot;https://support.apple.com/kb/PH11243?locale=en_US&amp;amp;viewlocale=en_US&quot;&gt;PRAM&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;reseting the &lt;a href=&quot;https://support.apple.com/en-us/HT201295&quot;&gt;SMC&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;None of these tricks worked. Then, I found
+&lt;a href=&quot;https://discussions.apple.com/message/28416971#28416971&quot;&gt;this gem&lt;/a&gt; of a solution!&lt;/p&gt;
+
+&lt;p&gt;In brief, to fix a hanging Mac App Store, run the software update from the
+command line using this command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo softwareupdate -i -a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Issuing the above command installed the Mac OS X Command Line Tools update and
+the Mac OS X 10.10.4 update for me. After restarting my computer, I could
+then install the remaining third party updates.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 30 Jun 2015 14:18:28 -0400</pubDate>
+        <link>http://mattgiguere.github.io/2015/06/30/mac_app_store_hangs_checking_for_updates.html</link>
+        <guid isPermaLink="true">http://mattgiguere.github.io/2015/06/30/mac_app_store_hangs_checking_for_updates.html</guid>
+        
+        <category>mac</category>
+        
+        <category>os</category>
+        
+        <category>x</category>
+        
+        
+      </item>
     
       <item>
         <title>Git History in Python with Dulwich</title>
@@ -1437,84 +1482,6 @@ a 62 cm/s improvement.&lt;/p&gt;
         <category>Parallel</category>
         
         <category>Tempering</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>The Last YastroML</title>
-        <description>&lt;p&gt;Yesterday we concluded &lt;a href=&quot;https://github.com/YastroML/YastroML&quot;&gt;YastroML&lt;/a&gt;, the Yale astronomy Machine
-Learning Discussion Group. Over the past year we have been irregularly meeting
-to go over the newly released textbook &lt;a href=&quot;http://press.princeton.edu/titles/10159.html&quot;&gt;Statistics, Data Mining, and Machine
-Learning in Astronomy&lt;/a&gt;: a textbook that, as its name implies, goes
-over a variety of statistical, data mining, and machine learning techniques
-that are relevant to astronomy. As I was looking into ordering the book, I
-noticed on twitter that a group of people at Columbia and other institutions
-in NYC had started up a discussion group to go over the material, which they
-referred to as &lt;a href=&quot;https://github.com/adrn/NYCastroML&quot;&gt;NYCastroML&lt;/a&gt;. This sounded like a terrific idea, and
-I immediately decided that I’d try to take part in this weeklyish events. I
-started crafting an email to inform other people in the Yale astronomy
-Department about the event, and my list of people to include grew, and grew,
-and grew… I decided that instead I’d send an email out to the department
-to gauge interest in organizing something here at Yale. The response was
-overwhelming — &lt;a href=&quot;https://github.com/YastroML/YastroML&quot;&gt;YastroML&lt;/a&gt; was born.&lt;/p&gt;
-
-&lt;p&gt;We started meeting weekly in March of the Spring 2014 semester; we stuck to our
-weekly schedule fairly well until the end of the semester. Academics always
-seem to think they will have plenty of free time come summer. In practice,
-between conferences, workshops, summer schools, and extra curricular
-activities, that never seems to be the case. With the end of the Spring
-Semester came the end of our weekly schedule. We met sporadically since then,
-and our meeting yesterday marked the completion of the final chapter.&lt;/p&gt;
-
-&lt;p&gt;In this last meeting we covered time series analysis. Major topics included&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Discrete Fourier Transforms&lt;/li&gt;
-  &lt;li&gt;Periodograms&lt;/li&gt;
-  &lt;li&gt;Digital Filtering&lt;/li&gt;
-  &lt;li&gt;Wavelets and Matched Filtering&lt;/li&gt;
-  &lt;li&gt;Classification of periodic phenomena&lt;/li&gt;
-  &lt;li&gt;Analysis of arrival time data&lt;/li&gt;
-  &lt;li&gt;Analysis of Stochastic Processes&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I put together an &lt;a href=&quot;http://nbviewer.ipython.org/github/YastroML/YastroML/blob/master/Session19_150219/Ch10_TimeSeries.ipynb&quot;&gt;IPython notebook&lt;/a&gt; to lead the discussion. Having
-dealt with time series analysis for the past several years while analyzing
-RV measurements and light curves, I was comfortable with a lot of the material,
-and added several examples and interactive components to the notebook to make
-the session a little more pedagogical.&lt;/p&gt;
-
-&lt;p&gt;Some of the highlights for me in this chapter were:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;seeing how easy it is to implement wavelets in python using &lt;a href=&quot;http://www.pybytes.com/pywavelets/&quot;&gt;PyWavelets&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;The use of truncated Fourier Series for searching for signals that may have
-multiple reoccurring features, such as eclipsing binaries&lt;/li&gt;
-  &lt;li&gt;The nonparametric Gregory-Loredo technique when dealing with sparse data sets&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Afterwards a few of us got together for a celebratory dram and to discuss how
-the discussion group can be improved for the next time around.&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 20 Feb 2015 12:30:48 -0500</pubDate>
-        <link>http://mattgiguere.github.io/2015/02/20/last-yastroml.html</link>
-        <guid isPermaLink="true">http://mattgiguere.github.io/2015/02/20/last-yastroml.html</guid>
-        
-        <category>python,</category>
-        
-        <category>IPython</category>
-        
-        <category>notebook,</category>
-        
-        <category>time</category>
-        
-        <category>series</category>
-        
-        <category>analysis,</category>
-        
-        <category>YastroML</category>
         
         
       </item>
