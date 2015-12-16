@@ -74,6 +74,14 @@ I had was that Jekyll no longer worked. Similar to the issue I had with
 LaTex, this seems to be related to the new feature in El Capitan known as
 <a href="https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40016462-CH1-DontLinkElementID_15">System Integrity Protection</a>.</p>
 
+<p>The error message I received stated:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>gem install jekyll
+ERROR:  While executing gem ... (Gem::FilePermissionError)
+    You don't have write permissions for the /Library/Ruby/Gems/2.0.0 directory.
+</code></pre>
+</div>
+
 <p>This can be overcome by installing a new version of ruby using homebrew, and
 then installing jekyll. @chmaynard was kind enough to put togher a nice
 description of the <a href="https://github.com/jekyll/jekyll/issues/3984">steps necessary</a>, which are described below

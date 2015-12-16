@@ -10,6 +10,12 @@ I had was that Jekyll no longer worked. Similar to the issue I had with
 LaTex, this seems to be related to the new feature in El Capitan known as
 [System Integrity Protection][SIP].
 
+The error message I received stated:
+
+    gem install jekyll
+    ERROR:  While executing gem ... (Gem::FilePermissionError)
+        You don't have write permissions for the /Library/Ruby/Gems/2.0.0 directory.
+
 This can be overcome by installing a new version of ruby using homebrew, and
 then installing jekyll. @chmaynard was kind enough to put togher a nice
 description of the [steps necessary][jekyllsteps], which are described below

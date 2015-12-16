@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 16 Dec 2015 09:38:25 -0500</pubDate>
-    <lastBuildDate>Wed, 16 Dec 2015 09:38:25 -0500</lastBuildDate>
+    <pubDate>Wed, 16 Dec 2015 09:40:58 -0500</pubDate>
+    <lastBuildDate>Wed, 16 Dec 2015 09:40:58 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -44,6 +44,14 @@ list of these issues, with links to blog posts on how I fixed them:&lt;/p&gt;
 I had was that Jekyll no longer worked. Similar to the issue I had with
 LaTex, this seems to be related to the new feature in El Capitan known as
 &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40016462-CH1-DontLinkElementID_15&quot;&gt;System Integrity Protection&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The error message I received stated:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install jekyll
+ERROR:  While executing gem ... (Gem::FilePermissionError)
+    You don&#39;t have write permissions for the /Library/Ruby/Gems/2.0.0 directory.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;This can be overcome by installing a new version of ruby using homebrew, and
 then installing jekyll. @chmaynard was kind enough to put togher a nice
