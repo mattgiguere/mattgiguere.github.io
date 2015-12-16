@@ -11,11 +11,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Issues with Mac OS X El Capitan</title>
-  <meta name="description" content="After upgrading from Yosemite to El Capitan, I’ve had a few issues. Below is alist of these issues, with links to blog posts on how I fixed them:">
+  <title>Installing Jekyll on Mac OS X El Capitan</title>
+  <meta name="description" content="After upgrading from Yosemite to El Capitan, one of several issuesI had was that Jekyll no longer worked. Similar to the issue I had withLaTex, this seems to...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://mattgiguere.github.io/2015/12/16/Issues_with_Mac_OS-X_El_Capitan.html">
+  <link rel="canonical" href="http://mattgiguere.github.io/2015/12/16/Installing_Jekyll_on_Mac_OS_X_El_Capitan.html">
   <link rel="alternate" type="application/rss+xml" title="Matt Giguere" href="http://mattgiguere.github.io/feed.xml" />
 </head>
 
@@ -68,18 +68,29 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Issues with Mac OS X El Capitan</h1>
+    <h1 class="post-title">Installing Jekyll on Mac OS X El Capitan</h1>
     <p class="post-meta">Dec 16, 2015</p>
   </header>
 
   <article class="post-content">
-    <p>After upgrading from Yosemite to El Capitan, I’ve had a few issues. Below is a
-list of these issues, with links to blog posts on how I fixed them:</p>
+    <p>After upgrading from Yosemite to El Capitan, one of <a href="/2015/12/16/Issues_with_Mac_OS-X_El_Capitan.html">several issues</a>
+I had was that Jekyll no longer worked. Similar to the issue I had with
+LaTex, this seems to be related to the new feature in El Capitan known as
+<a href="https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40016462-CH1-DontLinkElementID_15">System Integrity Protection</a>.</p>
 
-<ol>
-  <li><a href="/2015/12/15/Using_TeX_in_Mac_OS_X_El_Capitan.html">LaTeX</a></li>
-  <li><a href="/2015/12/16/Installing_Jekyll_on_Mac_OS_X_El_Capitan.html">jekyll</a></li>
-</ol>
+<p>This can be overcome by installing a new version of ruby using homebrew, and
+then installing jekyll. @chmaynard was kind enough to put togher a nice
+description of the <a href="https://github.com/jekyll/jekyll/issues/3984">steps necessary</a>, which are described below
+for convenience:</p>
+
+<ul>
+  <li>Install the Xcode command line utilities xcode-select –install</li>
+  <li>Install Homebrew: <code class="highlighter-rouge">ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</code>`</li>
+  <li>Install the latest ruby via homebrew: <code class="highlighter-rouge">brew install ruby</code></li>
+  <li>Install the latest Jekyll: <code class="highlighter-rouge">gem install jekyll</code></li>
+</ul>
+
+<p>After that, jekyll worked for me without further problems.</p>
 
 
   </article>

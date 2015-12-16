@@ -27,7 +27,7 @@ When I tried to recreate the symbolic link, I received the following error messa
     sudo ln -s /usr/local/texlive/2014/bin/x86_64-darwin texbin
     ln: texbin: Operation not permitted
 
-Looking into the [documentation][SIP], to recreate a symbolic link in the
+Looking into the [documentation][SIPconf], to recreate a symbolic link in the
 `/usr` directory, SIP needs to be disabled. To do so, carry out the following
 steps:
 
@@ -52,6 +52,6 @@ sudo ln -s /usr/local/texlive/2014/bin/x86_64-darwin texbin
 Once I did this, I could recompile TeX documents using TeXShop just fine!
 
 
+[SIP]:https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40016462-CH1-DontLinkElementID_15
 
-
-[SIP]: https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection/html
+[SIPconf]:https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection.html

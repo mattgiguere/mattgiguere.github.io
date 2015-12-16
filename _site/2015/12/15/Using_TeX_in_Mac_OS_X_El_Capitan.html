@@ -75,7 +75,7 @@
   <article class="post-content">
     <p>If you’ve recently upgraded to OS X El Capitan, and you’re getting an error
 message when trying to compile TeX, the reason is most likely due to one of
-the new features in OS X El Capitan called <a href="https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection/html">System Integrity Protection</a>.</p>
+the new features in OS X El Capitan called <a href="https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40016462-CH1-DontLinkElementID_15">System Integrity Protection</a>.</p>
 
 <p>When I upgraded to Mac OS X El Capitan, all non-native items once installed in
 <code class="highlighter-rouge">/usr</code>, including my simlink to my texbin
@@ -101,7 +101,7 @@ ln: texbin: Operation not permitted
 </code></pre>
 </div>
 
-<p>Looking into the <a href="https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection/html">documentation</a>, to recreate a symbolic link in the
+<p>Looking into the <a href="https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection.html">documentation</a>, to recreate a symbolic link in the
 <code class="highlighter-rouge">/usr</code> directory, SIP needs to be disabled. To do so, carry out the following
 steps:</p>
 

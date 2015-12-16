@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 16 Dec 2015 09:16:29 -0500</pubDate>
-    <lastBuildDate>Wed, 16 Dec 2015 09:16:29 -0500</lastBuildDate>
+    <pubDate>Wed, 16 Dec 2015 09:37:47 -0500</pubDate>
+    <lastBuildDate>Wed, 16 Dec 2015 09:37:47 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -17,6 +17,7 @@ list of these issues, with links to blog posts on how I fixed them:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;/2015/12/15/Using_TeX_in_Mac_OS_X_El_Capitan.html&quot;&gt;LaTeX&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/2015/12/16/Installing_Jekyll_on_Mac_OS_X_El_Capitan.html&quot;&gt;jekyll&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 </description>
@@ -38,10 +39,51 @@ list of these issues, with links to blog posts on how I fixed them:&lt;/p&gt;
       </item>
     
       <item>
+        <title>Installing Jekyll on Mac OS X El Capitan</title>
+        <description>&lt;p&gt;After upgrading from Yosemite to El Capitan, one of &lt;a href=&quot;/2015/12/16/Issues_with_Mac_OS-X_El_Capitan.html&quot;&gt;several issues&lt;/a&gt;
+I had was that Jekyll no longer worked. Similar to the issue I had with
+LaTex, this seems to be related to the new feature in El Capitan known as
+&lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40016462-CH1-DontLinkElementID_15&quot;&gt;System Integrity Protection&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This can be overcome by installing a new version of ruby using homebrew, and
+then installing jekyll. @chmaynard was kind enough to put togher a nice
+description of the &lt;a href=&quot;https://github.com/jekyll/jekyll/issues/3984&quot;&gt;steps necessary&lt;/a&gt;, which are described below
+for convenience:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Install the Xcode command line utilities xcode-select –install&lt;/li&gt;
+  &lt;li&gt;Install Homebrew: &lt;code class=&quot;highlighter-rouge&quot;&gt;ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;&lt;/code&gt;`&lt;/li&gt;
+  &lt;li&gt;Install the latest ruby via homebrew: &lt;code class=&quot;highlighter-rouge&quot;&gt;brew install ruby&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Install the latest Jekyll: &lt;code class=&quot;highlighter-rouge&quot;&gt;gem install jekyll&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;After that, jekyll worked for me without further problems.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 16 Dec 2015 02:43:40 -0500</pubDate>
+        <link>http://mattgiguere.github.io/2015/12/16/Installing_Jekyll_on_Mac_OS_X_El_Capitan.html</link>
+        <guid isPermaLink="true">http://mattgiguere.github.io/2015/12/16/Installing_Jekyll_on_Mac_OS_X_El_Capitan.html</guid>
+        
+        <category>mac</category>
+        
+        <category>os</category>
+        
+        <category>x,</category>
+        
+        <category>el</category>
+        
+        <category>capitan,</category>
+        
+        <category>jekyll</category>
+        
+        
+      </item>
+    
+      <item>
         <title>Using TeX in Mac OS X El Capitan</title>
         <description>&lt;p&gt;If you’ve recently upgraded to OS X El Capitan, and you’re getting an error
 message when trying to compile TeX, the reason is most likely due to one of
-the new features in OS X El Capitan called &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection/html&quot;&gt;System Integrity Protection&lt;/a&gt;.&lt;/p&gt;
+the new features in OS X El Capitan called &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40016462-CH1-DontLinkElementID_15&quot;&gt;System Integrity Protection&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;When I upgraded to Mac OS X El Capitan, all non-native items once installed in
 &lt;code class=&quot;highlighter-rouge&quot;&gt;/usr&lt;/code&gt;, including my simlink to my texbin
@@ -67,7 +109,7 @@ ln: texbin: Operation not permitted
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Looking into the &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection/html&quot;&gt;documentation&lt;/a&gt;, to recreate a symbolic link in the
+&lt;p&gt;Looking into the &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection.html&quot;&gt;documentation&lt;/a&gt;, to recreate a symbolic link in the
 &lt;code class=&quot;highlighter-rouge&quot;&gt;/usr&lt;/code&gt; directory, SIP needs to be disabled. To do so, carry out the following
 steps:&lt;/p&gt;
 
@@ -1186,285 +1228,6 @@ section.&lt;/p&gt;
         <category>yale,</category>
         
         <category>hpc</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Creating an AWS EC2 Cluster</title>
-        <description>&lt;p&gt;Today I decided to scale up my MPI MCMC sampling to use more nodes.In a
-&lt;a href=&quot;/2015/01/27/setting-up-mpi4py.html&quot;&gt;previous blog post&lt;/a&gt;, I showed how I installed MPI on our cluster. I
-got it up to 96 cores, but I scaled back and was using about 50 cores from our
-cluster for my analysis. I could add more, but there is currently a lot of
-demand for CPUs in our research group. Instead,
-I’m going try out Amazon Web Services (AWS) Elastic Cloud Computing (EC2) for
-this project.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/2015/03/10/scaling-up-with-aws.html&quot;&gt;Yesterday&lt;/a&gt; I setup an AWS account and created an Amazon Machine
-Instance (AMI). Today, I’m going to create the cluster. I found
-&lt;a href=&quot;http://cs.smith.edu/dftwiki/index.php/Tutorial:_Create_an_MPI_Cluster_on_the_Amazon_Elastic_Cloud_(EC2)&quot;&gt;this post&lt;/a&gt; to be helpful.&lt;/p&gt;
-
-&lt;p&gt;First, I installed &lt;a href=&quot;http://star.mit.edu/cluster/docs/latest/installation.html&quot;&gt;StarCluster&lt;/a&gt;, a python package made
-specifically for creating and managing AWS EC2 distributed computing clusters.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install StarCluster&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;I then opened a new Terminal window and followed the StarCluster
-&lt;a href=&quot;http://star.mit.edu/cluster/docs/latest/quickstart.html&quot;&gt;Quick start&lt;/a&gt; guide. The first thing is to create a config
-file:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;∞ starcluster &lt;span class=&quot;nb&quot;&gt;help
-&lt;/span&gt;StarCluster - &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://star.mit.edu/cluster&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;v. 0.95.6&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-Software Tools &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-Please submit bug reports to starcluster@mit.edu
-
-!!! ERROR - config file /home/matt/.starcluster/config does not exist
-
-Options:
---------
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1] Show the StarCluster config template
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;2] Write config template to /home/matt/.starcluster/config
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;q] Quit
-
-Please enter your selection: 2
-
-&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;Config template written to /home/matt/.starcluster/config
-&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;Please customize the config template
-∞ &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; .starcluster/
-∞ emacs config&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Modifying the configuration file to use my AWS_ACCESS_KEY_ID and
-AWS_SECRET_ACCESS_KEY was a bit tricky. Amazon changed the way it manages
-access keys and no longer allows them to be created at the root level. The
-&lt;a href=&quot;http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_SettingUpUser.html&quot;&gt;AWS IAM User documentation&lt;/a&gt; describes how to create a user and
-grab their access key. In a nutshell, do this:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;go to: https://console.aws.amazon.com/iam/&lt;/li&gt;
-  &lt;li&gt;In the left-hand navigation page
-    &lt;ul&gt;
-      &lt;li&gt;click &lt;strong&gt;Users&lt;/strong&gt;&lt;/li&gt;
-      &lt;li&gt;click the blue &lt;strong&gt;Create New Users&lt;/strong&gt; button at the top&lt;/li&gt;
-      &lt;li&gt;enter a username in the field&lt;/li&gt;
-      &lt;li&gt;click the blue &lt;strong&gt;Create&lt;/strong&gt; button at the bottom of the screen&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Your new access key and secret keys should then appear on the screen. Copy
-these into your .starcluster/config file. For the account number, use your
-Account Id, which can be found at the top of &lt;a href=&quot;https://console.aws.amazon.com/billing/home#/account&quot;&gt;“Account Settings”&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Scroll down a bit and modify the &lt;code class=&quot;highlighter-rouge&quot;&gt;KEY_LOCATION&lt;/code&gt; to point to the SSH Key you use
-to connect to AWS (you had to create a key pair when you created an AWS
-  account).&lt;/p&gt;
-
-&lt;p&gt;For me, I also had to modify my &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS_REGION_NAME&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS_REGION_HOST&lt;/code&gt;.
-Although I’m on the East  coast, for some reason amazon made my instances on
-the west coast. After &lt;a href=&quot;https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#Instances:sort=monitoring&quot;&gt;looking at my instances&lt;/a&gt;, here’s what I put
-in my config file for those two values:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;AWS_REGION_NAME &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; us-west-2a
-AWS_REGION_HOST &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; ec2.us-west-2.compute.amazonaws.com&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Next, I attempted to start up my cluster&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster start mycluster&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;After a long pause, I got an error message:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;∞ starcluster start mycluster
-StarCluster - (http://star.mit.edu/cluster) (v. 0.95.6)
-Software Tools for Academics and Researchers (STAR)
-Please submit bug reports to starcluster@mit.edu&lt;/p&gt;
-
-  &lt;p&gt;!!! ERROR - Connection error:
-Traceback (most recent call last):
- File “/Applications/anaconda/lib/python2.7/site-packages/starcluster/cli.py”, line 274, in main
-   sc.execute(args)
- File “/Applications/anaconda/lib/python2.7/site-packages/starcluster/commands/start.py”, line 189, in execute
-   scluster = self.cm.get_cluster_group_or_none(tag)
-  File “/Applications/anaconda/lib/python2.7/site-packages/starcluster/cluster.py”, line 244, in &amp;gt;get_cluster_group_or_none
-   return self.get_cluster_security_group(group_name)
-  File “/Applications/anaconda/lib/python2.7/site-packages/starcluster/cluster.py”, line 240, in &amp;gt;get_cluster_security_group
-   return self.ec2.get_security_group(gname)
- File “/Applications/anaconda/lib/python2.7/site-packages/starcluster/awsutils.py”, line 357, in get_security_group
-   filters={‘group-name’: groupname})[0]
- File “/Applications/anaconda/lib/python2.7/site-packages/starcluster/awsutils.py”, line 369, in get_security_groups
-   return self.conn.get_all_security_groups(filters=filters)
- File “/Applications/anaconda/lib/python2.7/site-packages/boto/ec2/connection.py”, line 2970, in get_all_security_groups
-   [(‘item’, SecurityGroup)], verb=’POST’)
- File “/Applications/anaconda/lib/python2.7/site-packages/boto/connection.py”, line 1150, in get_list
-   response = self.make_request(action, params, path, verb)
- File “/Applications/anaconda/lib/python2.7/site-packages/boto/connection.py”, line 1096, in make_request
-   return self._mexe(http_request)
- File “/Applications/anaconda/lib/python2.7/site-packages/boto/connection.py”, line 926, in _mexe
-   request.body, request.headers)
- File “/Applications/anaconda/lib/python2.7/httplib.py”, line 1001, in request
-   self._send_request(method, url, body, headers)
- File “/Applications/anaconda/lib/python2.7/httplib.py”, line 1035, in _send_request
-   self.endheaders(body)
- File “/Applications/anaconda/lib/python2.7/httplib.py”, line 997, in endheaders
-   self._send_output(message_body)
- File “/Applications/anaconda/lib/python2.7/httplib.py”, line 850, in _send_output
-   self.send(msg)
- File “/Applications/anaconda/lib/python2.7/httplib.py”, line 812, in send
-   self.connect()
- File “/Applications/anaconda/lib/python2.7/site-packages/boto/https_connection.py”, line 116, in connect
-   sock = socket.create_connection((self.host, self.port), self.timeout)
- File “/Applications/anaconda/lib/python2.7/socket.py”, line 553, in create_connection
-   for res in getaddrinfo(host, port, 0, SOCK_STREAM):
-gaierror: [Errno 8] nodename nor servname provided, or not known
-!!! ERROR - Check your internet connection?&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;There were some other options I changed. I’m using the free AMI, a t2.micro, so
-I changed the &lt;code class=&quot;highlighter-rouge&quot;&gt;NODE_INSTANCE_TYPE&lt;/code&gt;:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;NODE_INSTANCE_TYPE &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; t2.micro&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;I also setup my instance with the default Amazon Linxu HVM at the top of the
-list of instance types. I therefore needed to change the &lt;code class=&quot;highlighter-rouge&quot;&gt;NODE_IMAGE_ID&lt;/code&gt; as
-well. This information was given in the comments above that field in the
-default ~/.starcluster/config file:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;NODE_IMAGE_ID &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; ami-6b211202&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;This was caused by me changing the &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS_REGION_NAME&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS_REGION_HOST&lt;/code&gt;.
-Once I changed it back, I could connect, but I got error messages along the
-lines of:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;!!! ERROR - UnauthorizedOperation: You are not authorized to perform this operation.
-Traceback (most recent call last):
- File “/Applications/anaconda/lib/python2.7/site-packages/starcluster/cli.py”, line 274, in main
-   sc.execute(args)
- File “/Applications/anaconda/lib/python2.7/site-packages/starcluster/commands/start.py”, line 189, in execute
-   scluster = self.cm.get_cluster_group_or_none(tag)
-  File “/Applications/anaconda/lib/python2.7/site-packages/starcluster/cluster.py”, line 244, in &amp;gt;get_cluster_group_or_none
-   return self.get_cluster_security_group(group_name)
-  File “/Applications/anaconda/lib/python2.7/site-packages/starcluster/cluster.py”, line 240, in &amp;gt;get_cluster_security_group
-   return self.ec2.get_security_group(gname)
- File “/Applications/anaconda/lib/python2.7/site-packages/starcluster/awsutils.py”, line 357, in get_security_group
-   filters={‘group-name’: groupname})[0]
- File “/Applications/anaconda/lib/python2.7/site-packages/starcluster/awsutils.py”, line 369, in get_security_groups
-   return self.conn.get_all_security_groups(filters=filters)
- File “/Applications/anaconda/lib/python2.7/site-packages/boto/ec2/connection.py”, line 2929, in get_all_security_groups
-   [(‘item’, SecurityGroup)], verb=’POST’)
- File “/Applications/anaconda/lib/python2.7/site-packages/boto/connection.py”, line 1157, in get_list
-   raise self.ResponseError(response.status, response.reason, body)
-EC2ResponseError: EC2ResponseError: 403 Forbidden
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;/p&gt;
-  &lt;response&gt;&lt;errors&gt;&lt;error&gt;&lt;code&gt;UnauthorizedOperation&lt;/code&gt;&lt;message&gt;You are not authorized to perform this &amp;gt;operation.&lt;/message&gt;&lt;/error&gt;&lt;/errors&gt;&lt;requestid&gt;ccb6c947-8c96-4c41-bd0b-08af6866d50b&lt;/requestid&gt;&lt;/response&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;To fix this problem, I needed to create a new group that has EC2 permissions,
-and add my IAM user to that group. This can be done through the Identity and
-Access Management (IAM) &lt;a href=&quot;https://console.aws.amazon.com/iam/home#home&quot;&gt;Dashboard&lt;/a&gt;.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Click on &lt;strong&gt;Groups&lt;/strong&gt; in the left-hand navigation bar&lt;/li&gt;
-  &lt;li&gt;Click on the &lt;strong&gt;Create New Group&lt;/strong&gt; button&lt;/li&gt;
-  &lt;li&gt;Add a group with EC2 permissions.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Once this was done, I started receiving a new error message:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;∞ starcluster start mycluster
-StarCluster - (http://star.mit.edu/cluster) (v. 0.95.6)
-Software Tools for Academics and Researchers (STAR)
-Please submit bug reports to starcluster@mit.edu&lt;/p&gt;
-
-  &lt;blockquote&gt;
-    &lt;blockquote&gt;
-      &lt;blockquote&gt;
-        &lt;p&gt;Using default cluster template: smallcluster
-Validating cluster template settings…
-!!! ERROR - Cluster settings are not valid:
-!!! ERROR - Keypair ‘myawskey’ does not exist in region ‘us-east-1’&lt;/p&gt;
-      &lt;/blockquote&gt;
-    &lt;/blockquote&gt;
-  &lt;/blockquote&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;At that point I attempted to create a new key using the starcluster
-command&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster createkey mysckey -o ~/.ssh/mysckey.rsa&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;This didn’t work either. Later, I noticed that in the top right corner of the Amazon AWS Web Interface the region can be changed. My region defaulted to “Oregon” for some reason. I clicked the name and changed it to “N. Virginia”. It is odd that Amazon chose to write “N. Virginia” instead of just “Virginia” since there is no option for “S. Virginia” and “North Virginia” is not a state. Did they get Virginia confused with the Carolinas?&lt;/p&gt;
-
-&lt;p&gt;After switching to the “US East (N. Virginia)” region, I could then setup instances and create keys for the US East region. I changed the &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.starcluster/config&lt;/code&gt; file back to its defaults and tried again. I could now create keypairs through starcluster:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster createkey myStarClusterKey -o ~/.ssh/myStarClusterKey.rsa&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And looking at the &lt;strong&gt;Key Pairs&lt;/strong&gt; under &lt;strong&gt;Network &amp;amp; Security&lt;/strong&gt; on the AWS Web Interface, I could see that StarCluster generated the key properly. I updated my config file, but was still getting an error message:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster start mycluster
-StarCluster - &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://star.mit.edu/cluster&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;v. 0.95.6&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-Software Tools &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-Please submit bug reports to starcluster@mit.edu
-
-&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;Using default cluster template: smallcluster
-&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;Validating cluster template settings...
-!!! ERROR - Cluster settings are not valid:
-!!! ERROR - Keypair &lt;span class=&quot;s1&quot;&gt;&#39;myKey&#39;&lt;/span&gt; does not exist &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;region &lt;span class=&quot;s1&quot;&gt;&#39;us-east-1&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;My problem ended up being in the name I gave the key in the ~/.starcluster/config file.&lt;/p&gt;
-
-&lt;p&gt;Here is the snippet from my ~/.starcluster/config file that &lt;strong&gt;&lt;em&gt;did
-not work&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;key myawskey]
-&lt;span class=&quot;nv&quot;&gt;KEY_LOCATION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/matt/.ssh/myStarClusterKey.rsa                                                                                            &lt;span class=&quot;c&quot;&gt;# You can of course have multiple keypair sections&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;#     $ starcluster start -c mediumcluster mycluster&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# If a template is not specified then the template defined by DEFAULT_TEMPLATE&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# in the [global] section above is used. Below is the &quot;default&quot; template named&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# &quot;smallcluster&quot;. You can rename it but dont forget to update the&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# DEFAULT_TEMPLATE setting in the [global] section above. See the next section&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# on defining multiple templates.&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;cluster smallcluster]
-&lt;span class=&quot;c&quot;&gt;# change this to the name of one of the keypair sections defined above&lt;/span&gt;
-KEYNAME &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; myawskey&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And here is the snippet from my ~/.starcluster/config file that &lt;strong&gt;&lt;em&gt;worked&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;key myStarClusterKey]
-&lt;span class=&quot;nv&quot;&gt;KEY_LOCATION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/matt/.ssh/myStarClusterKey.rsa                                                                                            &lt;span class=&quot;c&quot;&gt;# You can of course have multiple keypair sections&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;#     $ starcluster start -c mediumcluster mycluster&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# If a template is not specified then the template defined by DEFAULT_TEMPLATE&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# in the [global] section above is used. Below is the &quot;default&quot; template named&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# &quot;smallcluster&quot;. You can rename it but dont forget to update the&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# DEFAULT_TEMPLATE setting in the [global] section above. See the next section&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# on defining multiple templates.&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;cluster smallcluster]
-&lt;span class=&quot;c&quot;&gt;# change this to the name of one of the keypair sections defined above&lt;/span&gt;
-KEYNAME &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; myStarClusterKey&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;An important point: The keyname needs to be the same name as the name of the key in AWS!&lt;/strong&gt; I thought &lt;code class=&quot;highlighter-rouge&quot;&gt;KEYNAME&lt;/code&gt; was just a local variable that was used in the starcluster code to point to the correct [key] section in the config file. That is NOT the case! &lt;code class=&quot;highlighter-rouge&quot;&gt;KEYNAME&lt;/code&gt; needs to be the same as the filename of the .rsa file.&lt;/p&gt;
-
-&lt;p&gt;Once I changed the keyname as shown in the above example, I could then successfully start a cluster using the starcluster code following the &lt;a href=&quot;http://star.mit.edu/cluster/docs/latest/quickstart.html&quot;&gt;Starcluster Quick Start Guide&lt;/a&gt;.&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 11 Mar 2015 09:58:53 -0400</pubDate>
-        <link>http://mattgiguere.github.io/2015/03/11/creating-an-aws-ec2-cluster.html</link>
-        <guid isPermaLink="true">http://mattgiguere.github.io/2015/03/11/creating-an-aws-ec2-cluster.html</guid>
-        
-        <category>aws,</category>
-        
-        <category>amazon,</category>
-        
-        <category>ec2,</category>
-        
-        <category>starcluster</category>
         
         
       </item>
