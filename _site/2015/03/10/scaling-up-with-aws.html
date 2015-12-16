@@ -90,33 +90,33 @@ This can be easily downloaded onto the AWS virtual machine instance by</p>
   <li>selecting the linux OS</li>
   <li>right-clicking in the browser on the “Linux 64-Bit - Python 2.7” button</li>
   <li>copying the link to the downloadable package</li>
-  <li>and pasting the link after <code>wget</code> in the SSH session into the VMI.</li>
+  <li>and pasting the link after <code class="highlighter-rouge">wget</code> in the SSH session into the VMI.</li>
 </ol>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">ssh -p22 -i my-private-key ec2-user@my-public-ip
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">ssh -p22 -i my-private-key ec2-user@my-public-ip
 mkdir tempDownloads
 <span class="nb">cd </span>tempDownloads
-wget http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-2.1.0-Linux-x86_64.sh</code></pre></div>
+wget http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-2.1.0-Linux-x86_64.sh</code></pre></figure>
 
 <p>Once the download has completed, installation is as simple as typing ls to
 find out the name of the install script, running it, and following the
 on-screen instructions.</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">ls
--rw-rw-r-- <span class="m">1</span> ec2-user ec2-user <span class="m">353806962</span> Sep <span class="m">30</span> 19:37 Anaconda-2.1.0-Linux-x86_64.sh
-bash Anaconda-2.1.0-Linux-x86_64.sh</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">ls
+-rw-rw-r-- 1 ec2-user ec2-user 353806962 Sep 30 19:37 Anaconda-2.1.0-Linux-x86_64.sh
+bash Anaconda-2.1.0-Linux-x86_64.sh</code></pre></figure>
 
 <p>If you said ‘yes’ at the end of installation to have the anaconda python path
 appended to your .bashrc file, then starting anaconda python is as simple as
 sourcing the changes to your .bashrc file and typing python:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">source</span> ~/.bashrc
-python</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">source</span> ~/.bashrc
+python</code></pre></figure>
 
 <p>There are a few packages I need to run my parallel tempering code. I’ll use
 pip to install these:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">pip install emcee</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">pip install emcee</code></pre></figure>
 
 
   </article>

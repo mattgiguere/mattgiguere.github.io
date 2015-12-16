@@ -73,7 +73,7 @@
   </header>
 
   <article class="post-content">
-    <p>In a <a href="http://arxiv.org/abs/1411.5374">recent</a> work, I used the Pearson linear correlation coefficient, \rho, to describe the linear correlation between the radial velocity (RV) measurements and the S-values. I also made a <a href="https://github.com/mattgiguere/pyutil/blob/master/pearsonBootstrapPvalue.py">chunk of code</a>, named <code>pearsonBootstrapPvalue.py</code>, that calculates the p-value through a bootstrap Monte Carlo analysis.</p>
+    <p>In a <a href="http://arxiv.org/abs/1411.5374">recent</a> work, I used the Pearson linear correlation coefficient, \rho, to describe the linear correlation between the radial velocity (RV) measurements and the S-values. I also made a <a href="https://github.com/mattgiguere/pyutil/blob/master/pearsonBootstrapPvalue.py">chunk of code</a>, named <code class="highlighter-rouge">pearsonBootstrapPvalue.py</code>, that calculates the p-value through a bootstrap Monte Carlo analysis.</p>
 
 <p>These two pieces of code came in handy again for some recent work measuring the H-alpha spectral line for activity analysis, and checking for correlation with the  RV measurements.</p>
 
@@ -81,7 +81,7 @@
 
 <p><img src="/images/Show_PearsonBootstrapPlot.png" alt="Pearson Rho Distribution from Bootstrap Monte Carlo Permutations" /></p>
 
-<p>The figure above is the output from <code>pearsonBootstrapPvalue.py</code>. The blue bins show the distribution of bootstrapped p-values, the red lines show the calculated p-value of the unscrambled RV-Halpha data, and highlighted in salmon are the scrambled bootstrap permutations that are more extreme, i.e. show a more significant correlation or anti-correlation, than the unscrambled data set. Since a significant fraction of the scrambled permutations are more extreme than the unscrambled data set, there is no significant linear correlation in this data set.</p>
+<p>The figure above is the output from <code class="highlighter-rouge">pearsonBootstrapPvalue.py</code>. The blue bins show the distribution of bootstrapped p-values, the red lines show the calculated p-value of the unscrambled RV-Halpha data, and highlighted in salmon are the scrambled bootstrap permutations that are more extreme, i.e. show a more significant correlation or anti-correlation, than the unscrambled data set. Since a significant fraction of the scrambled permutations are more extreme than the unscrambled data set, there is no significant linear correlation in this data set.</p>
 
 <p>If you’re interested in stellar activity, I should note that H-alpha equivalent widths in this data set were based on a 5 angstrom wide integration centered on the line center, and the line center was determined by fitting a parabola to the H-alpha line core. I attempted to fit H-alpha using many methods, and fitting the 5 A wide line  resulted in one of the least significant correlations.</p>
 

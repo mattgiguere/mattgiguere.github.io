@@ -118,7 +118,7 @@ to upload your SSH key does not work in the Safari browser. Use Google Chrome.</
 <h4 id="sshing-into-omega">SSHing Into Omega</h4>
 <p>Next, to SSH into omega, I used the command:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">ssh -p22 -i ~/.ssh/myomegakey netid@omega.hpc.yale.edu</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">ssh -p22 -i ~/.ssh/myomegakey netid@omega.hpc.yale.edu</code></pre></figure>
 
 <h4 id="creating-a-test-script">Creating a Test Script</h4>
 <p>Now comes the fun stuff. All jobs submitted for processing need to be wrapped
@@ -126,9 +126,9 @@ in a shell script. Before you do anything else, create a test script and see
 if it works. The sample script on the HPC site is out of date and results in
 error messages. Below is a sample script that works (as of March 12, 2015).</p>
 
-<p>Contents of <code>my_test_script.sh</code>:</p>
+<p>Contents of <code class="highlighter-rouge">my_test_script.sh</code>:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#!/bin/bash</span>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#!/bin/bash</span>
 
 <span class="c">###fas_devel: for compiling and testing code,</span>
 <span class="c">###restricted to one job per user32 max cores, 4 hours max walltime</span>
@@ -165,23 +165,23 @@ error messages. Below is a sample script that works (as of March 12, 2015).</p>
 <span class="nb">cd</span> <span class="nv">$PBS_O_WORKDIR</span>
 
 <span class="c">##Command to execute:</span>
-date</code></pre></div>
+date</code></pre></figure>
 
 <p>Most of what I wrote above is probably self-explanatory through the comments.
-Yes, the ‘#’ signs should be in front of the PBS commands. The <code>$PBS_JOBNAME</code>
-and <code>$PBS_JOBID</code> are handy variables that can be used to ensure your output is
+Yes, the ‘#’ signs should be in front of the PBS commands. The <code class="highlighter-rouge">$PBS_JOBNAME</code>
+and <code class="highlighter-rouge">$PBS_JOBID</code> are handy variables that can be used to ensure your output is
 printed to unique directories (i.e., you’re not overwriting previous results).</p>
 
 <p>To submit this job, type the following at the command line:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">qsub my_test_script.sh</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">qsub my_test_script.sh</code></pre></figure>
 
 <p>You should receive an email message when your script has begun execution. You
-can see the status of it by typing <code>showq</code>. The list is usually quite long, so
+can see the status of it by typing <code class="highlighter-rouge">showq</code>. The list is usually quite long, so
 you might find it useful to pipe the results to grep and search for just lines
 that contain your netid:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">showq <span class="p">|</span> grep netid</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">showq | grep netid</code></pre></figure>
 
 <p>Note that this test script is simply printing the date, so it won’t take long
 to run, and you should receive a finished email with exit 0 status shortly
@@ -193,11 +193,11 @@ after receiving the start email message.</p>
 <p>Now comes the fun part. Omega uses a module system. To print all available
 modules in the Terminal window type the following:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">module avail</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">module avail</code></pre></figure>
 
-<p>To find specific modules, use the <code>modulefind</code> command:</p>
+<p>To find specific modules, use the <code class="highlighter-rouge">modulefind</code> command:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="o">[</span>mjg22@login-0-0 ~<span class="o">]</span><span class="nv">$ </span>modulefind python
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="o">[</span>mjg22@login-0-0 ~]<span class="nv">$ </span>modulefind python
 /home/apps/fas/Modules:
 Applications/PythonPackages/numpy/numpy-GCC-ATLAS
 Applications/PythonPackages/scipy/scipy-GCC-ATLAS
@@ -233,28 +233,28 @@ RH6/Langs/Python/2.7.2
 RH6/Langs/Python/2.7.3
 RH6/Langs/Python/2.7.4rc2_experimental
 RH6/Langs/Python/3.2
-<span class="o">[</span>mjg22@login-0-0 ~<span class="o">]</span><span class="err">$</span></code></pre></div>
+<span class="o">[</span>mjg22@login-0-0 ~]<span class="err">$</span></code></pre></figure>
 
-<p>As can be seen in the included output above, <code>modulefind</code> is case insensitive.
+<p>As can be seen in the included output above, <code class="highlighter-rouge">modulefind</code> is case insensitive.
 There are many versions of python available, but the only packages that I
 wanted to uses were numpy and scipy.</p>
 
-<h4 id="loading-modules-and-adding-python-packages-using-pip">Loading Modules and Adding Python Packages Using <code>pip</code></h4>
+<h4 id="loading-modules-and-adding-python-packages-using-pip">Loading Modules and Adding Python Packages Using <code class="highlighter-rouge">pip</code></h4>
 
 <p>Adding more packages to your path can be a little tricky.
 I wanted to use python 2.7.9, but when I loaded that module,
-the <code>pip</code> command was not in my path. I loaded several others, and it looks
-like the most recent python 2 version to include <code>pip</code> on Omega is 2.7.3.
+the <code class="highlighter-rouge">pip</code> command was not in my path. I loaded several others, and it looks
+like the most recent python 2 version to include <code class="highlighter-rouge">pip</code> on Omega is 2.7.3.
 Another problem is that you won’t have write access to install packages to
 the default site-packages directory, so you will need to create a subdirectory
 in your home directory, and specify an optional argument to pip telling it
 where to install the libraries you need:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="o">[</span>mjg22@login-0-0 ~<span class="o">]</span><span class="nv">$mkdir</span> <span class="nb">local</span>
-<span class="o">[</span>mjg22@login-0-0 ~<span class="o">]</span><span class="nv">$module</span> load Langs/Python/2.7.3
-<span class="o">[</span>mjg22@login-0-0 ~<span class="o">]</span><span class="nv">$module</span> load Libs/NUMPY/1.9.1
-<span class="o">[</span>mjg22@login-0-0 ~<span class="o">]</span><span class="nv">$pip</span> install --install-option<span class="o">=</span><span class="s2">&quot;--prefix=~/local/&quot;</span> pandas
-<span class="o">[</span>mjg22@login-0-0 ~<span class="o">]</span><span class="nv">$pip</span> install --install-option<span class="o">=</span><span class="s2">&quot;--prefix=~/local/&quot;</span> argparse</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="o">[</span>mjg22@login-0-0 ~]<span class="nv">$mkdir</span> <span class="nb">local</span>
+<span class="o">[</span>mjg22@login-0-0 ~]<span class="nv">$module</span> load Langs/Python/2.7.3
+<span class="o">[</span>mjg22@login-0-0 ~]<span class="nv">$module</span> load Libs/NUMPY/1.9.1
+<span class="o">[</span>mjg22@login-0-0 ~]<span class="nv">$pip</span> install --install-option<span class="o">=</span><span class="s2">"--prefix=~/local/"</span> pandas
+<span class="o">[</span>mjg22@login-0-0 ~]<span class="nv">$pip</span> install --install-option<span class="o">=</span><span class="s2">"--prefix=~/local/"</span> argparse</code></pre></figure>
 
 <h3 id="setting-up-your-bashrc-file">Setting up your .bashrc file</h3>
 
@@ -262,10 +262,10 @@ where to install the libraries you need:</p>
 modify our bash startup file to load the other modules we want and modify
 our python path to include the libraries we installed in ~/local:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># .bashrc</span>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c"># .bashrc</span>
 
 <span class="c"># Source global definitions</span>
-<span class="k">if</span> <span class="o">[</span> -f /etc/bashrc <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<span class="k">if</span> <span class="o">[</span> -f /etc/bashrc <span class="o">]</span>; <span class="k">then</span>
         . /etc/bashrc
 <span class="k">fi</span>
 
@@ -283,14 +283,14 @@ module load Libs/MPI4PY/1.3.1
 <span class="c">### To install these, you need to use Python 2.7.3 because</span>
 <span class="c">### pip does not exist in the more recent modules</span>
 <span class="c">### module load Compilers/Python/2.7.3</span>
-<span class="c">### pip install --install-option=&quot;--prefix=~/local/&quot; package_name</span>
+<span class="c">### pip install --install-option="--prefix=~/local/" package_name</span>
 <span class="c">###for example</span>
-<span class="c">### pip install --install-option=&quot;--prefix=~/local/&quot; argparse</span>
-<span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span>/home/fas/fischer/mjg22/local/lib/python2.7/site-packages:<span class="nv">$PYTHONPATH</span></code></pre></div>
+<span class="c">### pip install --install-option="--prefix=~/local/" argparse</span>
+<span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span>/home/fas/fischer/mjg22/local/lib/python2.7/site-packages:<span class="nv">$PYTHONPATH</span></code></pre></figure>
 
 <h3 id="testing-the-real-code">Testing the real code</h3>
 <p>That should be everything. You should test your code on a single node before
-attempting to run it on many cores. <code>fas_devel</code>, as shown in the test script
+attempting to run it on many cores. <code class="highlighter-rouge">fas_devel</code>, as shown in the test script
 above, is the queue you want to use for that. To see what other queues are
 available click <a href="https://hpc.research.yale.edu/hpc_user_wiki/index.php/Omega#FAS_Queues">here</a>. Note there are 8 cores per node for
 Omega, and 36 GB of RAM per node, as mentioned in the <a href="https://hpc.research.yale.edu/hpc_user_wiki/index.php/Omega#Hardware">Hardware</a>

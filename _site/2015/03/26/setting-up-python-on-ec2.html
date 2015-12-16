@@ -79,36 +79,36 @@
 
 <p>First, we need to start our cluster instance. This can easily be done using starcluster by typing the following command:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster start mycluster</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster start mycluster</code></pre></figure>
 
 <p>To SSH into the master node of the cluster:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster sshmaster mycluster</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster sshmaster mycluster</code></pre></figure>
 
 <p>The SSH port on my machine is different from the default port, and it caused some problems with starcluster.</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster sshmaster mycluster
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster sshmaster mycluster
 StarCluster - <span class="o">(</span>http://star.mit.edu/cluster<span class="o">)</span> <span class="o">(</span>v. 0.95.6<span class="o">)</span>
-Software Tools <span class="k">for</span> Academics and Researchers <span class="o">(</span>STAR<span class="o">)</span>
+Software Tools <span class="k">for </span>Academics and Researchers <span class="o">(</span>STAR<span class="o">)</span>
 Please submit bug reports to starcluster@mit.edu
 
-ssh: connect to host ec2-25-3-89-123.compute-1.amazonaws.com port 2234: Operation timed out</code></pre></div>
+ssh: connect to host ec2-25-3-89-123.compute-1.amazonaws.com port 2234: Operation timed out</code></pre></figure>
 
-<p>One solution to this is to add an entry in <code>~/.ssh/config</code> to specify the port to the master node:</p>
+<p>One solution to this is to add an entry in <code class="highlighter-rouge">~/.ssh/config</code> to specify the port to the master node:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">Host ec2-25-3-89-123.compute-1.amazonaws.com
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">Host ec2-25-3-89-123.compute-1.amazonaws.com
    Hostname ec2-25-3-89-123.compute-1.amazonaws.com
-   Port 22</code></pre></div>
+   Port 22</code></pre></figure>
 
 <p>But this means adding a new entry every time a new cluster is started! That’s not an acceptable solution.</p>
 
-<p>I ended up changing the SSH port in <code>/etc/services</code> <em>back</em> to 22, and then modifying the <code>/System/Library/LaunchDaemons/ssh.plist</code> file to a port other than 22.</p>
+<p>I ended up changing the SSH port in <code class="highlighter-rouge">/etc/services</code> <em>back</em> to 22, and then modifying the <code class="highlighter-rouge">/System/Library/LaunchDaemons/ssh.plist</code> file to a port other than 22.</p>
 
 <p>Here’s what that looks like in OS X Yosemite:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">&lt;?xml <span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span> <span class="nv">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span>?&gt;
-&lt;!DOCTYPE plist PUBLIC <span class="s2">&quot;-//Apple//DTD PLIST 1.0//EN&quot;</span> <span class="s2">&quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;</span>&gt;
-&lt;plist <span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span>&gt;
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">&lt;?xml <span class="nv">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="nv">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span>?&gt;
+&lt;!DOCTYPE plist PUBLIC <span class="s2">"-//Apple//DTD PLIST 1.0//EN"</span> <span class="s2">"http://www.apple.com/DTDs/PropertyList-1.0.dtd"</span>&gt;
+&lt;plist <span class="nv">version</span><span class="o">=</span><span class="s2">"1.0"</span>&gt;
 &lt;dict&gt;
 	&lt;key&gt;Disabled&lt;/key&gt;
 	&lt;<span class="nb">true</span>/&gt;
@@ -146,7 +146,7 @@ ssh: connect to host ec2-25-3-89-123.compute-1.amazonaws.com port 2234: Operatio
 	&lt;key&gt;POSIXSpawnType&lt;/key&gt;
 	&lt;string&gt;Interactive&lt;/string&gt;
 &lt;/dict&gt;
-&lt;/plist&gt;</code></pre></div>
+&lt;/plist&gt;</code></pre></figure>
 
 <p>Changing the port number to 2123 in the ssh.plist makes it so that my computer only allows incoming connections to port 2123, but the default port when trying to connect to other machines is still 22. Perfect!</p>
 
@@ -154,80 +154,80 @@ ssh: connect to host ec2-25-3-89-123.compute-1.amazonaws.com port 2234: Operatio
 
 <p>Next, we want to get the proper version of python installed on our cluster. The instances that come with starcluster by default have a ton of useful tools already built in. Immediately after SSHing into the master node, the available tools are listed:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster sshmaster mycluster
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster sshmaster mycluster
 StarCluster - <span class="o">(</span>http://star.mit.edu/cluster<span class="o">)</span> <span class="o">(</span>v. 0.95.6<span class="o">)</span>
-Software Tools <span class="k">for</span> Academics and Researchers <span class="o">(</span>STAR<span class="o">)</span>
+Software Tools <span class="k">for </span>Academics and Researchers <span class="o">(</span>STAR<span class="o">)</span>
 Please submit bug reports to starcluster@mit.edu
 
-The authenticity of host <span class="s1">&#39;ec2-25-3-89-123.compute-1.amazonaws.com (25.3.89.123)&#39;</span> can<span class="s1">&#39;t be established.</span>
-<span class="s1">RSA key fingerprint is ab:ef:d8:2f:3c:78:b3:a2:a2:2c:4d:8e:3f:7e:2a:8c.</span>
-<span class="s1">Are you sure you want to continue connecting (yes/no)? yes</span>
-<span class="s1">Warning: Permanently added &#39;</span>ec2-25-3-89-123.compute-1.amazonaws.com,25.3.89.123<span class="s1">&#39; (RSA) to the list of known hosts.</span>
-<span class="s1">          _                 _           _</span>
-<span class="s1">__/\_____| |_ __ _ _ __ ___| |_   _ ___| |_ ___ _ __</span>
-<span class="s1">\    / __| __/ _` | &#39;</span>__/ __<span class="p">|</span> <span class="p">|</span> <span class="p">|</span> <span class="p">|</span> / __<span class="p">|</span> __/ _ <span class="se">\ </span><span class="s1">&#39;__|</span>
-<span class="s1">/_  _\__ \ || (_| | | | (__| | |_| \__ \ ||  __/ |</span>
-<span class="s1">  \/ |___/\__\__,_|_|  \___|_|\__,_|___/\__\___|_|</span>
+The authenticity of host <span class="s1">'ec2-25-3-89-123.compute-1.amazonaws.com (25.3.89.123)'</span> can<span class="s1">'t be established.
+RSA key fingerprint is ab:ef:d8:2f:3c:78:b3:a2:a2:2c:4d:8e:3f:7e:2a:8c.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '</span>ec2-25-3-89-123.compute-1.amazonaws.com,25.3.89.123<span class="s1">' (RSA) to the list of known hosts.
+          _                 _           _
+__/\_____| |_ __ _ _ __ ___| |_   _ ___| |_ ___ _ __
+\    / __| __/ _` | '</span>__/ __| | | | / __| __/ _ <span class="se">\ </span><span class="s1">'__|
+/_  _\__ \ || (_| | | | (__| | |_| \__ \ ||  __/ |
+  \/ |___/\__\__,_|_|  \___|_|\__,_|___/\__\___|_|
 
-<span class="s1">StarCluster Ubuntu 13.04 AMI</span>
-<span class="s1">Software Tools for Academics and Researchers (STAR)</span>
-<span class="s1">Homepage: http://star.mit.edu/cluster</span>
-<span class="s1">Documentation: http://star.mit.edu/cluster/docs/latest</span>
-<span class="s1">Code: https://github.com/jtriley/StarCluster</span>
-<span class="s1">Mailing list: http://star.mit.edu/cluster/mailinglist.html</span>
+StarCluster Ubuntu 13.04 AMI
+Software Tools for Academics and Researchers (STAR)
+Homepage: http://star.mit.edu/cluster
+Documentation: http://star.mit.edu/cluster/docs/latest
+Code: https://github.com/jtriley/StarCluster
+Mailing list: http://star.mit.edu/cluster/mailinglist.html
 
-<span class="s1">This AMI Contains:</span>
+This AMI Contains:
 
-<span class="s1">  * NVIDIA Driver 331.38</span>
-<span class="s1">  * NVIDIA CUDA Toolkit 5.5.22</span>
-<span class="s1">  * PyCuda 2013.1.1 and PyOpenCL 2013.2</span>
-<span class="s1">  * MAGMA 1.4.1</span>
-<span class="s1">  * Intel Ethernet Driver 2.11.3 (ixgbevf)</span>
-<span class="s1">  * Open Grid Scheduler (OGS - formerly SGE) queuing system</span>
-<span class="s1">  * Condor workload management system</span>
-<span class="s1">  * OpenMPI compiled with Open Grid Scheduler support</span>
-<span class="s1">  * OpenBLAS - Highly optimized Basic Linear Algebra Routines</span>
-<span class="s1">  * NumPy/SciPy linked against OpenBlas</span>
-<span class="s1">  * Pandas - Data Analysis Library</span>
-<span class="s1">  * IPython 1.1.0 with parallel and notebook support</span>
-<span class="s1">  * Julia 0.3pre</span>
-<span class="s1">  * and more! (use &#39;</span>dpkg -l<span class="err">&#39;</span> to show all installed packages<span class="o">)</span>
+  * NVIDIA Driver 331.38
+  * NVIDIA CUDA Toolkit 5.5.22
+  * PyCuda 2013.1.1 and PyOpenCL 2013.2
+  * MAGMA 1.4.1
+  * Intel Ethernet Driver 2.11.3 (ixgbevf)
+  * Open Grid Scheduler (OGS - formerly SGE) queuing system
+  * Condor workload management system
+  * OpenMPI compiled with Open Grid Scheduler support
+  * OpenBLAS - Highly optimized Basic Linear Algebra Routines
+  * NumPy/SciPy linked against OpenBlas
+  * Pandas - Data Analysis Library
+  * IPython 1.1.0 with parallel and notebook support
+  * Julia 0.3pre
+  * and more! (use '</span>dpkg -l<span class="s1">' to show all installed packages)
 
 Open Grid Scheduler/Condor cheat sheet:
 
-  * qstat/condor_q - show status of batch <span class="nb">jobs</span>
-  * qhost/condor_status- show status of hosts, queues, and <span class="nb">jobs</span>
-  * qsub/condor_submit - submit batch <span class="nb">jobs</span> <span class="o">(</span>e.g. qsub -cwd ./job.sh<span class="o">)</span>
-  * qdel/condor_rm - delete batch <span class="nb">jobs</span> <span class="o">(</span>e.g. qdel 7<span class="o">)</span>
+  * qstat/condor_q - show status of batch jobs
+  * qhost/condor_status- show status of hosts, queues, and jobs
+  * qsub/condor_submit - submit batch jobs (e.g. qsub -cwd ./job.sh)
+  * qdel/condor_rm - delete batch jobs (e.g. qdel 7)
   * qconf - configure Open Grid Scheduler system
 
 Current System Stats:
 
   System load:  0.0               Processes:           94
   Usage of /:   63.3% of 7.74GB   Users logged in:     0
-  Memory usage: 11%               IP address <span class="k">for</span> eth0: 123.45.6.78
+  Memory usage: 11%               IP address for eth0: 123.45.6.78
   Swap usage:   0%
 
     https://landscape.canonical.com/
-root@master:~#</code></pre></div>
+root@master:~#</span></code></pre></figure>
 
 <p>This is really great, but a lot of the versions listed here are dated, and the APIs have changed considerably. One option is to upgrade some of these libraries with pip:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">pip install pandas --upgrade
-pip install numexpr --upgrade</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">pip install pandas --upgrade
+pip install numexpr --upgrade</code></pre></figure>
 
 <p>One down side of simply upgrading the dependencies is that it takes a while — it took me 10 minutes and 7 seconds to start up a cluster and upgrade numpy and pandas. If you do not want to wait ten minutes every time you start up a cluster, another option is to use <a href="http://conda.pydata.org/miniconda.html">miniconda</a>, a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in <a href="/2015/03/20/better-python-coding-practices.html">this post</a>.</p>
 
 <p>When I switched from the version of python that comes built in with starcluster to miniconda, the total time to start up a cluster dropped from 10m7s to 4m57s. Switching to miniconda is not difficult; just type the following three lines once your cluster is started up and you have SSHed into the master node:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">cd</span> /home/sgeadmin<span class="p">;</span> wget http://repo.continuum.io/miniconda/Miniconda-3.9.1-Linux-x86_64.sh -O miniconda.sh<span class="p">;</span> bash miniconda.sh -b -p /home/sgeadmin/miniconda
-<span class="nb">echo</span> <span class="s2">&quot;export PATH=/home/sgeadmin/miniconda/bin:\$PATH&quot;</span> &gt;&gt; .bashrc<span class="p">;</span> <span class="nb">hash</span> -r
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/home/sgeadmin/miniconda/bin:<span class="nv">$PATH</span><span class="p">;</span> conda config --set always_yes yes --set changeps1 no</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">cd</span> /home/sgeadmin; wget http://repo.continuum.io/miniconda/Miniconda-3.9.1-Linux-x86_64.sh -O miniconda.sh; bash miniconda.sh -b -p /home/sgeadmin/miniconda
+<span class="nb">echo</span> <span class="s2">"export PATH=/home/sgeadmin/miniconda/bin:</span><span class="se">\$</span><span class="s2">PATH"</span> &gt;&gt; .bashrc; <span class="nb">hash</span> -r
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/home/sgeadmin/miniconda/bin:<span class="nv">$PATH</span>; conda config --set always_yes yes --set changeps1 no</code></pre></figure>
 
 <p>And then installing numpy and pandas is much faster than upgrading the starcluster version:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">conda install numpy
-conda install pandas</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">conda install numpy
+conda install pandas</code></pre></figure>
 
 <p>I create a starcluster startup script that sets up my environment, uploads all my coda and input data to the cluster, updates and installs all python dependencies, and then submits the MPI job. See the end of this post for the script.</p>
 
@@ -235,7 +235,7 @@ conda install pandas</code></pre></div>
 
 <p>Looking at the starcluster <a href="http://star.mit.edu/cluster/docs/latest/manual/getting_started.html#compile-and-run-a-hello-world-openmpi-program">Compile and run a “Hello World” OpenMPI program example</a>, it looks like we need to run things as sgeadmin in order to use MPI. Indeed, when I tried running things as root, I got error message saying it couldn’t access things in the root directory:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">qrsh_starter: cannot change to directory /root/projects</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">qrsh_starter: cannot change to directory /root/projects</code></pre></figure>
 
 <p>The /root directory only exists on the master node. We need to run our code from somewhere in the /home directory, since that’s the directory that is NFS mounted to all the nodes. This may also mean that upgrading pandas and numexpr only worked for the master node.</p>
 
@@ -243,71 +243,71 @@ conda install pandas</code></pre></div>
 
 <p>I made a script that will start up the cluster, and copy over all of the code and input data I want to use, then start an MPI job. Here’s what that script looks like:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#!/usr/bin/env bash</span>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#!/usr/bin/env bash</span>
 
-<span class="nb">echo</span> <span class="s2">&quot;Starting cluster...&quot;</span>
+<span class="nb">echo</span> <span class="s2">"Starting cluster..."</span>
 starcluster start mycluster
 
-<span class="nb">echo</span> <span class="s2">&quot;Now upgrading pandas and numexpr...&quot;</span>
+<span class="nb">echo</span> <span class="s2">"Now upgrading pandas and numexpr..."</span>
 <span class="c">#upgrade numpy and pandas:</span>
-starcluster sshmaster mycluster <span class="s1">&#39;pip install pandas --upgrade&#39;</span>
-starcluster sshmaster mycluster <span class="s1">&#39;pip install numexpr --upgrade&#39;</span>
+starcluster sshmaster mycluster <span class="s1">'pip install pandas --upgrade'</span>
+starcluster sshmaster mycluster <span class="s1">'pip install numexpr --upgrade'</span>
 
 <span class="c">#install dependencies:</span>
-starcluster sshmaster mycluster <span class="s1">&#39;pip install emcee&#39;</span>
+starcluster sshmaster mycluster <span class="s1">'pip install emcee'</span>
 
 <span class="c">#append my projects directory to the Python path:</span>
-starcluster sshmaster mycluster <span class="s1">&#39;echo &quot; &quot; &gt;&gt; .bashrc&#39;</span>
-starcluster sshmaster mycluster <span class="s1">&#39;echo &quot;#Add my projects dir to python path:&quot; &gt;&gt; .bashrc&#39;</span>
-starcluster sshmaster mycluster <span class="s1">&#39;echo &quot;export PYTHONPATH=/root/projects:\$PYTHONPATH&quot; &gt;&gt; .bashrc&#39;</span>
+starcluster sshmaster mycluster <span class="s1">'echo " " &gt;&gt; .bashrc'</span>
+starcluster sshmaster mycluster <span class="s1">'echo "#Add my projects dir to python path:" &gt;&gt; .bashrc'</span>
+starcluster sshmaster mycluster <span class="s1">'echo "export PYTHONPATH=/root/projects:\$PYTHONPATH" &gt;&gt; .bashrc'</span>
 
 <span class="c">#add directories and copy over code:</span>
-<span class="nb">echo</span> <span class="s2">&quot;Creating projects directory...&quot;</span>
+<span class="nb">echo</span> <span class="s2">"Creating projects directory..."</span>
 starcluster sshmaster mycluster mkdir projects
-<span class="nb">echo</span> <span class="s2">&quot;Creating MOST directory...&quot;</span>
+<span class="nb">echo</span> <span class="s2">"Creating MOST directory..."</span>
 starcluster sshmaster mycluster mkdir projects/MOST
-<span class="nb">echo</span> <span class="s2">&quot;Copying over module files...&quot;</span>
+<span class="nb">echo</span> <span class="s2">"Copying over module files..."</span>
 starcluster put mycluster /home/matt/projects/MOST/__init__.py projects/MOST/
 starcluster put mycluster /home/matt/projects/MOST/setup.py projects/MOST/
-<span class="nb">echo</span> <span class="s2">&quot;Creating code directory...&quot;</span>
+<span class="nb">echo</span> <span class="s2">"Creating code directory..."</span>
 starcluster sshmaster mycluster mkdir projects/MOST/code
-<span class="nb">echo</span> <span class="s2">&quot;Copying over the code...&quot;</span>
+<span class="nb">echo</span> <span class="s2">"Copying over the code..."</span>
 starcluster put mycluster /home/matt/projects/MOST/code projects/MOST/
 
 
 <span class="c">#now add the data directories and input data:</span>
-<span class="nb">echo</span> <span class="s2">&quot;Creating data directories...&quot;</span>
+<span class="nb">echo</span> <span class="s2">"Creating data directories..."</span>
 starcluster sshmaster mycluster mkdir projects/MOST/data
 starcluster sshmaster mycluster mkdir projects/MOST/data/chiron
 starcluster sshmaster mycluster mkdir projects/MOST/data/most
 starcluster sshmaster mycluster mkdir projects/MOST/data/MCMC
-<span class="nb">echo</span> <span class="s2">&quot;Copying over CHIRON data...&quot;</span>
+<span class="nb">echo</span> <span class="s2">"Copying over CHIRON data..."</span>
 starcluster put mycluster /home/matt/projects/MOST/data/chiron/epsEriChironSepDec2014.txt projects/MOST/data/chiron/
-<span class="nb">echo</span> <span class="s2">&quot;Copying over MOST data...&quot;</span>
+<span class="nb">echo</span> <span class="s2">"Copying over MOST data..."</span>
 starcluster put mycluster /home/matt/projects/MOST/data/most/epsEriMostFullRedResamp.txt projects/MOST/data/most/
 
 <span class="c">#now run the job</span>
-starcluster sshmaster mycluster <span class="s1">&#39;cd projects/MOST/code; qsub -cwd -pe orte 4 ./evol_starcluster_qsub_test.sh&#39;</span>
+starcluster sshmaster mycluster <span class="s1">'cd projects/MOST/code; qsub -cwd -pe orte 4 ./evol_starcluster_qsub_test.sh'</span>
 
-starcluster sshmaster mycluster <span class="s1">&#39;qstat&#39;</span></code></pre></div>
+starcluster sshmaster mycluster <span class="s1">'qstat'</span></code></pre></figure>
 
-<p>In the line that I use to run the job, I change directories into the directory with my code, and then call on qsub to execute my routine. The -cwd option tells qsub to start the code from the current working directory, and the -pe orte 4 tells it to use the orte parallel environment with 4 cores. The contents of <code>evol_starcluster_qsub_test.sh</code> are just the program to be executed with MPI.</p>
+<p>In the line that I use to run the job, I change directories into the directory with my code, and then call on qsub to execute my routine. The -cwd option tells qsub to start the code from the current working directory, and the -pe orte 4 tells it to use the orte parallel environment with 4 cores. The contents of <code class="highlighter-rouge">evol_starcluster_qsub_test.sh</code> are just the program to be executed with MPI.</p>
 
 <p>Contents of evol_starcluster_qsub_test.sh:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#!/bin/bash</span>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="c">#!/bin/bash</span>
 
-mpiexec python eeTwoSptParTmpDfRtEvol.py <span class="m">3</span> <span class="m">90</span> <span class="m">100</span> --thin 2</code></pre></div>
+mpiexec python eeTwoSptParTmpDfRtEvol.py 3 90 100 --thin 2</code></pre></figure>
 
 <p>When running this script, user interaction is still required at one point. When SSHing into the master node for the first time, SSH will ask to confirm the identity of the machine:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">The authenticity of host <span class="s1">&#39;ec2-22-3-444-55.compute-1.amazonaws.com (22.3.44.55)&#39;</span> can<span class="err">&#39;</span>t be established.
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">The authenticity of host <span class="s1">'ec2-22-3-444-55.compute-1.amazonaws.com (22.3.44.55)'</span> can<span class="s1">'t be established.
 RSA key fingerprint is 12:34:56:78:90:aa:bb:cc:dd:ee:ff:11::22:33:44.
-Are you sure you want to <span class="k">continue</span> connecting <span class="o">(</span>yes/no<span class="o">)</span>? yes</code></pre></div>
+Are you sure you want to continue connecting (yes/no)? yes</span></code></pre></figure>
 
-<p>If you want to skip that, you can add the following to your <code>~/.ssh/config</code> file:</p>
+<p>If you want to skip that, you can add the following to your <code class="highlighter-rouge">~/.ssh/config</code> file:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">StrictHostKeyChecking no</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">StrictHostKeyChecking no</code></pre></figure>
 
 
   </article>

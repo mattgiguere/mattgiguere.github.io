@@ -73,45 +73,45 @@
   </header>
 
   <article class="post-content">
-    <p>I looked into a problem that occurred recently when adding observations to the <code>spectra</code> table over break. The error message was</p>
+    <p>I looked into a problem that occurred recently when adding observations to the <code class="highlighter-rouge">spectra</code> table over break. The error message was</p>
 
-<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">DataError</span><span class="p">:</span> <span class="p">(</span><span class="mi">1264</span><span class="p">,</span> <span class="n">u</span><span class="ss">&quot;Out of range value for column &#39;spec_id&#39; at row 305&quot;</span><span class="p">)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">DataError</span><span class="p">:</span> <span class="p">(</span><span class="mi">1264</span><span class="p">,</span> <span class="n">u</span><span class="nv">"Out of range value for column 'spec_id' at row 305"</span><span class="p">)</span></code></pre></figure>
 
-<p>This was due to using a normal <code>INT</code> type for the index. The fix is quite simple in MySQL, you can change the type using the command:</p>
+<p>This was due to using a normal <code class="highlighter-rouge">INT</code> type for the index. The fix is quite simple in MySQL, you can change the type using the command:</p>
 
-<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">table_name</span> <span class="k">MODIFY</span> <span class="k">column_name</span> <span class="nb">BIGINT</span><span class="p">;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">table_name</span> <span class="k">MODIFY</span> <span class="k">column_name</span> <span class="n">BIGINT</span><span class="p">;</span></code></pre></figure>
 
-<p>However, <code>spec_id</code> is also auto incrementing and the PRIMARY KEY for
-my table. Here is the description of <code>spec_id</code> BEFORE ALTERing the
+<p>However, <code class="highlighter-rouge">spec_id</code> is also auto incrementing and the PRIMARY KEY for
+my table. Here is the description of <code class="highlighter-rouge">spec_id</code> BEFORE ALTERing the
 TABLE:</p>
 
-<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">describe</span> <span class="n">spectra</span><span class="p">;</span>
-<span class="o">+</span><span class="c1">----------------+--------------+------+-----+---------+----------------+</span>
-<span class="o">|</span> <span class="n">Field</span>          <span class="o">|</span> <span class="k">Type</span>         <span class="o">|</span> <span class="k">Null</span> <span class="o">|</span> <span class="k">Key</span> <span class="o">|</span> <span class="k">Default</span> <span class="o">|</span> <span class="n">Extra</span>          <span class="o">|</span>
-<span class="o">+</span><span class="c1">----------------+--------------+------+-----+---------+----------------+</span>
-<span class="o">|</span> <span class="n">spec_id</span>        <span class="o">|</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>      <span class="o">|</span> <span class="k">NO</span>   <span class="o">|</span> <span class="n">PRI</span> <span class="o">|</span> <span class="k">NULL</span>    <span class="o">|</span> <span class="n">auto_increment</span> <span class="o">|</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">describe</span> <span class="n">spectra</span><span class="p">;</span>
+<span class="o">+</span><span class="c1">----------------+--------------+------+-----+---------+----------------+
+</span><span class="o">|</span> <span class="n">Field</span>          <span class="o">|</span> <span class="k">Type</span>         <span class="o">|</span> <span class="k">Null</span> <span class="o">|</span> <span class="k">Key</span> <span class="o">|</span> <span class="k">Default</span> <span class="o">|</span> <span class="n">Extra</span>          <span class="o">|</span>
+<span class="o">+</span><span class="c1">----------------+--------------+------+-----+---------+----------------+
+</span><span class="o">|</span> <span class="n">spec_id</span>        <span class="o">|</span> <span class="n">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>      <span class="o">|</span> <span class="k">NO</span>   <span class="o">|</span> <span class="n">PRI</span> <span class="o">|</span> <span class="k">NULL</span>    <span class="o">|</span> <span class="n">auto_increment</span> <span class="o">|</span></code></pre></figure>
 
 <p>Since there is already a PRIMARY KEY set (spec_id), MySQL will produce an
 error if PRIMARY KEY is specified when attempting to MODIFY the TABLE.
 Fortunately, this does not matter — the spec_id column will
-remain the primary key even if PRIMARY KEY is not specified. However, <code>AUTO_INCREMENT</code> <strong>does</strong> need to be specified when altering the column.</p>
+remain the primary key even if PRIMARY KEY is not specified. However, <code class="highlighter-rouge">AUTO_INCREMENT</code> <strong>does</strong> need to be specified when altering the column.</p>
 
-<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">table_name</span> <span class="k">MODIFY</span> <span class="k">column_name</span> <span class="nb">BIGINT</span> <span class="n">AUTO_INCREMENT</span><span class="p">;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">table_name</span> <span class="k">MODIFY</span> <span class="k">column_name</span> <span class="n">BIGINT</span> <span class="n">AUTO_INCREMENT</span><span class="p">;</span></code></pre></figure>
 
 <p>In my specific case the command used to change my MySQL column
-from an <code>INT</code> type to <code>BIGINT</code> was</p>
+from an <code class="highlighter-rouge">INT</code> type to <code class="highlighter-rouge">BIGINT</code> was</p>
 
-<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">spectra</span> <span class="k">MODIFY</span> <span class="n">spec_id</span> <span class="nb">BIGINT</span> <span class="n">AUTO_INCREMENT</span><span class="p">;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">spectra</span> <span class="k">MODIFY</span> <span class="n">spec_id</span> <span class="n">BIGINT</span> <span class="n">AUTO_INCREMENT</span><span class="p">;</span></code></pre></figure>
 
 <p>which resulted in</p>
 
-<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">describe</span> <span class="n">spectra</span><span class="p">;</span>
-<span class="o">+</span><span class="c1">------------+------------+------+-----+---------+----------------+</span>
-<span class="o">|</span> <span class="n">Field</span>      <span class="o">|</span> <span class="k">Type</span>       <span class="o">|</span> <span class="k">Null</span> <span class="o">|</span> <span class="k">Key</span> <span class="o">|</span> <span class="k">Default</span> <span class="o">|</span> <span class="n">Extra</span>          <span class="o">|</span>
-<span class="o">+</span><span class="c1">------------+------------+------+-----+---------+----------------+</span>
-<span class="o">|</span> <span class="n">spec_id</span>    <span class="o">|</span> <span class="nb">bigint</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="o">|</span> <span class="k">NO</span>   <span class="o">|</span> <span class="n">PRI</span> <span class="o">|</span> <span class="k">NULL</span>    <span class="o">|</span> <span class="n">auto_increment</span> <span class="o">|</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">describe</span> <span class="n">spectra</span><span class="p">;</span>
+<span class="o">+</span><span class="c1">------------+------------+------+-----+---------+----------------+
+</span><span class="o">|</span> <span class="n">Field</span>      <span class="o">|</span> <span class="k">Type</span>       <span class="o">|</span> <span class="k">Null</span> <span class="o">|</span> <span class="k">Key</span> <span class="o">|</span> <span class="k">Default</span> <span class="o">|</span> <span class="n">Extra</span>          <span class="o">|</span>
+<span class="o">+</span><span class="c1">------------+------------+------+-----+---------+----------------+
+</span><span class="o">|</span> <span class="n">spec_id</span>    <span class="o">|</span> <span class="n">bigint</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="o">|</span> <span class="k">NO</span>   <span class="o">|</span> <span class="n">PRI</span> <span class="o">|</span> <span class="k">NULL</span>    <span class="o">|</span> <span class="n">auto_increment</span> <span class="o">|</span></code></pre></figure>
 
-<p>Using <code>BIGINT</code> for the type will allow for up to <a href="http://dev.mysql.com/doc/refman/5.5/en/integer-types.html">9 Quadrillion</a> rows in the table! That should last for a while.</p>
+<p>Using <code class="highlighter-rouge">BIGINT</code> for the type will allow for up to <a href="http://dev.mysql.com/doc/refman/5.5/en/integer-types.html">9 Quadrillion</a> rows in the table! That should last for a while.</p>
 
   </article>
 

@@ -81,48 +81,48 @@ couple cameras to capture the initial build of the spectrograph.</p>
 
 <p>The photographer sent all of the stills in advance, and we couldn’t wait to
 see what the final time lapse would like, so I made a few time lapse videos
-myself using <code>ffmpeg</code>.</p>
+myself using <code class="highlighter-rouge">ffmpeg</code>.</p>
 
 <h3 id="setting-up-ffmpeg">Setting up ffmpeg</h3>
 
 <p>To put this together, I needed to install ffmpeg. This turned out to be a \
 little challenging. I tried the normal homebrew install:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">brew install ffmpeg</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">brew install ffmpeg</code></pre></figure>
 
 <p>This worked! I then added a symbolic link to add it to my path:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">cd</span> /usr/local/bin
-sudo ln -s /usr/local/Cellar/ffmpeg/2.5.3/bin/ffmpeg ffmpeg</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">cd</span> /usr/local/bin
+sudo ln -s /usr/local/Cellar/ffmpeg/2.5.3/bin/ffmpeg ffmpeg</code></pre></figure>
 
 <p>Unfortunately, when I tried to get help on ffmpeg, here’s what it
 returned:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">ffmpeg --help
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">ffmpeg --help
 dyld: Library not loaded: /usr/local/lib/libx264.142.dylib
   Referenced from: /usr/local/bin/ffmpeg
   Reason: image not found
-Trace/BPT <span class="nb">trap</span></code></pre></div>
+Trace/BPT <span class="nb">trap</span></code></pre></figure>
 
 <p>I then did a search for this .dylib. homebrew installed it:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">cd</span> /usr/local/Cellar
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">cd</span> /usr/local/Cellar
 find . -name libx264.142.dylib
-./x264/r2495/lib/libx264.142.dylib</code></pre></div>
+./x264/r2495/lib/libx264.142.dylib</code></pre></figure>
 
 <p>I just needed to add it to my path:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">cd</span> /usr/local/bin
-sudo ln -s /usr/local/Cellar/x264/r2495/lib/libx264.142.dylib libx264.142.dylib</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">cd</span> /usr/local/bin
+sudo ln -s /usr/local/Cellar/x264/r2495/lib/libx264.142.dylib libx264.142.dylib</code></pre></figure>
 
 <p>I repeated this for a few more packages homebrew installed that were not in my
 path:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo ln -s /usr/local/Cellar/x264/r2495/lib/libx264.142.dylib libx264.142.dylib
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">sudo ln -s /usr/local/Cellar/x264/r2495/lib/libx264.142.dylib libx264.142.dylib
 sudo ln -s /usr/local/Cellar/libvo-aacenc/0.1.2/lib/libvo-aacenc.0.dylib libvo-aacenc.0.dylib
-sudo ln -s /usr/local/Cellar/lame/3.99.5/lib/libmp3lame.0.dylib libmp3lame.0.dylib</code></pre></div>
+sudo ln -s /usr/local/Cellar/lame/3.99.5/lib/libmp3lame.0.dylib libmp3lame.0.dylib</code></pre></figure>
 
-<p>Finally, <code>ffmpeg -h</code> returned the help, as expected.</p>
+<p>Finally, <code class="highlighter-rouge">ffmpeg -h</code> returned the help, as expected.</p>
 
 <p>I found <a href="https://trac.ffmpeg.org/wiki/Create%20a%20video%20slideshow%20from%20images">this page</a>
 on the ffmpeg wiki to be helpful in creating the time lapse. And
@@ -130,8 +130,8 @@ on the ffmpeg wiki to be helpful in creating the time lapse. And
 
 <p>The files I wanted to add were stored in a folder named Bench-View_JPG. They
 were in sequential order, but they didn’t start at 0. The easiest way to add
-them all to the movie was the use the <code>pattern_type</code> optional argument in
-conjunction with <code>glob</code>. The other options I used were:</p>
+them all to the movie was the use the <code class="highlighter-rouge">pattern_type</code> optional argument in
+conjunction with <code class="highlighter-rouge">glob</code>. The other options I used were:</p>
 
 <ul>
   <li>-<em>framerate</em>: the number of frames per second to input
@@ -140,9 +140,9 @@ conjunction with <code>glob</code>. The other options I used were:</p>
 </ul>
 
 <p>I wanted my video to be 1080p HD, and the final video to be called
-<code>BenchMovie1080p11fps.mp4</code>, so I used the following command:</p>
+<code class="highlighter-rouge">BenchMovie1080p11fps.mp4</code>, so I used the following command:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">ffmpeg -framerate <span class="m">11</span> -pattern_type glob -i <span class="s1">&#39;Bench-View_JPG/*.jpg&#39;</span> -r <span class="m">11</span> -s 1620x1080 BenchMovie1080p11fps.mp4</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">ffmpeg -framerate 11 -pattern_type glob -i <span class="s1">'Bench-View_JPG/*.jpg'</span> -r 11 -s 1620x1080 BenchMovie1080p11fps.mp4</code></pre></figure>
 
 <p>The result can be seen below.</p>
 
@@ -152,15 +152,15 @@ conjunction with <code>glob</code>. The other options I used were:</p>
   Upgrade your browser to one that supports the video tag.
 </video>
 
-<p>For embedding the video into the web page, I used the HTML5 <code>&lt;video&gt;</code> tag. I
+<p>For embedding the video into the web page, I used the HTML5 <code class="highlighter-rouge">&lt;video&gt;</code> tag. I
 also set the width to “100%”” and the height to “auto” to make sure it was
 responsive and scaled properly. Here’s the code that made the above video:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;video</span> <span class="na">width=</span><span class="s">&quot;100%&quot;</span> <span class="na">height=</span><span class="s">&quot;auto&quot;</span> <span class="na">controls</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;source</span> <span class="na">src=</span><span class="s">&quot;/images/BenchMovie1080p11fps.mp4&quot;</span> <span class="na">type=</span><span class="s">&quot;video/mp4&quot;</span><span class="nt">&gt;</span>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;video</span> <span class="na">width=</span><span class="s">"100%"</span> <span class="na">height=</span><span class="s">"auto"</span> <span class="na">controls</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;source</span> <span class="na">src=</span><span class="s">"/images/BenchMovie1080p11fps.mp4"</span> <span class="na">type=</span><span class="s">"video/mp4"</span><span class="nt">&gt;</span>
 Note: You are missing out on our time lapse video!
 Upgrade your browser to one that supports the video tag.
-<span class="nt">&lt;/video&gt;</span></code></pre></div>
+<span class="nt">&lt;/video&gt;</span></code></pre></figure>
 
 <p>The message, of course, only appears in unsupported browsers. Chrome,
 Firefox, Internet Explore, Opera, and Safari all support mp4 in the
@@ -170,7 +170,7 @@ video tag.</p>
 also created a time lapse video from stills taken with the other camera using
 the following command:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">ffmpeg -framerate <span class="m">11</span> -pattern_type glob -i <span class="s1">&#39;Full-View_JPG/_CAM*.jpg&#39;</span> -r <span class="m">11</span> -s 1620x1080 FullMovie1080p11fps.mp4</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">ffmpeg -framerate 11 -pattern_type glob -i <span class="s1">'Full-View_JPG/_CAM*.jpg'</span> -r 11 -s 1620x1080 FullMovie1080p11fps.mp4</code></pre></figure>
 
 <p>The results can be seen on MAO page of the <a href="http://exoplanets.astro.yale.edu/instrumentation/mao.php">Exoplanets Web Site</a>.</p>
 

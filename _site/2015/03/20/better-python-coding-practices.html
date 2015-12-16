@@ -89,45 +89,45 @@ that analyze the output of the code of interest.</p>
 
 <p><strong>Routine to test:</strong></p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">multiply_numbers</span><span class="p">(</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">):</span>
-  <span class="k">return</span> <span class="n">num1</span> <span class="o">*</span> <span class="n">num2</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">multiply_numbers</span><span class="p">(</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">num1</span> <span class="o">*</span> <span class="n">num2</span></code></pre></figure>
 
 <p><strong>Test routine:</strong></p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">test_multiply_numbers_with_scalars</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">test_multiply_numbers_with_scalars</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
   <span class="n">res</span> <span class="o">=</span> <span class="n">multiply_numbers</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-  <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span></code></pre></div>
+  <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span></code></pre></figure>
 
-<p>This test ensures that the result the <code>multiply_numbers</code> function
+<p>This test ensures that the result the <code class="highlighter-rouge">multiply_numbers</code> function
 is the length that we would expect it to be. For simple one-liners
- like <code>multiply_numbers</code>, there’s no need to test, but functions
+ like <code class="highlighter-rouge">multiply_numbers</code>, there’s no need to test, but functions
  and methods in the real world are almost always more complicated,
  and as the complexity increases testing can save a ton of time
  that would otherwise be spent debugging.</p>
 
 <p>There are many libraries out there for testing python code, but
 <a href="https://nose.readthedocs.org/en/latest/">nose</a> looked the most appealing to me. How to set nose up
-is detailed in their documentation. Personally, I used <code>pip</code> to
+is detailed in their documentation. Personally, I used <code class="highlighter-rouge">pip</code> to
 install it:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">pip install nose</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">pip install nose</code></pre></figure>
 
 <p>I then created a “tests” directory in my repository root directory
 and started filling it with short test routines to test out every
 function and possibility of my code. Then to test your code with
-nose, simply type <code>nosetests</code> at the command line at the repository
+nose, simply type <code class="highlighter-rouge">nosetests</code> at the command line at the repository
 root level. nose searches through your repository looking for test
 code and executes the tests it finds. Here’s an example of nose
 successfully executing all 12 of test routines it found in my
 repository path:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">my_project<span class="nv">$ </span>nosetests
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="gp">my_project$ </span>nosetests
 ............
 ----------------------------------------------------------------------
-Ran <span class="m">12</span> tests in 0.014s
+Ran 12 tests <span class="k">in </span>0.014s
 
 OK
-my_project<span class="err">$</span></code></pre></div>
+my_project<span class="err">$</span></code></pre></figure>
 
 <p>If you’re curious what other testing packages exist out there for
 python, I found the
@@ -139,7 +139,7 @@ introduction to unit testing in python.</p>
 <p><a href="https://travis-ci.org">Travis-CI</a> is a continuous integration service. This allows for
 automated testing of code upon pushes to a <a href="https://github.com">github</a> repository.
 This free tool for open source projects is great if you forget to run
-<code>nosetests</code> after adding new functionality to your code and also if
+<code class="highlighter-rouge">nosetests</code> after adding new functionality to your code and also if
 your collaborating with others. It will probably take a little time
 to get travis setup for your particular needs. The Travis-CI
 <a href="http://docs.travis-ci.com/user/languages/python/">docs</a> are a good place to start, but I found their built

@@ -88,31 +88,31 @@ Instance (AMI). Today, I’m going to create the cluster. I found
 <p>First, I installed <a href="http://star.mit.edu/cluster/docs/latest/installation.html">StarCluster</a>, a python package made
 specifically for creating and managing AWS EC2 distributed computing clusters.</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">pip install StarCluster</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">pip install StarCluster</code></pre></figure>
 
 <p>I then opened a new Terminal window and followed the StarCluster
 <a href="http://star.mit.edu/cluster/docs/latest/quickstart.html">Quick start</a> guide. The first thing is to create a config
 file:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">∞ starcluster <span class="nb">help</span>
-StarCluster - <span class="o">(</span>http://star.mit.edu/cluster<span class="o">)</span> <span class="o">(</span>v. 0.95.6<span class="o">)</span>
-Software Tools <span class="k">for</span> Academics and Researchers <span class="o">(</span>STAR<span class="o">)</span>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">∞ starcluster <span class="nb">help
+</span>StarCluster - <span class="o">(</span>http://star.mit.edu/cluster<span class="o">)</span> <span class="o">(</span>v. 0.95.6<span class="o">)</span>
+Software Tools <span class="k">for </span>Academics and Researchers <span class="o">(</span>STAR<span class="o">)</span>
 Please submit bug reports to starcluster@mit.edu
 
 !!! ERROR - config file /home/matt/.starcluster/config does not exist
 
 Options:
 --------
-<span class="o">[</span>1<span class="o">]</span> Show the StarCluster config template
-<span class="o">[</span>2<span class="o">]</span> Write config template to /home/matt/.starcluster/config
-<span class="o">[</span>q<span class="o">]</span> Quit
+<span class="o">[</span>1] Show the StarCluster config template
+<span class="o">[</span>2] Write config template to /home/matt/.starcluster/config
+<span class="o">[</span>q] Quit
 
 Please enter your selection: 2
 
-&gt;&gt;&gt; Config template written to /home/matt/.starcluster/config
-&gt;&gt;&gt; Please customize the config template
+<span class="gp">&gt;&gt;&gt; </span>Config template written to /home/matt/.starcluster/config
+<span class="gp">&gt;&gt;&gt; </span>Please customize the config template
 ∞ <span class="nb">cd</span> .starcluster/
-∞ emacs config</code></pre></div>
+∞ emacs config</code></pre></figure>
 
 <p>Modifying the configuration file to use my AWS_ACCESS_KEY_ID and
 AWS_SECRET_ACCESS_KEY was a bit tricky. Amazon changed the way it manages
@@ -136,21 +136,21 @@ grab their access key. In a nutshell, do this:</p>
 these into your .starcluster/config file. For the account number, use your
 Account Id, which can be found at the top of <a href="https://console.aws.amazon.com/billing/home#/account">“Account Settings”</a>.</p>
 
-<p>Scroll down a bit and modify the <code>KEY_LOCATION</code> to point to the SSH Key you use
+<p>Scroll down a bit and modify the <code class="highlighter-rouge">KEY_LOCATION</code> to point to the SSH Key you use
 to connect to AWS (you had to create a key pair when you created an AWS
   account).</p>
 
-<p>For me, I also had to modify my <code>AWS_REGION_NAME</code> and <code>AWS_REGION_HOST</code>.
+<p>For me, I also had to modify my <code class="highlighter-rouge">AWS_REGION_NAME</code> and <code class="highlighter-rouge">AWS_REGION_HOST</code>.
 Although I’m on the East  coast, for some reason amazon made my instances on
 the west coast. After <a href="https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#Instances:sort=monitoring">looking at my instances</a>, here’s what I put
 in my config file for those two values:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">AWS_REGION_NAME</span> <span class="o">=</span> us-west-2a
-<span class="nv">AWS_REGION_HOST</span> <span class="o">=</span> ec2.us-west-2.compute.amazonaws.com</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">AWS_REGION_NAME <span class="o">=</span> us-west-2a
+AWS_REGION_HOST <span class="o">=</span> ec2.us-west-2.compute.amazonaws.com</code></pre></figure>
 
 <p>Next, I attempted to start up my cluster</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster start mycluster</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster start mycluster</code></pre></figure>
 
 <p>After a long pause, I got an error message:</p>
 
@@ -201,18 +201,18 @@ gaierror: [Errno 8] nodename nor servname provided, or not known
 </blockquote>
 
 <p>There were some other options I changed. I’m using the free AMI, a t2.micro, so
-I changed the <code>NODE_INSTANCE_TYPE</code>:</p>
+I changed the <code class="highlighter-rouge">NODE_INSTANCE_TYPE</code>:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">NODE_INSTANCE_TYPE</span> <span class="o">=</span> t2.micro</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">NODE_INSTANCE_TYPE <span class="o">=</span> t2.micro</code></pre></figure>
 
 <p>I also setup my instance with the default Amazon Linxu HVM at the top of the
-list of instance types. I therefore needed to change the <code>NODE_IMAGE_ID</code> as
+list of instance types. I therefore needed to change the <code class="highlighter-rouge">NODE_IMAGE_ID</code> as
 well. This information was given in the comments above that field in the
 default ~/.starcluster/config file:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">NODE_IMAGE_ID</span> <span class="o">=</span> ami-6b211202</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">NODE_IMAGE_ID <span class="o">=</span> ami-6b211202</code></pre></figure>
 
-<p>This was caused by me changing the <code>AWS_REGION_NAME</code> and <code>AWS_REGION_HOST</code>.
+<p>This was caused by me changing the <code class="highlighter-rouge">AWS_REGION_NAME</code> and <code class="highlighter-rouge">AWS_REGION_HOST</code>.
 Once I changed it back, I could connect, but I got error messages along the
 lines of:</p>
 
@@ -273,64 +273,64 @@ Validating cluster template settings…
 <p>At that point I attempted to create a new key using the starcluster
 command</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster createkey mysckey -o ~/.ssh/mysckey.rsa</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster createkey mysckey -o ~/.ssh/mysckey.rsa</code></pre></figure>
 
 <p>This didn’t work either. Later, I noticed that in the top right corner of the Amazon AWS Web Interface the region can be changed. My region defaulted to “Oregon” for some reason. I clicked the name and changed it to “N. Virginia”. It is odd that Amazon chose to write “N. Virginia” instead of just “Virginia” since there is no option for “S. Virginia” and “North Virginia” is not a state. Did they get Virginia confused with the Carolinas?</p>
 
-<p>After switching to the “US East (N. Virginia)” region, I could then setup instances and create keys for the US East region. I changed the <code>~/.starcluster/config</code> file back to its defaults and tried again. I could now create keypairs through starcluster:</p>
+<p>After switching to the “US East (N. Virginia)” region, I could then setup instances and create keys for the US East region. I changed the <code class="highlighter-rouge">~/.starcluster/config</code> file back to its defaults and tried again. I could now create keypairs through starcluster:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster createkey myStarClusterKey -o ~/.ssh/myStarClusterKey.rsa</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster createkey myStarClusterKey -o ~/.ssh/myStarClusterKey.rsa</code></pre></figure>
 
 <p>And looking at the <strong>Key Pairs</strong> under <strong>Network &amp; Security</strong> on the AWS Web Interface, I could see that StarCluster generated the key properly. I updated my config file, but was still getting an error message:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster start mycluster
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">starcluster start mycluster
 StarCluster - <span class="o">(</span>http://star.mit.edu/cluster<span class="o">)</span> <span class="o">(</span>v. 0.95.6<span class="o">)</span>
-Software Tools <span class="k">for</span> Academics and Researchers <span class="o">(</span>STAR<span class="o">)</span>
+Software Tools <span class="k">for </span>Academics and Researchers <span class="o">(</span>STAR<span class="o">)</span>
 Please submit bug reports to starcluster@mit.edu
 
-&gt;&gt;&gt; Using default cluster template: smallcluster
-&gt;&gt;&gt; Validating cluster template settings...
+<span class="gp">&gt;&gt;&gt; </span>Using default cluster template: smallcluster
+<span class="gp">&gt;&gt;&gt; </span>Validating cluster template settings...
 !!! ERROR - Cluster settings are not valid:
-!!! ERROR - Keypair <span class="s1">&#39;myKey&#39;</span> does not exist in region <span class="s1">&#39;us-east-1&#39;</span></code></pre></div>
+!!! ERROR - Keypair <span class="s1">'myKey'</span> does not exist <span class="k">in </span>region <span class="s1">'us-east-1'</span></code></pre></figure>
 
 <p>My problem ended up being in the name I gave the key in the ~/.starcluster/config file.</p>
 
 <p>Here is the snippet from my ~/.starcluster/config file that <strong><em>did
 not work</em></strong>:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="o">[</span>key myawskey<span class="o">]</span>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="o">[</span>key myawskey]
 <span class="nv">KEY_LOCATION</span><span class="o">=</span>/home/matt/.ssh/myStarClusterKey.rsa                                                                                            <span class="c"># You can of course have multiple keypair sections</span>
 
 <span class="c">#     $ starcluster start -c mediumcluster mycluster</span>
 <span class="c">#</span>
 <span class="c"># If a template is not specified then the template defined by DEFAULT_TEMPLATE</span>
-<span class="c"># in the [global] section above is used. Below is the &quot;default&quot; template named</span>
-<span class="c"># &quot;smallcluster&quot;. You can rename it but dont forget to update the</span>
+<span class="c"># in the [global] section above is used. Below is the "default" template named</span>
+<span class="c"># "smallcluster". You can rename it but dont forget to update the</span>
 <span class="c"># DEFAULT_TEMPLATE setting in the [global] section above. See the next section</span>
 <span class="c"># on defining multiple templates.</span>
 
-<span class="o">[</span>cluster smallcluster<span class="o">]</span>
+<span class="o">[</span>cluster smallcluster]
 <span class="c"># change this to the name of one of the keypair sections defined above</span>
-<span class="nv">KEYNAME</span> <span class="o">=</span> myawskey</code></pre></div>
+KEYNAME <span class="o">=</span> myawskey</code></pre></figure>
 
 <p>And here is the snippet from my ~/.starcluster/config file that <strong><em>worked</em></strong>:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="o">[</span>key myStarClusterKey<span class="o">]</span>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="o">[</span>key myStarClusterKey]
 <span class="nv">KEY_LOCATION</span><span class="o">=</span>/home/matt/.ssh/myStarClusterKey.rsa                                                                                            <span class="c"># You can of course have multiple keypair sections</span>
 
 <span class="c">#     $ starcluster start -c mediumcluster mycluster</span>
 <span class="c">#</span>
 <span class="c"># If a template is not specified then the template defined by DEFAULT_TEMPLATE</span>
-<span class="c"># in the [global] section above is used. Below is the &quot;default&quot; template named</span>
-<span class="c"># &quot;smallcluster&quot;. You can rename it but dont forget to update the</span>
+<span class="c"># in the [global] section above is used. Below is the "default" template named</span>
+<span class="c"># "smallcluster". You can rename it but dont forget to update the</span>
 <span class="c"># DEFAULT_TEMPLATE setting in the [global] section above. See the next section</span>
 <span class="c"># on defining multiple templates.</span>
 
-<span class="o">[</span>cluster smallcluster<span class="o">]</span>
+<span class="o">[</span>cluster smallcluster]
 <span class="c"># change this to the name of one of the keypair sections defined above</span>
-<span class="nv">KEYNAME</span> <span class="o">=</span> myStarClusterKey</code></pre></div>
+KEYNAME <span class="o">=</span> myStarClusterKey</code></pre></figure>
 
-<p><strong>An important point: The keyname needs to be the same name as the name of the key in AWS!</strong> I thought <code>KEYNAME</code> was just a local variable that was used in the starcluster code to point to the correct [key] section in the config file. That is NOT the case! <code>KEYNAME</code> needs to be the same as the filename of the .rsa file.</p>
+<p><strong>An important point: The keyname needs to be the same name as the name of the key in AWS!</strong> I thought <code class="highlighter-rouge">KEYNAME</code> was just a local variable that was used in the starcluster code to point to the correct [key] section in the config file. That is NOT the case! <code class="highlighter-rouge">KEYNAME</code> needs to be the same as the filename of the .rsa file.</p>
 
 <p>Once I changed the keyname as shown in the above example, I could then successfully start a cluster using the starcluster code following the <a href="http://star.mit.edu/cluster/docs/latest/quickstart.html">Starcluster Quick Start Guide</a>.</p>
 

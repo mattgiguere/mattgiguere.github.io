@@ -6,9 +6,108 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 30 Jun 2015 18:32:12 -0400</pubDate>
-    <lastBuildDate>Tue, 30 Jun 2015 18:32:12 -0400</lastBuildDate>
-    <generator>Jekyll v2.5.3</generator>
+    <pubDate>Wed, 16 Dec 2015 07:59:40 -0500</pubDate>
+    <lastBuildDate>Wed, 16 Dec 2015 07:59:40 -0500</lastBuildDate>
+    <generator>Jekyll v3.0.1</generator>
+    
+      <item>
+        <title>Issues with Mac OS X El Capitan</title>
+        <description>&lt;p&gt;After upgrading from Yosemite to El Capitan, I’ve had a few issues. Below is a
+list of these issues, with links to blog posts on how I fixed them:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;/2015/12/15/Using_TeX_in_Mac_OS_X_El_Capitan.html&quot;&gt;LaTeX&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Wed, 16 Dec 2015 02:43:40 -0500</pubDate>
+        <link>http://mattgiguere.github.io/2015/12/16/Issues_with_Mac_OS-X_El_Capitan.html</link>
+        <guid isPermaLink="true">http://mattgiguere.github.io/2015/12/16/Issues_with_Mac_OS-X_El_Capitan.html</guid>
+        
+        <category>mac</category>
+        
+        <category>os</category>
+        
+        <category>x,</category>
+        
+        <category>el</category>
+        
+        <category>capitan</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Using TeX in Mac OS X El Capitan</title>
+        <description>&lt;p&gt;If you’ve recently upgraded to OS X El Capitan, and you’re getting an error
+message when trying to compile TeX, the reason is most likely due to one of
+the new “features” in OS X El Capitan called &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection/html&quot;&gt;System Integrity Protection&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;When I upgraded to Mac OS X El Capitan, this great new “feature” deleted all
+non-native items installed in &lt;code class=&quot;highlighter-rouge&quot;&gt;/usr&lt;/code&gt;, including my simlink to my texbin
+directory. This caused an error message when I tried to compile a latex
+document:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Can’t find required tool.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;/usr/texbin/simpdftex does not exist. TeXShop is  a front end for TeX, but you also need a TeX distribution. Perhaps such a distribution was not installed or was removed during a system upgrade. If so, go to http://tug.org/MacTeX and follow the instructions to (re)install MacTeX. A less likely possibility is that a tool path is incorrectly configured in TeXShop preferences. This can happen if you are using the macports or fink distributions.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;When I tried to recreate the symbolic link, I received the following error message:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+sudo ln -s /usr/local/texlive/2014/bin/x86_64-darwin texbin
+ln: texbin: Operation not permitted
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Looking into the &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection/html&quot;&gt;documentation&lt;/a&gt;, to recreate a symbolic link in the
+&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr&lt;/code&gt; directory, SIP needs to be disabled. To do so, carry out the following
+steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Reboot in “Recovery Mode” by restarting and holding down &lt;code class=&quot;highlighter-rouge&quot;&gt;Command&lt;/code&gt;+&lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Click Utilities -&amp;gt; Terminal&lt;/li&gt;
+  &lt;li&gt;type &lt;code class=&quot;highlighter-rouge&quot;&gt;csrutil disable&lt;/code&gt; and press &lt;code class=&quot;highlighter-rouge&quot;&gt;Enter&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Restart&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Once your computer has restarted,  you can check if the operation was
+successful by typing &lt;code class=&quot;highlighter-rouge&quot;&gt;csrutil status&lt;/code&gt; at the command line. If all went
+well, you should see the following:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;shell
+$csrutil status
+System Integrity Protection status: disabled
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, recreate the symbolic link to the texbin directory:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;shell
+sudo ln -s /usr/local/texlive/2014/bin/x86_64-darwin texbin
+&lt;/code&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 15 Dec 2015 10:47:31 -0500</pubDate>
+        <link>http://mattgiguere.github.io/2015/12/15/Using_TeX_in_Mac_OS_X_El_Capitan.html</link>
+        <guid isPermaLink="true">http://mattgiguere.github.io/2015/12/15/Using_TeX_in_Mac_OS_X_El_Capitan.html</guid>
+        
+        <category>mac</category>
+        
+        <category>os</category>
+        
+        <category>x,</category>
+        
+        <category>latex,</category>
+        
+        <category>el</category>
+        
+        <category>capitan</category>
+        
+        
+      </item>
     
       <item>
         <title>Mac App Store Hanging While &quot;Checking for updates...&quot;</title>
@@ -35,8 +134,9 @@ again “Repair Disk Permissions” and “Repair Disk”&lt;/li&gt;
 &lt;p&gt;In brief, to fix a hanging Mac App Store, run the software update from the
 command line using this command:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;sudo softwareupdate -i -a
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo softwareupdate -i -a
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Issuing the above command installed the Mac OS X Command Line Tools update and
 the Mac OS X 10.10.4 update for me. After restarting my computer, I could
@@ -79,58 +179,58 @@ a decent example in their github repo, and it only took a little
 bit of hacking to get it to get my git data. Below is the code I
 used to&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;dulwich.repo&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Repo&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;dulwich.repo&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Repo&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;# create a repo object:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;rep&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Repo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;/home/matt/projects/MOST/&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rep&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Repo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;/home/matt/projects/MOST/&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;# specify the file to get the last commit of:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dirfnm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;code/eeTwoSptDtrnddOff.py&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dirfnm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;code/eeTwoSptDtrnddOff.py&#39;&lt;/span&gt;
 
-&lt;span class=&quot;c&quot;&gt;# now create a repo &amp;quot;walker&amp;quot; that gets the&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# now create a repo &quot;walker&quot; that gets the&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# last commit for the dirfnm file:&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;repowlkr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rep&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_walker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dirfnm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_entries&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;lastfcommit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;iter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;repowlkr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;commit&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;ne&quot;&gt;StopIteration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;{} does not exist in repo history.&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dirfnm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;StopIteration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;{} does not exist in repo history.&#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dirfnm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;using {} git version: {}&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dirfnm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastfcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;using {} git version: {}&#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dirfnm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastfcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;The above code prints to screen the most recent commit id for the
 executed file. I also want to print the most recent commit id for
 the executed file &lt;em&gt;and&lt;/em&gt; the whole repository to an output directory
 where all the output data go:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# add git version information for future reference:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;odir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;/git_info.txt&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;##############################&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;file executed: {}.py&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execfilenm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;latest commit to {}.py: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execfilenm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastfcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;author: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastfcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;time: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ctime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastfcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author_time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# add git version information for future reference:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;odir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;/git_info.txt&#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;w&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;##############################&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;file executed: {}.py&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execfilenm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;latest commit to {}.py: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execfilenm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastfcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;author: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastfcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;time: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ctime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastfcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author_time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;repowlkr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rep&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_walker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_entries&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;lastrcommit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;iter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;repowlkr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;commit&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;ne&quot;&gt;StopIteration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Cannot get repo history.&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;StopIteration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Cannot get repo history.&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;##############################&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;latest commit to MOST repo: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastrcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;author: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastrcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;time: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ctime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastrcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author_time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;##############################&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;latest commit to MOST repo: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastrcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;author: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastrcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;time: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ctime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastrcommit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author_time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h4 id=&quot;the-result&quot;&gt;The Result&lt;/h4&gt;
 &lt;p&gt;The code prints the following line at run time&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;using eeTwoSptDtrnddOff git version: 4bb26eb1bacb47c435a015195c824c0acfaa5661&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;using eeTwoSptDtrnddOff git version: 4bb26eb1bacb47c435a015195c824c0acfaa5661&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;and makes the file &lt;code&gt;git_info.txt&lt;/code&gt;, which contains the following:&lt;/p&gt;
+&lt;p&gt;and makes the file &lt;code class=&quot;highlighter-rouge&quot;&gt;git_info.txt&lt;/code&gt;, which contains the following:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;##############################
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;##############################
 file executed: eeTwoSptDtrnddOff.py
 latest commit to eeTwoSptDtrnddOff.py: 4bb26eb1bacb47c435a015195c824c0acfaa5661
 author: Matt Giguere &amp;lt;matthew.giguere@gmail.com&amp;gt;
@@ -138,7 +238,7 @@ time: Wed Apr 29 14:38:39 2015
 ##############################
 latest commit to MOST repo: f0be22d21db4017a6f067ebb0ddce3fd87104af9
 author: Matt Giguere &amp;lt;matthew.giguere@gmail.com&amp;gt;
-time: Wed Apr 29 14:40:02 2015&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+time: Wed Apr 29 14:40:02 2015&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
         <pubDate>Wed, 29 Apr 2015 10:57:19 -0400</pubDate>
@@ -172,36 +272,36 @@ time: Wed Apr 29 14:40:02 2015&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;First, we need to start our cluster instance. This can easily be done using starcluster by typing the following command:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster start mycluster&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster start mycluster&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;To SSH into the master node of the cluster:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster sshmaster mycluster&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster sshmaster mycluster&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;The SSH port on my machine is different from the default port, and it caused some problems with starcluster.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster sshmaster mycluster
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster sshmaster mycluster
 StarCluster - &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://star.mit.edu/cluster&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;v. 0.95.6&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-Software Tools &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Software Tools &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 Please submit bug reports to starcluster@mit.edu
 
-ssh: connect to host ec2-25-3-89-123.compute-1.amazonaws.com port 2234: Operation timed out&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ssh: connect to host ec2-25-3-89-123.compute-1.amazonaws.com port 2234: Operation timed out&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;One solution to this is to add an entry in &lt;code&gt;~/.ssh/config&lt;/code&gt; to specify the port to the master node:&lt;/p&gt;
+&lt;p&gt;One solution to this is to add an entry in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.ssh/config&lt;/code&gt; to specify the port to the master node:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;Host ec2-25-3-89-123.compute-1.amazonaws.com
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;Host ec2-25-3-89-123.compute-1.amazonaws.com
    Hostname ec2-25-3-89-123.compute-1.amazonaws.com
-   Port 22&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+   Port 22&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;But this means adding a new entry every time a new cluster is started! That’s not an acceptable solution.&lt;/p&gt;
 
-&lt;p&gt;I ended up changing the SSH port in &lt;code&gt;/etc/services&lt;/code&gt; &lt;em&gt;back&lt;/em&gt; to 22, and then modifying the &lt;code&gt;/System/Library/LaunchDaemons/ssh.plist&lt;/code&gt; file to a port other than 22.&lt;/p&gt;
+&lt;p&gt;I ended up changing the SSH port in &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/services&lt;/code&gt; &lt;em&gt;back&lt;/em&gt; to 22, and then modifying the &lt;code class=&quot;highlighter-rouge&quot;&gt;/System/Library/LaunchDaemons/ssh.plist&lt;/code&gt; file to a port other than 22.&lt;/p&gt;
 
 &lt;p&gt;Here’s what that looks like in OS X Yosemite:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&amp;lt;?xml &lt;span class=&quot;nv&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;?&amp;gt;
-&amp;lt;!DOCTYPE plist PUBLIC &lt;span class=&quot;s2&quot;&gt;&amp;quot;-//Apple//DTD PLIST 1.0//EN&amp;quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&amp;quot;&lt;/span&gt;&amp;gt;
-&amp;lt;plist &lt;span class=&quot;nv&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt;&amp;gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&amp;lt;?xml &lt;span class=&quot;nv&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.0&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt;?&amp;gt;
+&amp;lt;!DOCTYPE plist PUBLIC &lt;span class=&quot;s2&quot;&gt;&quot;-//Apple//DTD PLIST 1.0//EN&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&lt;/span&gt;&amp;gt;
+&amp;lt;plist &lt;span class=&quot;nv&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.0&quot;&lt;/span&gt;&amp;gt;
 &amp;lt;dict&amp;gt;
 	&amp;lt;key&amp;gt;Disabled&amp;lt;/key&amp;gt;
 	&amp;lt;&lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;/&amp;gt;
@@ -239,7 +339,7 @@ ssh: connect to host ec2-25-3-89-123.compute-1.amazonaws.com port 2234: Operatio
 	&amp;lt;key&amp;gt;POSIXSpawnType&amp;lt;/key&amp;gt;
 	&amp;lt;string&amp;gt;Interactive&amp;lt;/string&amp;gt;
 &amp;lt;/dict&amp;gt;
-&amp;lt;/plist&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&amp;lt;/plist&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Changing the port number to 2123 in the ssh.plist makes it so that my computer only allows incoming connections to port 2123, but the default port when trying to connect to other machines is still 22. Perfect!&lt;/p&gt;
 
@@ -247,80 +347,80 @@ ssh: connect to host ec2-25-3-89-123.compute-1.amazonaws.com port 2234: Operatio
 
 &lt;p&gt;Next, we want to get the proper version of python installed on our cluster. The instances that come with starcluster by default have a ton of useful tools already built in. Immediately after SSHing into the master node, the available tools are listed:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster sshmaster mycluster
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster sshmaster mycluster
 StarCluster - &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://star.mit.edu/cluster&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;v. 0.95.6&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-Software Tools &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Software Tools &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 Please submit bug reports to starcluster@mit.edu
 
-The authenticity of host &lt;span class=&quot;s1&quot;&gt;&amp;#39;ec2-25-3-89-123.compute-1.amazonaws.com (25.3.89.123)&amp;#39;&lt;/span&gt; can&lt;span class=&quot;s1&quot;&gt;&amp;#39;t be established.&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;RSA key fingerprint is ab:ef:d8:2f:3c:78:b3:a2:a2:2c:4d:8e:3f:7e:2a:8c.&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Are you sure you want to continue connecting (yes/no)? yes&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Warning: Permanently added &amp;#39;&lt;/span&gt;ec2-25-3-89-123.compute-1.amazonaws.com,25.3.89.123&lt;span class=&quot;s1&quot;&gt;&amp;#39; (RSA) to the list of known hosts.&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;          _                 _           _&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;__/\_____| |_ __ _ _ __ ___| |_   _ ___| |_ ___ _ __&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;\    / __| __/ _` | &amp;#39;&lt;/span&gt;__/ __&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; / __&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; __/ _ &lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;__|&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;/_  _\__ \ || (_| | | | (__| | |_| \__ \ ||  __/ |&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  \/ |___/\__\__,_|_|  \___|_|\__,_|___/\__\___|_|&lt;/span&gt;
+The authenticity of host &lt;span class=&quot;s1&quot;&gt;&#39;ec2-25-3-89-123.compute-1.amazonaws.com (25.3.89.123)&#39;&lt;/span&gt; can&lt;span class=&quot;s1&quot;&gt;&#39;t be established.
+RSA key fingerprint is ab:ef:d8:2f:3c:78:b3:a2:a2:2c:4d:8e:3f:7e:2a:8c.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added &#39;&lt;/span&gt;ec2-25-3-89-123.compute-1.amazonaws.com,25.3.89.123&lt;span class=&quot;s1&quot;&gt;&#39; (RSA) to the list of known hosts.
+          _                 _           _
+__/\_____| |_ __ _ _ __ ___| |_   _ ___| |_ ___ _ __
+\    / __| __/ _` | &#39;&lt;/span&gt;__/ __| | | | / __| __/ _ &lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;__|
+/_  _\__ \ || (_| | | | (__| | |_| \__ \ ||  __/ |
+  \/ |___/\__\__,_|_|  \___|_|\__,_|___/\__\___|_|
 
-&lt;span class=&quot;s1&quot;&gt;StarCluster Ubuntu 13.04 AMI&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Software Tools for Academics and Researchers (STAR)&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Homepage: http://star.mit.edu/cluster&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Documentation: http://star.mit.edu/cluster/docs/latest&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Code: https://github.com/jtriley/StarCluster&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;Mailing list: http://star.mit.edu/cluster/mailinglist.html&lt;/span&gt;
+StarCluster Ubuntu 13.04 AMI
+Software Tools for Academics and Researchers (STAR)
+Homepage: http://star.mit.edu/cluster
+Documentation: http://star.mit.edu/cluster/docs/latest
+Code: https://github.com/jtriley/StarCluster
+Mailing list: http://star.mit.edu/cluster/mailinglist.html
 
-&lt;span class=&quot;s1&quot;&gt;This AMI Contains:&lt;/span&gt;
+This AMI Contains:
 
-&lt;span class=&quot;s1&quot;&gt;  * NVIDIA Driver 331.38&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  * NVIDIA CUDA Toolkit 5.5.22&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  * PyCuda 2013.1.1 and PyOpenCL 2013.2&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  * MAGMA 1.4.1&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  * Intel Ethernet Driver 2.11.3 (ixgbevf)&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  * Open Grid Scheduler (OGS - formerly SGE) queuing system&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  * Condor workload management system&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  * OpenMPI compiled with Open Grid Scheduler support&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  * OpenBLAS - Highly optimized Basic Linear Algebra Routines&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  * NumPy/SciPy linked against OpenBlas&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  * Pandas - Data Analysis Library&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  * IPython 1.1.0 with parallel and notebook support&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  * Julia 0.3pre&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;  * and more! (use &amp;#39;&lt;/span&gt;dpkg -l&lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt; to show all installed packages&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+  * NVIDIA Driver 331.38
+  * NVIDIA CUDA Toolkit 5.5.22
+  * PyCuda 2013.1.1 and PyOpenCL 2013.2
+  * MAGMA 1.4.1
+  * Intel Ethernet Driver 2.11.3 (ixgbevf)
+  * Open Grid Scheduler (OGS - formerly SGE) queuing system
+  * Condor workload management system
+  * OpenMPI compiled with Open Grid Scheduler support
+  * OpenBLAS - Highly optimized Basic Linear Algebra Routines
+  * NumPy/SciPy linked against OpenBlas
+  * Pandas - Data Analysis Library
+  * IPython 1.1.0 with parallel and notebook support
+  * Julia 0.3pre
+  * and more! (use &#39;&lt;/span&gt;dpkg -l&lt;span class=&quot;s1&quot;&gt;&#39; to show all installed packages)
 
 Open Grid Scheduler/Condor cheat sheet:
 
-  * qstat/condor_q - show status of batch &lt;span class=&quot;nb&quot;&gt;jobs&lt;/span&gt;
-  * qhost/condor_status- show status of hosts, queues, and &lt;span class=&quot;nb&quot;&gt;jobs&lt;/span&gt;
-  * qsub/condor_submit - submit batch &lt;span class=&quot;nb&quot;&gt;jobs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;e.g. qsub -cwd ./job.sh&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-  * qdel/condor_rm - delete batch &lt;span class=&quot;nb&quot;&gt;jobs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;e.g. qdel 7&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+  * qstat/condor_q - show status of batch jobs
+  * qhost/condor_status- show status of hosts, queues, and jobs
+  * qsub/condor_submit - submit batch jobs (e.g. qsub -cwd ./job.sh)
+  * qdel/condor_rm - delete batch jobs (e.g. qdel 7)
   * qconf - configure Open Grid Scheduler system
 
 Current System Stats:
 
   System load:  0.0               Processes:           94
   Usage of /:   63.3% of 7.74GB   Users logged in:     0
-  Memory usage: 11%               IP address &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; eth0: 123.45.6.78
+  Memory usage: 11%               IP address for eth0: 123.45.6.78
   Swap usage:   0%
 
     https://landscape.canonical.com/
-root@master:~#&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+root@master:~#&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;This is really great, but a lot of the versions listed here are dated, and the APIs have changed considerably. One option is to upgrade some of these libraries with pip:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install pandas --upgrade
-pip install numexpr --upgrade&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install pandas --upgrade
+pip install numexpr --upgrade&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;One down side of simply upgrading the dependencies is that it takes a while — it took me 10 minutes and 7 seconds to start up a cluster and upgrade numpy and pandas. If you do not want to wait ten minutes every time you start up a cluster, another option is to use &lt;a href=&quot;http://conda.pydata.org/miniconda.html&quot;&gt;miniconda&lt;/a&gt;, a lightweight package that only contains conda and python, and then install only the necessary dependencies. I used miniconda when setting up travis-ci, which was covered briefly in &lt;a href=&quot;/2015/03/20/better-python-coding-practices.html&quot;&gt;this post&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;When I switched from the version of python that comes built in with starcluster to miniconda, the total time to start up a cluster dropped from 10m7s to 4m57s. Switching to miniconda is not difficult; just type the following three lines once your cluster is started up and you have SSHed into the master node:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /home/sgeadmin&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; wget http://repo.continuum.io/miniconda/Miniconda-3.9.1-Linux-x86_64.sh -O miniconda.sh&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; bash miniconda.sh -b -p /home/sgeadmin/miniconda
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;export PATH=/home/sgeadmin/miniconda/bin:\$PATH&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; .bashrc&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt; -r
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/sgeadmin/miniconda/bin:&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; conda config --set always_yes yes --set changeps1 no&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /home/sgeadmin; wget http://repo.continuum.io/miniconda/Miniconda-3.9.1-Linux-x86_64.sh -O miniconda.sh; bash miniconda.sh -b -p /home/sgeadmin/miniconda
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;export PATH=/home/sgeadmin/miniconda/bin:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\$&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;PATH&quot;&lt;/span&gt; &amp;gt;&amp;gt; .bashrc; &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt; -r
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/sgeadmin/miniconda/bin:&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;; conda config --set always_yes yes --set changeps1 no&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;And then installing numpy and pandas is much faster than upgrading the starcluster version:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;conda install numpy
-conda install pandas&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;conda install numpy
+conda install pandas&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;I create a starcluster startup script that sets up my environment, uploads all my coda and input data to the cluster, updates and installs all python dependencies, and then submits the MPI job. See the end of this post for the script.&lt;/p&gt;
 
@@ -328,7 +428,7 @@ conda install pandas&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Looking at the starcluster &lt;a href=&quot;http://star.mit.edu/cluster/docs/latest/manual/getting_started.html#compile-and-run-a-hello-world-openmpi-program&quot;&gt;Compile and run a “Hello World” OpenMPI program example&lt;/a&gt;, it looks like we need to run things as sgeadmin in order to use MPI. Indeed, when I tried running things as root, I got error message saying it couldn’t access things in the root directory:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;qrsh_starter: cannot change to directory /root/projects&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;qrsh_starter: cannot change to directory /root/projects&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;The /root directory only exists on the master node. We need to run our code from somewhere in the /home directory, since that’s the directory that is NFS mounted to all the nodes. This may also mean that upgrading pandas and numexpr only worked for the master node.&lt;/p&gt;
 
@@ -336,71 +436,71 @@ conda install pandas&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;I made a script that will start up the cluster, and copy over all of the code and input data I want to use, then start an MPI job. Here’s what that script looks like:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env bash&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env bash&lt;/span&gt;
 
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Starting cluster...&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Starting cluster...&quot;&lt;/span&gt;
 starcluster start mycluster
 
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Now upgrading pandas and numexpr...&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Now upgrading pandas and numexpr...&quot;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#upgrade numpy and pandas:&lt;/span&gt;
-starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&amp;#39;pip install pandas --upgrade&amp;#39;&lt;/span&gt;
-starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&amp;#39;pip install numexpr --upgrade&amp;#39;&lt;/span&gt;
+starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&#39;pip install pandas --upgrade&#39;&lt;/span&gt;
+starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&#39;pip install numexpr --upgrade&#39;&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;#install dependencies:&lt;/span&gt;
-starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&amp;#39;pip install emcee&amp;#39;&lt;/span&gt;
+starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&#39;pip install emcee&#39;&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;#append my projects directory to the Python path:&lt;/span&gt;
-starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&amp;#39;echo &amp;quot; &amp;quot; &amp;gt;&amp;gt; .bashrc&amp;#39;&lt;/span&gt;
-starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&amp;#39;echo &amp;quot;#Add my projects dir to python path:&amp;quot; &amp;gt;&amp;gt; .bashrc&amp;#39;&lt;/span&gt;
-starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&amp;#39;echo &amp;quot;export PYTHONPATH=/root/projects:\$PYTHONPATH&amp;quot; &amp;gt;&amp;gt; .bashrc&amp;#39;&lt;/span&gt;
+starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&#39;echo &quot; &quot; &amp;gt;&amp;gt; .bashrc&#39;&lt;/span&gt;
+starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&#39;echo &quot;#Add my projects dir to python path:&quot; &amp;gt;&amp;gt; .bashrc&#39;&lt;/span&gt;
+starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&#39;echo &quot;export PYTHONPATH=/root/projects:\$PYTHONPATH&quot; &amp;gt;&amp;gt; .bashrc&#39;&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;#add directories and copy over code:&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Creating projects directory...&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Creating projects directory...&quot;&lt;/span&gt;
 starcluster sshmaster mycluster mkdir projects
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Creating MOST directory...&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Creating MOST directory...&quot;&lt;/span&gt;
 starcluster sshmaster mycluster mkdir projects/MOST
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Copying over module files...&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Copying over module files...&quot;&lt;/span&gt;
 starcluster put mycluster /home/matt/projects/MOST/__init__.py projects/MOST/
 starcluster put mycluster /home/matt/projects/MOST/setup.py projects/MOST/
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Creating code directory...&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Creating code directory...&quot;&lt;/span&gt;
 starcluster sshmaster mycluster mkdir projects/MOST/code
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Copying over the code...&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Copying over the code...&quot;&lt;/span&gt;
 starcluster put mycluster /home/matt/projects/MOST/code projects/MOST/
 
 
 &lt;span class=&quot;c&quot;&gt;#now add the data directories and input data:&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Creating data directories...&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Creating data directories...&quot;&lt;/span&gt;
 starcluster sshmaster mycluster mkdir projects/MOST/data
 starcluster sshmaster mycluster mkdir projects/MOST/data/chiron
 starcluster sshmaster mycluster mkdir projects/MOST/data/most
 starcluster sshmaster mycluster mkdir projects/MOST/data/MCMC
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Copying over CHIRON data...&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Copying over CHIRON data...&quot;&lt;/span&gt;
 starcluster put mycluster /home/matt/projects/MOST/data/chiron/epsEriChironSepDec2014.txt projects/MOST/data/chiron/
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Copying over MOST data...&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Copying over MOST data...&quot;&lt;/span&gt;
 starcluster put mycluster /home/matt/projects/MOST/data/most/epsEriMostFullRedResamp.txt projects/MOST/data/most/
 
 &lt;span class=&quot;c&quot;&gt;#now run the job&lt;/span&gt;
-starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&amp;#39;cd projects/MOST/code; qsub -cwd -pe orte 4 ./evol_starcluster_qsub_test.sh&amp;#39;&lt;/span&gt;
+starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&#39;cd projects/MOST/code; qsub -cwd -pe orte 4 ./evol_starcluster_qsub_test.sh&#39;&lt;/span&gt;
 
-starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&amp;#39;qstat&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+starcluster sshmaster mycluster &lt;span class=&quot;s1&quot;&gt;&#39;qstat&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;In the line that I use to run the job, I change directories into the directory with my code, and then call on qsub to execute my routine. The -cwd option tells qsub to start the code from the current working directory, and the -pe orte 4 tells it to use the orte parallel environment with 4 cores. The contents of &lt;code&gt;evol_starcluster_qsub_test.sh&lt;/code&gt; are just the program to be executed with MPI.&lt;/p&gt;
+&lt;p&gt;In the line that I use to run the job, I change directories into the directory with my code, and then call on qsub to execute my routine. The -cwd option tells qsub to start the code from the current working directory, and the -pe orte 4 tells it to use the orte parallel environment with 4 cores. The contents of &lt;code class=&quot;highlighter-rouge&quot;&gt;evol_starcluster_qsub_test.sh&lt;/code&gt; are just the program to be executed with MPI.&lt;/p&gt;
 
 &lt;p&gt;Contents of evol_starcluster_qsub_test.sh:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
 
-mpiexec python eeTwoSptParTmpDfRtEvol.py &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;90&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100&lt;/span&gt; --thin 2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+mpiexec python eeTwoSptParTmpDfRtEvol.py 3 90 100 --thin 2&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;When running this script, user interaction is still required at one point. When SSHing into the master node for the first time, SSH will ask to confirm the identity of the machine:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;The authenticity of host &lt;span class=&quot;s1&quot;&gt;&amp;#39;ec2-22-3-444-55.compute-1.amazonaws.com (22.3.44.55)&amp;#39;&lt;/span&gt; can&lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt;t be established.
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;The authenticity of host &lt;span class=&quot;s1&quot;&gt;&#39;ec2-22-3-444-55.compute-1.amazonaws.com (22.3.44.55)&#39;&lt;/span&gt; can&lt;span class=&quot;s1&quot;&gt;&#39;t be established.
 RSA key fingerprint is 12:34:56:78:90:aa:bb:cc:dd:ee:ff:11::22:33:44.
-Are you sure you want to &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt; connecting &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;yes/no&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;? yes&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+Are you sure you want to continue connecting (yes/no)? yes&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;If you want to skip that, you can add the following to your &lt;code&gt;~/.ssh/config&lt;/code&gt; file:&lt;/p&gt;
+&lt;p&gt;If you want to skip that, you can add the following to your &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.ssh/config&lt;/code&gt; file:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;StrictHostKeyChecking no&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;StrictHostKeyChecking no&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
         <pubDate>Thu, 26 Mar 2015 08:03:55 -0400</pubDate>
@@ -442,45 +542,45 @@ that analyze the output of the code of interest.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Routine to test:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;multiply_numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;multiply_numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;&lt;strong&gt;Test routine:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_multiply_numbers_with_scalars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_multiply_numbers_with_scalars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;multiply_numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;assert&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;span class=&quot;k&quot;&gt;assert&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;This test ensures that the result the &lt;code&gt;multiply_numbers&lt;/code&gt; function
+&lt;p&gt;This test ensures that the result the &lt;code class=&quot;highlighter-rouge&quot;&gt;multiply_numbers&lt;/code&gt; function
 is the length that we would expect it to be. For simple one-liners
- like &lt;code&gt;multiply_numbers&lt;/code&gt;, there’s no need to test, but functions
+ like &lt;code class=&quot;highlighter-rouge&quot;&gt;multiply_numbers&lt;/code&gt;, there’s no need to test, but functions
  and methods in the real world are almost always more complicated,
  and as the complexity increases testing can save a ton of time
  that would otherwise be spent debugging.&lt;/p&gt;
 
 &lt;p&gt;There are many libraries out there for testing python code, but
 &lt;a href=&quot;https://nose.readthedocs.org/en/latest/&quot;&gt;nose&lt;/a&gt; looked the most appealing to me. How to set nose up
-is detailed in their documentation. Personally, I used &lt;code&gt;pip&lt;/code&gt; to
+is detailed in their documentation. Personally, I used &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt; to
 install it:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install nose&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install nose&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;I then created a “tests” directory in my repository root directory
 and started filling it with short test routines to test out every
 function and possibility of my code. Then to test your code with
-nose, simply type &lt;code&gt;nosetests&lt;/code&gt; at the command line at the repository
+nose, simply type &lt;code class=&quot;highlighter-rouge&quot;&gt;nosetests&lt;/code&gt; at the command line at the repository
 root level. nose searches through your repository looking for test
 code and executes the tests it finds. Here’s an example of nose
 successfully executing all 12 of test routines it found in my
 repository path:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;my_project&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nosetests
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;gp&quot;&gt;my_project$ &lt;/span&gt;nosetests
 ............
 ----------------------------------------------------------------------
-Ran &lt;span class=&quot;m&quot;&gt;12&lt;/span&gt; tests in 0.014s
+Ran 12 tests &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;0.014s
 
 OK
-my_project&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+my_project&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;If you’re curious what other testing packages exist out there for
 python, I found the
@@ -492,7 +592,7 @@ introduction to unit testing in python.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://travis-ci.org&quot;&gt;Travis-CI&lt;/a&gt; is a continuous integration service. This allows for
 automated testing of code upon pushes to a &lt;a href=&quot;https://github.com&quot;&gt;github&lt;/a&gt; repository.
 This free tool for open source projects is great if you forget to run
-&lt;code&gt;nosetests&lt;/code&gt; after adding new functionality to your code and also if
+&lt;code class=&quot;highlighter-rouge&quot;&gt;nosetests&lt;/code&gt; after adding new functionality to your code and also if
 your collaborating with others. It will probably take a little time
 to get travis setup for your particular needs. The Travis-CI
 &lt;a href=&quot;http://docs.travis-ci.com/user/languages/python/&quot;&gt;docs&lt;/a&gt; are a good place to start, but I found their built
@@ -610,48 +710,48 @@ couple cameras to capture the initial build of the spectrograph.&lt;/p&gt;
 
 &lt;p&gt;The photographer sent all of the stills in advance, and we couldn’t wait to
 see what the final time lapse would like, so I made a few time lapse videos
-myself using &lt;code&gt;ffmpeg&lt;/code&gt;.&lt;/p&gt;
+myself using &lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;setting-up-ffmpeg&quot;&gt;Setting up ffmpeg&lt;/h3&gt;
 
 &lt;p&gt;To put this together, I needed to install ffmpeg. This turned out to be a \
 little challenging. I tried the normal homebrew install:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;brew install ffmpeg&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;brew install ffmpeg&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;This worked! I then added a symbolic link to add it to my path:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/local/bin
-sudo ln -s /usr/local/Cellar/ffmpeg/2.5.3/bin/ffmpeg ffmpeg&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/local/bin
+sudo ln -s /usr/local/Cellar/ffmpeg/2.5.3/bin/ffmpeg ffmpeg&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Unfortunately, when I tried to get help on ffmpeg, here’s what it
 returned:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ffmpeg --help
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ffmpeg --help
 dyld: Library not loaded: /usr/local/lib/libx264.142.dylib
   Referenced from: /usr/local/bin/ffmpeg
   Reason: image not found
-Trace/BPT &lt;span class=&quot;nb&quot;&gt;trap&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+Trace/BPT &lt;span class=&quot;nb&quot;&gt;trap&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;I then did a search for this .dylib. homebrew installed it:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/local/Cellar
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/local/Cellar
 find . -name libx264.142.dylib
-./x264/r2495/lib/libx264.142.dylib&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+./x264/r2495/lib/libx264.142.dylib&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;I just needed to add it to my path:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/local/bin
-sudo ln -s /usr/local/Cellar/x264/r2495/lib/libx264.142.dylib libx264.142.dylib&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/local/bin
+sudo ln -s /usr/local/Cellar/x264/r2495/lib/libx264.142.dylib libx264.142.dylib&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;I repeated this for a few more packages homebrew installed that were not in my
 path:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;sudo ln -s /usr/local/Cellar/x264/r2495/lib/libx264.142.dylib libx264.142.dylib
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;sudo ln -s /usr/local/Cellar/x264/r2495/lib/libx264.142.dylib libx264.142.dylib
 sudo ln -s /usr/local/Cellar/libvo-aacenc/0.1.2/lib/libvo-aacenc.0.dylib libvo-aacenc.0.dylib
-sudo ln -s /usr/local/Cellar/lame/3.99.5/lib/libmp3lame.0.dylib libmp3lame.0.dylib&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+sudo ln -s /usr/local/Cellar/lame/3.99.5/lib/libmp3lame.0.dylib libmp3lame.0.dylib&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Finally, &lt;code&gt;ffmpeg -h&lt;/code&gt; returned the help, as expected.&lt;/p&gt;
+&lt;p&gt;Finally, &lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -h&lt;/code&gt; returned the help, as expected.&lt;/p&gt;
 
 &lt;p&gt;I found &lt;a href=&quot;https://trac.ffmpeg.org/wiki/Create%20a%20video%20slideshow%20from%20images&quot;&gt;this page&lt;/a&gt;
 on the ffmpeg wiki to be helpful in creating the time lapse. And
@@ -659,8 +759,8 @@ on the ffmpeg wiki to be helpful in creating the time lapse. And
 
 &lt;p&gt;The files I wanted to add were stored in a folder named Bench-View_JPG. They
 were in sequential order, but they didn’t start at 0. The easiest way to add
-them all to the movie was the use the &lt;code&gt;pattern_type&lt;/code&gt; optional argument in
-conjunction with &lt;code&gt;glob&lt;/code&gt;. The other options I used were:&lt;/p&gt;
+them all to the movie was the use the &lt;code class=&quot;highlighter-rouge&quot;&gt;pattern_type&lt;/code&gt; optional argument in
+conjunction with &lt;code class=&quot;highlighter-rouge&quot;&gt;glob&lt;/code&gt;. The other options I used were:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;-&lt;em&gt;framerate&lt;/em&gt;: the number of frames per second to input
@@ -669,9 +769,9 @@ conjunction with &lt;code&gt;glob&lt;/code&gt;. The other options I used were:&l
 &lt;/ul&gt;
 
 &lt;p&gt;I wanted my video to be 1080p HD, and the final video to be called
-&lt;code&gt;BenchMovie1080p11fps.mp4&lt;/code&gt;, so I used the following command:&lt;/p&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;BenchMovie1080p11fps.mp4&lt;/code&gt;, so I used the following command:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ffmpeg -framerate &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt; -pattern_type glob -i &lt;span class=&quot;s1&quot;&gt;&amp;#39;Bench-View_JPG/*.jpg&amp;#39;&lt;/span&gt; -r &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt; -s 1620x1080 BenchMovie1080p11fps.mp4&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ffmpeg -framerate 11 -pattern_type glob -i &lt;span class=&quot;s1&quot;&gt;&#39;Bench-View_JPG/*.jpg&#39;&lt;/span&gt; -r 11 -s 1620x1080 BenchMovie1080p11fps.mp4&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;The result can be seen below.&lt;/p&gt;
 
@@ -681,15 +781,15 @@ conjunction with &lt;code&gt;glob&lt;/code&gt;. The other options I used were:&l
   Upgrade your browser to one that supports the video tag.
 &lt;/video&gt;
 
-&lt;p&gt;For embedding the video into the web page, I used the HTML5 &lt;code&gt;&amp;lt;video&amp;gt;&lt;/code&gt; tag. I
+&lt;p&gt;For embedding the video into the web page, I used the HTML5 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;video&amp;gt;&lt;/code&gt; tag. I
 also set the width to “100%”” and the height to “auto” to make sure it was
 responsive and scaled properly. Here’s the code that made the above video:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;video&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;100%&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;auto&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;controls&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;source&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/images/BenchMovie1080p11fps.mp4&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;video/mp4&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;video&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;100%&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;auto&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;controls&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;source&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/images/BenchMovie1080p11fps.mp4&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;video/mp4&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
 Note: You are missing out on our time lapse video!
 Upgrade your browser to one that supports the video tag.
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/video&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/video&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;The message, of course, only appears in unsupported browsers. Chrome,
 Firefox, Internet Explore, Opera, and Safari all support mp4 in the
@@ -699,7 +799,7 @@ video tag.&lt;/p&gt;
 also created a time lapse video from stills taken with the other camera using
 the following command:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ffmpeg -framerate &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt; -pattern_type glob -i &lt;span class=&quot;s1&quot;&gt;&amp;#39;Full-View_JPG/_CAM*.jpg&amp;#39;&lt;/span&gt; -r &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt; -s 1620x1080 FullMovie1080p11fps.mp4&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ffmpeg -framerate 11 -pattern_type glob -i &lt;span class=&quot;s1&quot;&gt;&#39;Full-View_JPG/_CAM*.jpg&#39;&lt;/span&gt; -r 11 -s 1620x1080 FullMovie1080p11fps.mp4&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;The results can be seen on MAO page of the &lt;a href=&quot;http://exoplanets.astro.yale.edu/instrumentation/mao.php&quot;&gt;Exoplanets Web Site&lt;/a&gt;.&lt;/p&gt;
 
@@ -752,7 +852,7 @@ do publish the total retail sales per state.&lt;/p&gt;
 
 &lt;p&gt;The &lt;a href=&quot;http://www.census.gov/popest/data/national/totals/2014/index.html&quot;&gt;US Census Bureau publish&lt;/a&gt; another excellent data set tabulating
 the estimated population per state per year. I combined these two data sets
-using &lt;code&gt;pandas&lt;/code&gt; in Python (see bottom of post for details),
+using &lt;code class=&quot;highlighter-rouge&quot;&gt;pandas&lt;/code&gt; in Python (see bottom of post for details),
 and the resulting average per capita energy use by state can be seen below.&lt;/p&gt;
 
 &lt;script type=&quot;text/javascript&quot; src=&quot;https://public.tableau.com/javascripts/api/viz_v1.js&quot;&gt;&lt;/script&gt;
@@ -789,7 +889,7 @@ average residential electric rate by state for 2014, and dividing by the 2012 -
  2013 2-Year Averaged Median Household income. If you prefer mathematical
 notation, that is&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;\[
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\[
  f_{I} = \frac{E_{C} H_{p} R_{E}}{I}
  \]&lt;/code&gt;&lt;/p&gt;
 
@@ -883,7 +983,7 @@ to upload your SSH key does not work in the Safari browser. Use Google Chrome.&l
 &lt;h4 id=&quot;sshing-into-omega&quot;&gt;SSHing Into Omega&lt;/h4&gt;
 &lt;p&gt;Next, to SSH into omega, I used the command:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ssh -p22 -i ~/.ssh/myomegakey netid@omega.hpc.yale.edu&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ssh -p22 -i ~/.ssh/myomegakey netid@omega.hpc.yale.edu&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h4 id=&quot;creating-a-test-script&quot;&gt;Creating a Test Script&lt;/h4&gt;
 &lt;p&gt;Now comes the fun stuff. All jobs submitted for processing need to be wrapped
@@ -891,9 +991,9 @@ in a shell script. Before you do anything else, create a test script and see
 if it works. The sample script on the HPC site is out of date and results in
 error messages. Below is a sample script that works (as of March 12, 2015).&lt;/p&gt;
 
-&lt;p&gt;Contents of &lt;code&gt;my_test_script.sh&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;Contents of &lt;code class=&quot;highlighter-rouge&quot;&gt;my_test_script.sh&lt;/code&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;###fas_devel: for compiling and testing code,&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;###restricted to one job per user32 max cores, 4 hours max walltime&lt;/span&gt;
@@ -930,23 +1030,23 @@ error messages. Below is a sample script that works (as of March 12, 2015).&lt;/
 &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$PBS_O_WORKDIR&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;##Command to execute:&lt;/span&gt;
-date&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+date&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Most of what I wrote above is probably self-explanatory through the comments.
-Yes, the ‘#’ signs should be in front of the PBS commands. The &lt;code&gt;$PBS_JOBNAME&lt;/code&gt;
-and &lt;code&gt;$PBS_JOBID&lt;/code&gt; are handy variables that can be used to ensure your output is
+Yes, the ‘#’ signs should be in front of the PBS commands. The &lt;code class=&quot;highlighter-rouge&quot;&gt;$PBS_JOBNAME&lt;/code&gt;
+and &lt;code class=&quot;highlighter-rouge&quot;&gt;$PBS_JOBID&lt;/code&gt; are handy variables that can be used to ensure your output is
 printed to unique directories (i.e., you’re not overwriting previous results).&lt;/p&gt;
 
 &lt;p&gt;To submit this job, type the following at the command line:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;qsub my_test_script.sh&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;qsub my_test_script.sh&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;You should receive an email message when your script has begun execution. You
-can see the status of it by typing &lt;code&gt;showq&lt;/code&gt;. The list is usually quite long, so
+can see the status of it by typing &lt;code class=&quot;highlighter-rouge&quot;&gt;showq&lt;/code&gt;. The list is usually quite long, so
 you might find it useful to pipe the results to grep and search for just lines
 that contain your netid:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;showq &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep netid&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;showq | grep netid&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Note that this test script is simply printing the date, so it won’t take long
 to run, and you should receive a finished email with exit 0 status shortly
@@ -958,11 +1058,11 @@ after receiving the start email message.&lt;/p&gt;
 &lt;p&gt;Now comes the fun part. Omega uses a module system. To print all available
 modules in the Terminal window type the following:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;module avail&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;module avail&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;To find specific modules, use the &lt;code&gt;modulefind&lt;/code&gt; command:&lt;/p&gt;
+&lt;p&gt;To find specific modules, use the &lt;code class=&quot;highlighter-rouge&quot;&gt;modulefind&lt;/code&gt; command:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;modulefind python
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;modulefind python
 /home/apps/fas/Modules:
 Applications/PythonPackages/numpy/numpy-GCC-ATLAS
 Applications/PythonPackages/scipy/scipy-GCC-ATLAS
@@ -998,28 +1098,28 @@ RH6/Langs/Python/2.7.2
 RH6/Langs/Python/2.7.3
 RH6/Langs/Python/2.7.4rc2_experimental
 RH6/Langs/Python/3.2
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;As can be seen in the included output above, &lt;code&gt;modulefind&lt;/code&gt; is case insensitive.
+&lt;p&gt;As can be seen in the included output above, &lt;code class=&quot;highlighter-rouge&quot;&gt;modulefind&lt;/code&gt; is case insensitive.
 There are many versions of python available, but the only packages that I
 wanted to uses were numpy and scipy.&lt;/p&gt;
 
-&lt;h4 id=&quot;loading-modules-and-adding-python-packages-using-pip&quot;&gt;Loading Modules and Adding Python Packages Using &lt;code&gt;pip&lt;/code&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;loading-modules-and-adding-python-packages-using-pip&quot;&gt;Loading Modules and Adding Python Packages Using &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt;&lt;/h4&gt;
 
 &lt;p&gt;Adding more packages to your path can be a little tricky.
 I wanted to use python 2.7.9, but when I loaded that module,
-the &lt;code&gt;pip&lt;/code&gt; command was not in my path. I loaded several others, and it looks
-like the most recent python 2 version to include &lt;code&gt;pip&lt;/code&gt; on Omega is 2.7.3.
+the &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt; command was not in my path. I loaded several others, and it looks
+like the most recent python 2 version to include &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt; on Omega is 2.7.3.
 Another problem is that you won’t have write access to install packages to
 the default site-packages directory, so you will need to create a subdirectory
 in your home directory, and specify an optional argument to pip telling it
 where to install the libraries you need:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$mkdir&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;local&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$module&lt;/span&gt; load Langs/Python/2.7.3
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$module&lt;/span&gt; load Libs/NUMPY/1.9.1
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$pip&lt;/span&gt; install --install-option&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;--prefix=~/local/&amp;quot;&lt;/span&gt; pandas
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$pip&lt;/span&gt; install --install-option&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;--prefix=~/local/&amp;quot;&lt;/span&gt; argparse&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;nv&quot;&gt;$mkdir&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;local&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;nv&quot;&gt;$module&lt;/span&gt; load Langs/Python/2.7.3
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;nv&quot;&gt;$module&lt;/span&gt; load Libs/NUMPY/1.9.1
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;nv&quot;&gt;$pip&lt;/span&gt; install --install-option&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;--prefix=~/local/&quot;&lt;/span&gt; pandas
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;nv&quot;&gt;$pip&lt;/span&gt; install --install-option&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;--prefix=~/local/&quot;&lt;/span&gt; argparse&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h3 id=&quot;setting-up-your-bashrc-file&quot;&gt;Setting up your .bashrc file&lt;/h3&gt;
 
@@ -1027,10 +1127,10 @@ where to install the libraries you need:&lt;/p&gt;
 modify our bash startup file to load the other modules we want and modify
 our python path to include the libraries we installed in ~/local:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;# .bashrc&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;# .bashrc&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;# Source global definitions&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -f /etc/bashrc &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -f /etc/bashrc &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
         . /etc/bashrc
 &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
 
@@ -1048,14 +1148,14 @@ module load Libs/MPI4PY/1.3.1
 &lt;span class=&quot;c&quot;&gt;### To install these, you need to use Python 2.7.3 because&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;### pip does not exist in the more recent modules&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;### module load Compilers/Python/2.7.3&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;### pip install --install-option=&amp;quot;--prefix=~/local/&amp;quot; package_name&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### pip install --install-option=&quot;--prefix=~/local/&quot; package_name&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;###for example&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;### pip install --install-option=&amp;quot;--prefix=~/local/&amp;quot; argparse&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PYTHONPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/fas/fischer/mjg22/local/lib/python2.7/site-packages:&lt;span class=&quot;nv&quot;&gt;$PYTHONPATH&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;c&quot;&gt;### pip install --install-option=&quot;--prefix=~/local/&quot; argparse&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PYTHONPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/fas/fischer/mjg22/local/lib/python2.7/site-packages:&lt;span class=&quot;nv&quot;&gt;$PYTHONPATH&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h3 id=&quot;testing-the-real-code&quot;&gt;Testing the real code&lt;/h3&gt;
 &lt;p&gt;That should be everything. You should test your code on a single node before
-attempting to run it on many cores. &lt;code&gt;fas_devel&lt;/code&gt;, as shown in the test script
+attempting to run it on many cores. &lt;code class=&quot;highlighter-rouge&quot;&gt;fas_devel&lt;/code&gt;, as shown in the test script
 above, is the queue you want to use for that. To see what other queues are
 available click &lt;a href=&quot;https://hpc.research.yale.edu/hpc_user_wiki/index.php/Omega#FAS_Queues&quot;&gt;here&lt;/a&gt;. Note there are 8 cores per node for
 Omega, and 36 GB of RAM per node, as mentioned in the &lt;a href=&quot;https://hpc.research.yale.edu/hpc_user_wiki/index.php/Omega#Hardware&quot;&gt;Hardware&lt;/a&gt;
@@ -1101,31 +1201,31 @@ Instance (AMI). Today, I’m going to create the cluster. I found
 &lt;p&gt;First, I installed &lt;a href=&quot;http://star.mit.edu/cluster/docs/latest/installation.html&quot;&gt;StarCluster&lt;/a&gt;, a python package made
 specifically for creating and managing AWS EC2 distributed computing clusters.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install StarCluster&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install StarCluster&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;I then opened a new Terminal window and followed the StarCluster
 &lt;a href=&quot;http://star.mit.edu/cluster/docs/latest/quickstart.html&quot;&gt;Quick start&lt;/a&gt; guide. The first thing is to create a config
 file:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;∞ starcluster &lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;
-StarCluster - &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://star.mit.edu/cluster&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;v. 0.95.6&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-Software Tools &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;∞ starcluster &lt;span class=&quot;nb&quot;&gt;help
+&lt;/span&gt;StarCluster - &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://star.mit.edu/cluster&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;v. 0.95.6&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Software Tools &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 Please submit bug reports to starcluster@mit.edu
 
 !!! ERROR - config file /home/matt/.starcluster/config does not exist
 
 Options:
 --------
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Show the StarCluster config template
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;2&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Write config template to /home/matt/.starcluster/config
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;q&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Quit
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1] Show the StarCluster config template
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;2] Write config template to /home/matt/.starcluster/config
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;q] Quit
 
 Please enter your selection: 2
 
-&amp;gt;&amp;gt;&amp;gt; Config template written to /home/matt/.starcluster/config
-&amp;gt;&amp;gt;&amp;gt; Please customize the config template
+&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;Config template written to /home/matt/.starcluster/config
+&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;Please customize the config template
 ∞ &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; .starcluster/
-∞ emacs config&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+∞ emacs config&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Modifying the configuration file to use my AWS_ACCESS_KEY_ID and
 AWS_SECRET_ACCESS_KEY was a bit tricky. Amazon changed the way it manages
@@ -1149,21 +1249,21 @@ grab their access key. In a nutshell, do this:&lt;/p&gt;
 these into your .starcluster/config file. For the account number, use your
 Account Id, which can be found at the top of &lt;a href=&quot;https://console.aws.amazon.com/billing/home#/account&quot;&gt;“Account Settings”&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Scroll down a bit and modify the &lt;code&gt;KEY_LOCATION&lt;/code&gt; to point to the SSH Key you use
+&lt;p&gt;Scroll down a bit and modify the &lt;code class=&quot;highlighter-rouge&quot;&gt;KEY_LOCATION&lt;/code&gt; to point to the SSH Key you use
 to connect to AWS (you had to create a key pair when you created an AWS
   account).&lt;/p&gt;
 
-&lt;p&gt;For me, I also had to modify my &lt;code&gt;AWS_REGION_NAME&lt;/code&gt; and &lt;code&gt;AWS_REGION_HOST&lt;/code&gt;.
+&lt;p&gt;For me, I also had to modify my &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS_REGION_NAME&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS_REGION_HOST&lt;/code&gt;.
 Although I’m on the East  coast, for some reason amazon made my instances on
 the west coast. After &lt;a href=&quot;https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#Instances:sort=monitoring&quot;&gt;looking at my instances&lt;/a&gt;, here’s what I put
 in my config file for those two values:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;AWS_REGION_NAME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; us-west-2a
-&lt;span class=&quot;nv&quot;&gt;AWS_REGION_HOST&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; ec2.us-west-2.compute.amazonaws.com&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;AWS_REGION_NAME &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; us-west-2a
+AWS_REGION_HOST &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; ec2.us-west-2.compute.amazonaws.com&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Next, I attempted to start up my cluster&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster start mycluster&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster start mycluster&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;After a long pause, I got an error message:&lt;/p&gt;
 
@@ -1214,18 +1314,18 @@ gaierror: [Errno 8] nodename nor servname provided, or not known
 &lt;/blockquote&gt;
 
 &lt;p&gt;There were some other options I changed. I’m using the free AMI, a t2.micro, so
-I changed the &lt;code&gt;NODE_INSTANCE_TYPE&lt;/code&gt;:&lt;/p&gt;
+I changed the &lt;code class=&quot;highlighter-rouge&quot;&gt;NODE_INSTANCE_TYPE&lt;/code&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;NODE_INSTANCE_TYPE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; t2.micro&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;NODE_INSTANCE_TYPE &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; t2.micro&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;I also setup my instance with the default Amazon Linxu HVM at the top of the
-list of instance types. I therefore needed to change the &lt;code&gt;NODE_IMAGE_ID&lt;/code&gt; as
+list of instance types. I therefore needed to change the &lt;code class=&quot;highlighter-rouge&quot;&gt;NODE_IMAGE_ID&lt;/code&gt; as
 well. This information was given in the comments above that field in the
 default ~/.starcluster/config file:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;NODE_IMAGE_ID&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; ami-6b211202&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;NODE_IMAGE_ID &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; ami-6b211202&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;This was caused by me changing the &lt;code&gt;AWS_REGION_NAME&lt;/code&gt; and &lt;code&gt;AWS_REGION_HOST&lt;/code&gt;.
+&lt;p&gt;This was caused by me changing the &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS_REGION_NAME&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS_REGION_HOST&lt;/code&gt;.
 Once I changed it back, I could connect, but I got error messages along the
 lines of:&lt;/p&gt;
 
@@ -1286,64 +1386,64 @@ Validating cluster template settings…
 &lt;p&gt;At that point I attempted to create a new key using the starcluster
 command&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster createkey mysckey -o ~/.ssh/mysckey.rsa&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster createkey mysckey -o ~/.ssh/mysckey.rsa&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;This didn’t work either. Later, I noticed that in the top right corner of the Amazon AWS Web Interface the region can be changed. My region defaulted to “Oregon” for some reason. I clicked the name and changed it to “N. Virginia”. It is odd that Amazon chose to write “N. Virginia” instead of just “Virginia” since there is no option for “S. Virginia” and “North Virginia” is not a state. Did they get Virginia confused with the Carolinas?&lt;/p&gt;
 
-&lt;p&gt;After switching to the “US East (N. Virginia)” region, I could then setup instances and create keys for the US East region. I changed the &lt;code&gt;~/.starcluster/config&lt;/code&gt; file back to its defaults and tried again. I could now create keypairs through starcluster:&lt;/p&gt;
+&lt;p&gt;After switching to the “US East (N. Virginia)” region, I could then setup instances and create keys for the US East region. I changed the &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.starcluster/config&lt;/code&gt; file back to its defaults and tried again. I could now create keypairs through starcluster:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster createkey myStarClusterKey -o ~/.ssh/myStarClusterKey.rsa&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster createkey myStarClusterKey -o ~/.ssh/myStarClusterKey.rsa&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;And looking at the &lt;strong&gt;Key Pairs&lt;/strong&gt; under &lt;strong&gt;Network &amp;amp; Security&lt;/strong&gt; on the AWS Web Interface, I could see that StarCluster generated the key properly. I updated my config file, but was still getting an error message:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster start mycluster
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;starcluster start mycluster
 StarCluster - &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://star.mit.edu/cluster&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;v. 0.95.6&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-Software Tools &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Software Tools &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Academics and Researchers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;STAR&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 Please submit bug reports to starcluster@mit.edu
 
-&amp;gt;&amp;gt;&amp;gt; Using default cluster template: smallcluster
-&amp;gt;&amp;gt;&amp;gt; Validating cluster template settings...
+&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;Using default cluster template: smallcluster
+&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;Validating cluster template settings...
 !!! ERROR - Cluster settings are not valid:
-!!! ERROR - Keypair &lt;span class=&quot;s1&quot;&gt;&amp;#39;myKey&amp;#39;&lt;/span&gt; does not exist in region &lt;span class=&quot;s1&quot;&gt;&amp;#39;us-east-1&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+!!! ERROR - Keypair &lt;span class=&quot;s1&quot;&gt;&#39;myKey&#39;&lt;/span&gt; does not exist &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;region &lt;span class=&quot;s1&quot;&gt;&#39;us-east-1&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;My problem ended up being in the name I gave the key in the ~/.starcluster/config file.&lt;/p&gt;
 
 &lt;p&gt;Here is the snippet from my ~/.starcluster/config file that &lt;strong&gt;&lt;em&gt;did
 not work&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;key myawskey&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;key myawskey]
 &lt;span class=&quot;nv&quot;&gt;KEY_LOCATION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/matt/.ssh/myStarClusterKey.rsa                                                                                            &lt;span class=&quot;c&quot;&gt;# You can of course have multiple keypair sections&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;#     $ starcluster start -c mediumcluster mycluster&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# If a template is not specified then the template defined by DEFAULT_TEMPLATE&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# in the [global] section above is used. Below is the &amp;quot;default&amp;quot; template named&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# &amp;quot;smallcluster&amp;quot;. You can rename it but dont forget to update the&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# in the [global] section above is used. Below is the &quot;default&quot; template named&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# &quot;smallcluster&quot;. You can rename it but dont forget to update the&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# DEFAULT_TEMPLATE setting in the [global] section above. See the next section&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# on defining multiple templates.&lt;/span&gt;
 
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;cluster smallcluster&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;cluster smallcluster]
 &lt;span class=&quot;c&quot;&gt;# change this to the name of one of the keypair sections defined above&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;KEYNAME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; myawskey&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+KEYNAME &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; myawskey&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;And here is the snippet from my ~/.starcluster/config file that &lt;strong&gt;&lt;em&gt;worked&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;key myStarClusterKey&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;key myStarClusterKey]
 &lt;span class=&quot;nv&quot;&gt;KEY_LOCATION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/matt/.ssh/myStarClusterKey.rsa                                                                                            &lt;span class=&quot;c&quot;&gt;# You can of course have multiple keypair sections&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;#     $ starcluster start -c mediumcluster mycluster&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# If a template is not specified then the template defined by DEFAULT_TEMPLATE&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# in the [global] section above is used. Below is the &amp;quot;default&amp;quot; template named&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# &amp;quot;smallcluster&amp;quot;. You can rename it but dont forget to update the&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# in the [global] section above is used. Below is the &quot;default&quot; template named&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# &quot;smallcluster&quot;. You can rename it but dont forget to update the&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# DEFAULT_TEMPLATE setting in the [global] section above. See the next section&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# on defining multiple templates.&lt;/span&gt;
 
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;cluster smallcluster&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;cluster smallcluster]
 &lt;span class=&quot;c&quot;&gt;# change this to the name of one of the keypair sections defined above&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;KEYNAME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; myStarClusterKey&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+KEYNAME &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; myStarClusterKey&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;&lt;strong&gt;An important point: The keyname needs to be the same name as the name of the key in AWS!&lt;/strong&gt; I thought &lt;code&gt;KEYNAME&lt;/code&gt; was just a local variable that was used in the starcluster code to point to the correct [key] section in the config file. That is NOT the case! &lt;code&gt;KEYNAME&lt;/code&gt; needs to be the same as the filename of the .rsa file.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;An important point: The keyname needs to be the same name as the name of the key in AWS!&lt;/strong&gt; I thought &lt;code class=&quot;highlighter-rouge&quot;&gt;KEYNAME&lt;/code&gt; was just a local variable that was used in the starcluster code to point to the correct [key] section in the config file. That is NOT the case! &lt;code class=&quot;highlighter-rouge&quot;&gt;KEYNAME&lt;/code&gt; needs to be the same as the filename of the .rsa file.&lt;/p&gt;
 
 &lt;p&gt;Once I changed the keyname as shown in the above example, I could then successfully start a cluster using the starcluster code following the &lt;a href=&quot;http://star.mit.edu/cluster/docs/latest/quickstart.html&quot;&gt;Starcluster Quick Start Guide&lt;/a&gt;.&lt;/p&gt;
 
@@ -1359,129 +1459,6 @@ not work&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
         <category>ec2,</category>
         
         <category>starcluster</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Scaling Up With AWS</title>
-        <description>&lt;p&gt;As mentioned in a &lt;a href=&quot;/2015/03/09/parallel-tempering.html&quot;&gt;previous blog post&lt;/a&gt;, my parallel tempering code is
-now working. There is still work to be done in adding new physics,
-but I am now in a position to benefit from some extra computing
-power. I’m going to try using &lt;a href=&quot;http://aws.amazon.com/ec2/&quot;&gt;Amazon EC2&lt;/a&gt; for this project.&lt;/p&gt;
-
-&lt;p&gt;First, I launched an instance running the Amazon Linux AMI (HVM).
-&lt;a href=&quot;http://badhessian.org/2013/11/cluster-computing-for-027hr-using-amazon-ec2-and-ipython-notebook/&quot;&gt;This blog post&lt;/a&gt; may be helpful in setting things up.&lt;/p&gt;
-
-&lt;p&gt;Once the instance was created, and my keys were all setup, I SSHed into my
-instance. My favorite distribution of scientific python is anaconda python.
-This can be easily downloaded onto the AWS virtual machine instance by&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;going to the Anaconda downloads page&lt;/li&gt;
-  &lt;li&gt;selecting the linux OS&lt;/li&gt;
-  &lt;li&gt;right-clicking in the browser on the “Linux 64-Bit - Python 2.7” button&lt;/li&gt;
-  &lt;li&gt;copying the link to the downloadable package&lt;/li&gt;
-  &lt;li&gt;and pasting the link after &lt;code&gt;wget&lt;/code&gt; in the SSH session into the VMI.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ssh -p22 -i my-private-key ec2-user@my-public-ip
-mkdir tempDownloads
-&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;tempDownloads
-wget http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-2.1.0-Linux-x86_64.sh&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Once the download has completed, installation is as simple as typing ls to
-find out the name of the install script, running it, and following the
-on-screen instructions.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ls
--rw-rw-r-- &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; ec2-user ec2-user &lt;span class=&quot;m&quot;&gt;353806962&lt;/span&gt; Sep &lt;span class=&quot;m&quot;&gt;30&lt;/span&gt; 19:37 Anaconda-2.1.0-Linux-x86_64.sh
-bash Anaconda-2.1.0-Linux-x86_64.sh&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;If you said ‘yes’ at the end of installation to have the anaconda python path
-appended to your .bashrc file, then starting anaconda python is as simple as
-sourcing the changes to your .bashrc file and typing python:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bashrc
-python&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;There are a few packages I need to run my parallel tempering code. I’ll use
-pip to install these:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;pip install emcee&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-</description>
-        <pubDate>Tue, 10 Mar 2015 14:39:10 -0400</pubDate>
-        <link>http://mattgiguere.github.io/2015/03/10/scaling-up-with-aws.html</link>
-        <guid isPermaLink="true">http://mattgiguere.github.io/2015/03/10/scaling-up-with-aws.html</guid>
-        
-        <category>python,</category>
-        
-        <category>IPython,</category>
-        
-        <category>time</category>
-        
-        <category>series</category>
-        
-        <category>analysis,</category>
-        
-        <category>AWS,</category>
-        
-        <category>EC2</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Parallel Tempering</title>
-        <description>&lt;p&gt;After a few days of working out the bugs in between other projects, I
-now have the spot modeling code working with parallel tempering. Briefly,
-&lt;a href=&quot;https://en.wikipedia.org/wiki/Parallel_tempering&quot;&gt;parallel tempering&lt;/a&gt; allows for better exploration of the
-parameter space of multi-modal distributions. In my particular example, there
-may be (and probably are) many spots on the surface of a star. I am trying to
-find the most probable coordinates for the spots, as well as their sizes, and
-other properties of the star. When performing the normal Affine Invariant MCMC
-Ensemble sampling of &lt;a href=&quot;http://dan.iel.fm/emcee/current/&quot;&gt;emcee&lt;/a&gt;, Markov chains will get stuck in local
-minima (e.g. smaller spot locations), and do not explore the full parameter
-space to find the larger spot locations. Parallel tempering reduces the
-height of the barriers between the posterior distribution, allowing chains
-to fully explore the parameter space, and find the dominant spot locations.&lt;/p&gt;
-
-&lt;p&gt;Here is the best fit solution employing a maximum likelihood method with an
-excellent initial guess based on a grid search:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/Show_TwoSpotModelLinearTrendCrat.png&quot; alt=&quot;Maximum Likelihood&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;And here are 100 random samples taken from the parallel tempering method:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/Show_eeTwoSpotParTmp100Samps.png&quot; alt=&quot;Parallel Tempering&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Note the standard deviation of the residuals for the photometry is unchanged,
-but the standard deviation of the residuals for the RV data benefited from
-a 62 cm/s improvement.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 09 Mar 2015 16:21:08 -0400</pubDate>
-        <link>http://mattgiguere.github.io/2015/03/09/parallel-tempering.html</link>
-        <guid isPermaLink="true">http://mattgiguere.github.io/2015/03/09/parallel-tempering.html</guid>
-        
-        <category>python,</category>
-        
-        <category>time</category>
-        
-        <category>series</category>
-        
-        <category>analysis,</category>
-        
-        <category>MPI,</category>
-        
-        <category>Bayesian,</category>
-        
-        <category>MCMC,</category>
-        
-        <category>Parallel</category>
-        
-        <category>Tempering</category>
         
         
       </item>

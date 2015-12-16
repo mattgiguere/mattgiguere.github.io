@@ -85,41 +85,41 @@ paper is accepted.</p>
 structures (and published over the last 6 years) were erroneous, I used
 the exposure meter midpoints from the MySQL database instead:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;SELECT emmnwob, mnvel, errvel FROM exposuremeter e &quot;</span>
-<span class="n">cmd</span> <span class="o">+=</span> <span class="s">&quot;INNER JOIN velocities v ON v.observation_id = e.observation_id &quot;</span>
-<span class="n">cmd</span> <span class="o">+=</span> <span class="s">&quot;INNER JOIN observations o ON o.observation_id = e.observation_id &quot;</span>
-<span class="n">cmd</span> <span class="o">+=</span> <span class="s">&quot;WHERE object=22049 AND tag=&#39;a&#39; AND mnvel IS NOT NULL&quot;</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">cmd</span> <span class="o">=</span> <span class="s">"SELECT emmnwob, mnvel, errvel FROM exposuremeter e "</span>
+<span class="n">cmd</span> <span class="o">+=</span> <span class="s">"INNER JOIN velocities v ON v.observation_id = e.observation_id "</span>
+<span class="n">cmd</span> <span class="o">+=</span> <span class="s">"INNER JOIN observations o ON o.observation_id = e.observation_id "</span>
+<span class="n">cmd</span> <span class="o">+=</span> <span class="s">"WHERE object=22049 AND tag='a' AND mnvel IS NOT NULL"</span>
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">ccdb</span><span class="o">.</span><span class="n">connectChironDB</span><span class="p">()</span>
 
-<span class="n">eerv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql_query</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span></code></pre></div>
+<span class="n">eerv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql_query</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span></code></pre></figure>
 
 <p>And converted the exposure meter midpoints to Julian Dates using
-the <code>pandas</code> <code>DatetimeIndex</code> and <code>to_julian_date()</code> methods:</p>
+the <code class="highlighter-rouge">pandas</code> <code class="highlighter-rouge">DatetimeIndex</code> and <code class="highlighter-rouge">to_julian_date()</code> methods:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">emmnwobjds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">eerv</span><span class="o">.</span><span class="n">emmnwob</span><span class="p">)</span>
-<span class="n">eerv</span><span class="p">[</span><span class="s">&#39;emmnwobjd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">emmnwobjds</span><span class="o">.</span><span class="n">to_julian_date</span><span class="p">()</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">emmnwobjds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">eerv</span><span class="o">.</span><span class="n">emmnwob</span><span class="p">)</span>
+<span class="n">eerv</span><span class="p">[</span><span class="s">'emmnwobjd'</span><span class="p">]</span> <span class="o">=</span> <span class="n">emmnwobjds</span><span class="o">.</span><span class="n">to_julian_date</span><span class="p">()</span></code></pre></figure>
 
 <p>The next step was to restore the MOST data from file and downsample by taking a
 running mean. Downsampling reduced the noise and allowed the photometry to
 be combined with the RV data without completely dominating the solution.
 Both restoring the data and downsampling were accomplished in
-pandas with a little help from the <code>Time</code> method in <code>astropy</code>:</p>
+pandas with a little help from the <code class="highlighter-rouge">Time</code> method in <code class="highlighter-rouge">astropy</code>:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">astropy.time</span> <span class="kn">import</span> <span class="n">Time</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">astropy.time</span> <span class="kn">import</span> <span class="n">Time</span>
 <span class="c">#restore data</span>
-<span class="n">eeph</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">&#39;epsEriMost.txt&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">eeph</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'epsEriMost.txt'</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">'</span><span class="err">\</span><span class="s">s+'</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="c">#create JD astropy Time object for easy conversion to ISO format:</span>
-<span class="n">MostJds</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="n">eeph</span><span class="o">.</span><span class="n">MJD</span> <span class="o">+</span> <span class="mf">2451545.</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;jd&#39;</span><span class="p">)</span>
+<span class="n">MostJds</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="n">eeph</span><span class="o">.</span><span class="n">MJD</span> <span class="o">+</span> <span class="mf">2451545.</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">'jd'</span><span class="p">)</span>
 <span class="c">#now store as DatetimeIndex</span>
-<span class="n">eeph</span><span class="p">[</span><span class="s">&#39;ObsDT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">MostJds</span><span class="o">.</span><span class="n">isot</span><span class="p">)</span>
+<span class="n">eeph</span><span class="p">[</span><span class="s">'ObsDT'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">MostJds</span><span class="o">.</span><span class="n">isot</span><span class="p">)</span>
 
 <span class="c">#next create a one column series of flux values with the observation</span>
 <span class="c">#time as the index:</span>
-<span class="n">eemr</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">eeph</span><span class="p">[</span><span class="s">&#39;flux&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">eeph</span><span class="p">[</span><span class="s">&#39;ObsDT&#39;</span><span class="p">])</span>
-<span class="n">mhc</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Mean&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">}</span>
-<span class="n">downsampledtimes</span> <span class="o">=</span> <span class="n">eemr</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&quot;480min&quot;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="n">mhc</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_julian_date</span><span class="p">()</span>
-<span class="n">downsampledflux</span> <span class="o">=</span> <span class="n">eemr</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&quot;480min&quot;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="n">mhc</span><span class="p">)</span></code></pre></div>
+<span class="n">eemr</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">eeph</span><span class="p">[</span><span class="s">'flux'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">eeph</span><span class="p">[</span><span class="s">'ObsDT'</span><span class="p">])</span>
+<span class="n">mhc</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Mean'</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">}</span>
+<span class="n">downsampledtimes</span> <span class="o">=</span> <span class="n">eemr</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">"480min"</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="n">mhc</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_julian_date</span><span class="p">()</span>
+<span class="n">downsampledflux</span> <span class="o">=</span> <span class="n">eemr</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">"480min"</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="n">mhc</span><span class="p">)</span></code></pre></figure>
 
 <p>Since the MOST data have reported homoscedastic errors (a rarity in astronomy)
 this worked out. Otherwise, we’d need to take a weighted mean.</p>
@@ -131,7 +131,7 @@ to get a self-consistent model describing the star. For a first step in doing
 this, I went with a quick maximum likelihood approach. The log likehood function
 for the problem is:</p>
 
-<p><code>\[
+<p><code class="highlighter-rouge">\[
 \ln{p(v, \phi|t, \sigma, t', \sigma', \Theta)} = - \frac{1}{2} \sum_{n}\left[ \frac{(v_{n} - f(t_{n}| \Theta))^{2}}{\sigma_{n}^2} + \ln{(2 \pi \sigma_{n}^{2})}\right]
 - \frac{1}{2} \sum_{m}\left[ \frac{(\phi_{m} - f'(t'_{m}| \Theta))^{2}}{\sigma_{m}^{'2}} + \ln{(2 \pi \sigma_{m}^{'2})}\right]
 \]</code></p>
@@ -149,11 +149,11 @@ for the problem is:</p>
 
 <p>This was then driven by minimizing the negative of the log likelihood:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#use the scipy optimize method:</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#use the scipy optimize method:</span>
 <span class="kn">import</span> <span class="nn">scipy.optimize</span> <span class="kn">as</span> <span class="nn">op</span>
 <span class="n">nll</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="o">-</span><span class="n">lnlike</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">nll</span><span class="p">,</span> <span class="n">theta_init</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">verr</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">ferr</span><span class="p">),</span>
-                     <span class="n">method</span><span class="o">=</span><span class="s">&#39;Powell&#39;</span><span class="p">)</span></code></pre></div>
+                     <span class="n">method</span><span class="o">=</span><span class="s">'Powell'</span><span class="p">)</span></code></pre></figure>
 
 <p>For a first pass we decided to include two spots. No spot growth or decay.
 No differential rotation. Just something quick and dirty, but it was clear

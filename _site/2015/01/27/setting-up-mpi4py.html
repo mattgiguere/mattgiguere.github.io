@@ -73,92 +73,92 @@
   </header>
 
   <article class="post-content">
-    <p>Today I’ve been trying to get <code>emcee</code> up and running and to use it with MPI. There were a number of obstacles that I needed to overcome to get MPI working on multiple machines.</p>
+    <p>Today I’ve been trying to get <code class="highlighter-rouge">emcee</code> up and running and to use it with MPI. There were a number of obstacles that I needed to overcome to get MPI working on multiple machines.</p>
 
 <p>I have an anaconda installation of python, and mpi4py is one of the packages they support (more below), so I installed mpi4py using the following command:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">conda install mpi4py</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">conda install mpi4py</code></pre></figure>
 
 <p>But when I tried running it I got the following error:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">/opt/anaconda1anaconda2anaconda3/share/openmpi/help-opal-runtime.txt</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">/opt/anaconda1anaconda2anaconda3/share/openmpi/help-opal-runtime.txt</code></pre></figure>
 
 <p>Fortunately for me, <a href="https://groups.google.com/a/continuum.io/forum/#!topic/anaconda/7CsGQKNvcdQ">someone else encountered a similar error</a>. Until anaconda fixes their bug, an inelegant hack is to make a symbolic link pointing from /opt/ana… to the correct path. I have anaconda python installed for all users, so instead of pointing the symbolic link to my home directory, I pointed it to the directory containing the anaconda python distribution, the Applications directory:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">sudo ln -s /Applications/anaconda/ /opt/anaconda1anaconda2anaconda3</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">sudo ln -s /Applications/anaconda/ /opt/anaconda1anaconda2anaconda3</code></pre></figure>
 
 <p>I did this on all 5 machines that I plan on testing MPI on. The next step is to create a hostfile containing the names or IP addresses of all hosts that will be used for computing. This is just a simple text file containing nothing more than the name of the host and the number of slots, or threads, to run on it at any given time:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">host1.example.edu <span class="nv">slots</span><span class="o">=</span>12
-host2.example.edu <span class="nv">slots</span><span class="o">=</span>8</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">host1.example.edu <span class="nv">slots</span><span class="o">=</span>12
+host2.example.edu <span class="nv">slots</span><span class="o">=</span>8</code></pre></figure>
 
 <p>The example tests in the <a href="http://mpi4py.scipy.org/docs/usrman/install.html">mpi4py documentation</a> failed for me, but @jbornschein put together a nice <a href="https://github.com/jbornschein/mpi4py-examples">github repository with some example code</a>. I ran the 01-helloworld example, specifying the hosts I wanted to distribute the jobs to:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">cd </span>projects/mpi4pyexamples
-mpirun --hostfile myhostfile.txt ./01-helloworld</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">cd </span>projects/mpi4pyexamples
+mpirun --hostfile myhostfile.txt ./01-helloworld</code></pre></figure>
 
 <p>After a rather long delay in returning a result, an error was returned saying it could connect on the default port. That makes sense since we use non-default ports for our machines. After some searching, it doesn’t seem like there’s any way to specify the port in the hostfile, instead I used an ssh config file. I’m using Mac OS X 10.10, and setting a config file up was quite quick and easy to do:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">emacs ~/.ssh/config</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">emacs ~/.ssh/config</code></pre></figure>
 
 <p>and for contents add</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">Host host1.example.edu
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">Host host1.example.edu
    Hostname host1.example.edu
    Port 2400
 
 Host host2.example.edu
    Hostname host2.example.edu
-   Port 2400</code></pre></div>
+   Port 2400</code></pre></figure>
 
-<p>After adding the hosts and ports to the <code>config</code> file, I didn’t need to restart, or open a new terminal window or anything else that might be expected. Reissuing the same command in the same terminal window returned an immediate result:</p>
+<p>After adding the hosts and ports to the <code class="highlighter-rouge">config</code> file, I didn’t need to restart, or open a new terminal window or anything else that might be expected. Reissuing the same command in the same terminal window returned an immediate result:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">∞ mpirun --hostfile myhostfile ./01-hello-world
-Hello! I<span class="s1">&#39;m rank 1 from 8 running in total...</span>
-<span class="s1">Hello! I&#39;</span>m rank <span class="m">3</span> from <span class="m">8</span> running in total...
-Hello! I<span class="s1">&#39;m rank 0 from 8 running in total...</span>
-<span class="s1">Hello! I&#39;</span>m rank <span class="m">2</span> from <span class="m">8</span> running in total...
-Hello! I<span class="s1">&#39;m rank 7 from 8 running in total...</span>
-<span class="s1">Hello! I&#39;</span>m rank <span class="m">4</span> from <span class="m">8</span> running in total...
-Hello! I<span class="s1">&#39;m rank 5 from 8 running in total...</span>
-<span class="s1">Hello! I&#39;</span>m rank <span class="m">6</span> from <span class="m">8</span> running in total...
-^Cmpirun: killing job...</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">∞ mpirun --hostfile myhostfile ./01-hello-world
+Hello! I<span class="s1">'m rank 1 from 8 running in total...
+Hello! I'</span>m rank 3 from 8 running <span class="k">in </span>total...
+Hello! I<span class="s1">'m rank 0 from 8 running in total...
+Hello! I'</span>m rank 2 from 8 running <span class="k">in </span>total...
+Hello! I<span class="s1">'m rank 7 from 8 running in total...
+Hello! I'</span>m rank 4 from 8 running <span class="k">in </span>total...
+Hello! I<span class="s1">'m rank 5 from 8 running in total...
+Hello! I'</span>m rank 6 from 8 running <span class="k">in </span>total...
+^Cmpirun: killing job...</code></pre></figure>
 
 <p>However, as you can see things didn’t end very well. I had to kill the job, otherwise I end up with a strange error:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">∞ mpirun --hostfile hostfile ./01-hello-world
-Hello! I<span class="s1">&#39;m rank 0 from 8 running in total...</span>
-<span class="s1">Hello! I&#39;</span>m rank <span class="m">3</span> from <span class="m">8</span> running in total...
-Hello! I<span class="s1">&#39;m rank 1 from 8 running in total...</span>
-<span class="s1">Hello! I&#39;</span>m rank <span class="m">2</span> from <span class="m">8</span> running in total...
-Hello! I<span class="s1">&#39;m rank 4 from 8 running in total...</span>
-<span class="s1">Hello! I&#39;</span>m rank <span class="m">5</span> from <span class="m">8</span> running in total...
-Hello! I<span class="s1">&#39;m rank 6 from 8 running in total...</span>
-<span class="s1">Hello! I&#39;</span>m rank <span class="m">7</span> from <span class="m">8</span> running in total...
-<span class="o">[</span>host2.example.edu<span class="o">][[</span>7061,1<span class="o">]</span>,4<span class="o">][</span>btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect<span class="o">]</span> connect<span class="o">()</span> to 128.5.5.6 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
-<span class="o">[</span>host2.example.edu<span class="o">][[</span>7061,1<span class="o">]</span>,5<span class="o">][</span>btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect<span class="o">]</span> connect<span class="o">()</span> to 128.5.5.6 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
-<span class="o">[</span>host2.example.edu<span class="o">][[</span>7061,1<span class="o">]</span>,6<span class="o">][</span>btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect<span class="o">]</span> connect<span class="o">()</span> to 128.5.5.6 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
-<span class="o">[</span>host2.example.edu<span class="o">][[</span>7061,1<span class="o">]</span>,7<span class="o">][</span>btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect<span class="o">]</span> connect<span class="o">()</span> to 128.5.5.6 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
-<span class="o">[</span>host1.example.edu<span class="o">][[</span>7061,1<span class="o">]</span>,0<span class="o">][</span>btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect<span class="o">]</span> connect<span class="o">()</span> to 128.5.5.5 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
-<span class="o">[</span>host1.example.edu<span class="o">][[</span>7061,1<span class="o">]</span>,1<span class="o">][</span>btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect<span class="o">]</span> connect<span class="o">()</span> to 128.5.5.5 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
-<span class="o">[</span>host1.example.edu<span class="o">][[</span>7061,1<span class="o">]</span>,2<span class="o">][</span>btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect<span class="o">]</span> connect<span class="o">()</span> to 128.5.5.5 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
-<span class="o">[</span>host1.example.edu<span class="o">][[</span>7061,1<span class="o">]</span>,3<span class="o">][</span>btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect<span class="o">]</span> connect<span class="o">()</span> to 128.5.5.5 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">∞ mpirun --hostfile hostfile ./01-hello-world
+Hello! I<span class="s1">'m rank 0 from 8 running in total...
+Hello! I'</span>m rank 3 from 8 running <span class="k">in </span>total...
+Hello! I<span class="s1">'m rank 1 from 8 running in total...
+Hello! I'</span>m rank 2 from 8 running <span class="k">in </span>total...
+Hello! I<span class="s1">'m rank 4 from 8 running in total...
+Hello! I'</span>m rank 5 from 8 running <span class="k">in </span>total...
+Hello! I<span class="s1">'m rank 6 from 8 running in total...
+Hello! I'</span>m rank 7 from 8 running <span class="k">in </span>total...
+<span class="o">[</span>host2.example.edu][[7061,1],4][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect<span class="o">()</span> to 128.5.5.6 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
+<span class="o">[</span>host2.example.edu][[7061,1],5][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect<span class="o">()</span> to 128.5.5.6 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
+<span class="o">[</span>host2.example.edu][[7061,1],6][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect<span class="o">()</span> to 128.5.5.6 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
+<span class="o">[</span>host2.example.edu][[7061,1],7][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect<span class="o">()</span> to 128.5.5.6 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
+<span class="o">[</span>host1.example.edu][[7061,1],0][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect<span class="o">()</span> to 128.5.5.5 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
+<span class="o">[</span>host1.example.edu][[7061,1],1][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect<span class="o">()</span> to 128.5.5.5 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
+<span class="o">[</span>host1.example.edu][[7061,1],2][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect<span class="o">()</span> to 128.5.5.5 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span>
+<span class="o">[</span>host1.example.edu][[7061,1],3][btl_tcp_endpoint.c:638:mca_btl_tcp_endpoint_complete_connect] connect<span class="o">()</span> to 128.5.5.5 failed: Operation timed out <span class="o">(</span>60<span class="o">)</span></code></pre></figure>
 
 <p>I downloaded the <a href="https://bitbucket.org/mpi4py/mpi4py/downloads">source code</a> for mpi4py, changed directories into the downloaded directory and tried running their tests:</p>
 
-<div class="highlight"><pre><code class="language-sh" data-lang="sh">mpiexec --hostfile hostfile python <span class="nb">test</span>/runtests.py</code></pre></div>
+<figure class="highlight"><pre><code class="language-sh" data-lang="sh">mpiexec --hostfile hostfile python <span class="nb">test</span>/runtests.py</code></pre></figure>
 
-<p>Running <code>runtests.py</code> when the <code>hostfile</code> contains only <code>host1.example.edu</code> or <code>host2.example.edu</code> works fine. However, when I include both hosts I end up with the same error as the <code>helloworld.py</code> example. This error doesn’t crop up with the <code>mpi4py</code> <code>helloworld</code> example, just the <code>mpi4py-examples</code> <code>helloworld</code>. The difference between the failed and successful versions being that the version that fails waits for all jobs to finish up at the end through <code>comm.Barrier()</code>.</p>
+<p>Running <code class="highlighter-rouge">runtests.py</code> when the <code class="highlighter-rouge">hostfile</code> contains only <code class="highlighter-rouge">host1.example.edu</code> or <code class="highlighter-rouge">host2.example.edu</code> works fine. However, when I include both hosts I end up with the same error as the <code class="highlighter-rouge">helloworld.py</code> example. This error doesn’t crop up with the <code class="highlighter-rouge">mpi4py</code> <code class="highlighter-rouge">helloworld</code> example, just the <code class="highlighter-rouge">mpi4py-examples</code> <code class="highlighter-rouge">helloworld</code>. The difference between the failed and successful versions being that the version that fails waits for all jobs to finish up at the end through <code class="highlighter-rouge">comm.Barrier()</code>.</p>
 
 <p><a href="http://stackoverflow.com/questions/15072563/running-mpi-on-two-hosts">This article</a>, which discusses the communication was helpful — it appears the two computers, host1 and host2, can communicate with the machine I am running the commands from, but they cannot communicate with eachother.</p>
 
-<p>I disabled the firewall through System Preferences -&gt; Security &amp; Privacy. This worked for the <code>helloworld.py</code> example, but not for <code>tests/runtests.py</code>. I should also mention that <code>host1</code> has 12 cores and <code>host2</code> has 8 cores. While testing out my hostfile I had reduced the number of “slots” on each to 4 and it worked. When I increased the number of slots on either host above 4, the connection failed error message reappeared when running <code>helloworld.py</code>.</p>
+<p>I disabled the firewall through System Preferences -&gt; Security &amp; Privacy. This worked for the <code class="highlighter-rouge">helloworld.py</code> example, but not for <code class="highlighter-rouge">tests/runtests.py</code>. I should also mention that <code class="highlighter-rouge">host1</code> has 12 cores and <code class="highlighter-rouge">host2</code> has 8 cores. While testing out my hostfile I had reduced the number of “slots” on each to 4 and it worked. When I increased the number of slots on either host above 4, the connection failed error message reappeared when running <code class="highlighter-rouge">helloworld.py</code>.</p>
 
-<p>It looks like part of the problem may be that <code>host1</code> and <code>host2</code> are using different SSH ports, and therefore cannot communicate between each other. I switched to using two host machines that are using the same ports for SSH, and both <code>helloworld.py</code> and <code>runtests.py</code> finished up successfully.</p>
+<p>It looks like part of the problem may be that <code class="highlighter-rouge">host1</code> and <code class="highlighter-rouge">host2</code> are using different SSH ports, and therefore cannot communicate between each other. I switched to using two host machines that are using the same ports for SSH, and both <code class="highlighter-rouge">helloworld.py</code> and <code class="highlighter-rouge">runtests.py</code> finished up successfully.</p>
 
 <p>However, adding a third machine is now causing issues…</p>
 
-<p>This turned out to be that the firewall was still on despite turning it off through the GUI in system preferences. Simply turning the firewall off through the System Preferences GUI worked on 2 of the 3 machines, so I’m not sure why it got hung up on the third. If you’re having similar problems, try taking a look at either “All Messages” or “secure.log” in the console (or /var/log/secure.log) on the mac host. If you see lines stating that the Firewall refused connection, this is your problem too. Simply restarting the system did the trick. I’ve now added several more machines and have executed <code>helloworld.py</code> and <code>tests/runtests.py</code> successfully on 96 cores!</p>
+<p>This turned out to be that the firewall was still on despite turning it off through the GUI in system preferences. Simply turning the firewall off through the System Preferences GUI worked on 2 of the 3 machines, so I’m not sure why it got hung up on the third. If you’re having similar problems, try taking a look at either “All Messages” or “secure.log” in the console (or /var/log/secure.log) on the mac host. If you see lines stating that the Firewall refused connection, this is your problem too. Simply restarting the system did the trick. I’ve now added several more machines and have executed <code class="highlighter-rouge">helloworld.py</code> and <code class="highlighter-rouge">tests/runtests.py</code> successfully on 96 cores!</p>
 
   </article>
 
