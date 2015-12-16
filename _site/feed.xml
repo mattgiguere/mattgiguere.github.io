@@ -6,8 +6,8 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 16 Dec 2015 07:59:40 -0500</pubDate>
-    <lastBuildDate>Wed, 16 Dec 2015 07:59:40 -0500</lastBuildDate>
+    <pubDate>Wed, 16 Dec 2015 09:16:29 -0500</pubDate>
+    <lastBuildDate>Wed, 16 Dec 2015 09:16:29 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -41,12 +41,12 @@ list of these issues, with links to blog posts on how I fixed them:&lt;/p&gt;
         <title>Using TeX in Mac OS X El Capitan</title>
         <description>&lt;p&gt;If you’ve recently upgraded to OS X El Capitan, and you’re getting an error
 message when trying to compile TeX, the reason is most likely due to one of
-the new “features” in OS X El Capitan called &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection/html&quot;&gt;System Integrity Protection&lt;/a&gt;.&lt;/p&gt;
+the new features in OS X El Capitan called &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection/html&quot;&gt;System Integrity Protection&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;When I upgraded to Mac OS X El Capitan, this great new “feature” deleted all
-non-native items installed in &lt;code class=&quot;highlighter-rouge&quot;&gt;/usr&lt;/code&gt;, including my simlink to my texbin
-directory. This caused an error message when I tried to compile a latex
-document:&lt;/p&gt;
+&lt;p&gt;When I upgraded to Mac OS X El Capitan, all non-native items once installed in
+&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr&lt;/code&gt;, including my simlink to my texbin
+directory, were wiped out. This caused an error message when I tried to compile
+a latex document:&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;Can’t find required tool.&lt;/strong&gt;&lt;/p&gt;
@@ -56,12 +56,16 @@ document:&lt;/p&gt;
   &lt;p&gt;/usr/texbin/simpdftex does not exist. TeXShop is  a front end for TeX, but you also need a TeX distribution. Perhaps such a distribution was not installed or was removed during a system upgrade. If so, go to http://tug.org/MacTeX and follow the instructions to (re)install MacTeX. A less likely possibility is that a tool path is incorrectly configured in TeXShop preferences. This can happen if you are using the macports or fink distributions.&lt;/p&gt;
 &lt;/blockquote&gt;
 
+&lt;p&gt;My TeX editor of choice is TeXShop, but I imagine this error occurs with other
+TeX editors in OS X. The following solution should work independent of the
+TeX editor.&lt;/p&gt;
+
 &lt;p&gt;When I tried to recreate the symbolic link, I received the following error message:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
-sudo ln -s /usr/local/texlive/2014/bin/x86_64-darwin texbin
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo ln -s /usr/local/texlive/2014/bin/x86_64-darwin texbin
 ln: texbin: Operation not permitted
-&lt;/code&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Looking into the &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Security/Conceptual/System_Integrity_Protection_Guide/ConfiguringSystemIntegrityProtection/ConfiguringSystemIntegrityProtection/html&quot;&gt;documentation&lt;/a&gt;, to recreate a symbolic link in the
 &lt;code class=&quot;highlighter-rouge&quot;&gt;/usr&lt;/code&gt; directory, SIP needs to be disabled. To do so, carry out the following
@@ -78,16 +82,18 @@ steps:&lt;/p&gt;
 successful by typing &lt;code class=&quot;highlighter-rouge&quot;&gt;csrutil status&lt;/code&gt; at the command line. If all went
 well, you should see the following:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;shell
-$csrutil status
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$csrutil status
 System Integrity Protection status: disabled
-&lt;/code&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Next, recreate the symbolic link to the texbin directory:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;shell
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
 sudo ln -s /usr/local/texlive/2014/bin/x86_64-darwin texbin
 &lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Once I did this, I could recompile TeX documents using TeXShop just fine!&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 15 Dec 2015 10:47:31 -0500</pubDate>
