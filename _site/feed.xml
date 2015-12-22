@@ -6,9 +6,34 @@
 </description>
     <link>http://mattgiguere.github.io/</link>
     <atom:link href="http://mattgiguere.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 16 Dec 2015 09:42:24 -0500</pubDate>
-    <lastBuildDate>Wed, 16 Dec 2015 09:42:24 -0500</lastBuildDate>
+    <pubDate>Tue, 22 Dec 2015 17:48:28 -0500</pubDate>
+    <lastBuildDate>Tue, 22 Dec 2015 17:48:28 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
+    
+      <item>
+        <title>Auto Scaling On EC2</title>
+        <description>&lt;p&gt;For my Insight project, I created a Flask-based web app that I hosted on Amazon
+Web Services (AWS) Elastic Cloud Computing (EC2). I had the original site on a
+&lt;a href=&quot;https://aws.amazon.com/ec2/instance-types/&quot;&gt;micro instance&lt;/a&gt;. That worked for the initial testing, but
+during demos I found that when several people in the audience were viewing my
+site at the same time while I was presenting, it would overload the server and
+result in an error.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 22 Dec 2015 12:47:50 -0500</pubDate>
+        <link>http://mattgiguere.github.io/2015/12/22/Auto_Scaling_On_EC2.html</link>
+        <guid isPermaLink="true">http://mattgiguere.github.io/2015/12/22/Auto_Scaling_On_EC2.html</guid>
+        
+        <category>python,</category>
+        
+        <category>Flask,</category>
+        
+        <category>AWS,</category>
+        
+        <category>EC2</category>
+        
+        
+      </item>
     
       <item>
         <title>Issues with Mac OS X El Capitan</title>
@@ -988,254 +1013,6 @@ illustrations can be downloaded for my Tableau public profile &lt;a href=&quot;h
         <category>bootstrap,</category>
         
         <category>d3.js</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Running MPI Python Code on Yale Omega</title>
-        <description>&lt;p&gt;Yesterday I got my Parallel Tempering MCMC code working on Yale’s
-&lt;a href=&quot;http://westcampus.yale.edu/research/science-medicine-engineering/core-facililties/high-performance-computing-center&quot;&gt;Omega Cluster&lt;/a&gt;. I found &lt;a href=&quot;https://hpc.research.yale.edu/hpc_user_wiki/index.php/Omega&quot;&gt;the “documentation”&lt;/a&gt; to be far
-out of date, and not very helpful. Fortunately, there were several people in
-the department that could help me out (thanks Kaylea, Duncan, and Andys!!). In
-the hopes of easing the reducing the setup time for others that may be
-interested in using Omega for their research, I decided to write this blog post
-detailing my setup.&lt;/p&gt;
-
-&lt;h3 id=&quot;welcome-email&quot;&gt;Welcome Email&lt;/h3&gt;
-
-&lt;p&gt;When your account is first created, you will receive an email that starts off
-like this:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Welcome to Omega - Yale High Performance Cluster&lt;/p&gt;
-
-  &lt;p&gt;An account has been created for you on omega.hpc.yale.edu.&lt;/p&gt;
-
-  &lt;p&gt;Details about the cluster and its usage can be found at
-* http://hpc.research.yale.edu/wiki/index.php/Omega&lt;/p&gt;
-
-  &lt;p&gt;Before you can login you will need to create and upload your ssh key here:
-* http://gold.hpc.yale.internal/cgi-bin/sshkeys.py&lt;/p&gt;
-
-  &lt;p&gt;For additional information about ssh please visit:
-* http://hpc.yale.edu/faq/secure-shell-faq/&lt;/p&gt;
-
-  &lt;p&gt;There are several queues to choose from, each serving a different purpose
-* http://hpc.research.yale.edu/wiki/index.php/Omega#FAS_Queues&lt;/p&gt;
-
-  &lt;p&gt;When submitting jobs, some of the qsub terms have changed; most
-importantly when selecting the number of nodes or number of
-processors:
-* http://hpc.research.yale.edu/wiki/index.php/Omega#Scheduling_your_Programs_to_run&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h4 id=&quot;ssh-keys&quot;&gt;SSH Keys&lt;/h4&gt;
-&lt;p&gt;The first thing to note that is not mentioned in the welcome email message (and
-I could not find mentioned in the online documentation) is that the link given
-to upload your SSH key does not work in the Safari browser. Use Google Chrome.&lt;/p&gt;
-
-&lt;h4 id=&quot;sshing-into-omega&quot;&gt;SSHing Into Omega&lt;/h4&gt;
-&lt;p&gt;Next, to SSH into omega, I used the command:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;ssh -p22 -i ~/.ssh/myomegakey netid@omega.hpc.yale.edu&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h4 id=&quot;creating-a-test-script&quot;&gt;Creating a Test Script&lt;/h4&gt;
-&lt;p&gt;Now comes the fun stuff. All jobs submitted for processing need to be wrapped
-in a shell script. Before you do anything else, create a test script and see
-if it works. The sample script on the HPC site is out of date and results in
-error messages. Below is a sample script that works (as of March 12, 2015).&lt;/p&gt;
-
-&lt;p&gt;Contents of &lt;code class=&quot;highlighter-rouge&quot;&gt;my_test_script.sh&lt;/code&gt;:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;###fas_devel: for compiling and testing code,&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;###restricted to one job per user32 max cores, 4 hours max walltime&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;###name of job&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#PBS -N mytestjob&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;###-q queue_name&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#PBS -q fas_devel&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;###PBS -l procs=1, tpn=1&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#PBS -l nodes=1:ppn=8,mem=35gb&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;#PBS -l walltime=4:00:00&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;##oe: stdout(o) and stderr(e)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#PBS -j oe&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;##where to put the output&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#PBS -o output_dir/$PBS_JOBNAME.$PBS_JOBID&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;##what you get emails for ((a)borted, (b)egin, (e)nd)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#PBS -m abe&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;###email yourself status messages about your job:&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#PBS -M firstname.lastname@yale.edu&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;##Import terminal env variables&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#PBS -V&lt;/span&gt;
-
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;OMP_NUM_THREADS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8
-
-&lt;span class=&quot;c&quot;&gt;###run from directory the job is submitted from&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$PBS_O_WORKDIR&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;##Command to execute:&lt;/span&gt;
-date&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Most of what I wrote above is probably self-explanatory through the comments.
-Yes, the ‘#’ signs should be in front of the PBS commands. The &lt;code class=&quot;highlighter-rouge&quot;&gt;$PBS_JOBNAME&lt;/code&gt;
-and &lt;code class=&quot;highlighter-rouge&quot;&gt;$PBS_JOBID&lt;/code&gt; are handy variables that can be used to ensure your output is
-printed to unique directories (i.e., you’re not overwriting previous results).&lt;/p&gt;
-
-&lt;p&gt;To submit this job, type the following at the command line:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;qsub my_test_script.sh&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;You should receive an email message when your script has begun execution. You
-can see the status of it by typing &lt;code class=&quot;highlighter-rouge&quot;&gt;showq&lt;/code&gt;. The list is usually quite long, so
-you might find it useful to pipe the results to grep and search for just lines
-that contain your netid:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;showq | grep netid&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Note that this test script is simply printing the date, so it won’t take long
-to run, and you should receive a finished email with exit 0 status shortly
-after receiving the start email message.&lt;/p&gt;
-
-&lt;p&gt;If all went well, congratulations!&lt;/p&gt;
-
-&lt;h3 id=&quot;setting-up-python-and-mpi-on-omega&quot;&gt;Setting up Python and MPI on Omega&lt;/h3&gt;
-&lt;p&gt;Now comes the fun part. Omega uses a module system. To print all available
-modules in the Terminal window type the following:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;module avail&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;To find specific modules, use the &lt;code class=&quot;highlighter-rouge&quot;&gt;modulefind&lt;/code&gt; command:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;modulefind python
-/home/apps/fas/Modules:
-Applications/PythonPackages/numpy/numpy-GCC-ATLAS
-Applications/PythonPackages/scipy/scipy-GCC-ATLAS
-Applications/PythonPackages/wxPython/2.8
-Apps/PythonPackages/numpy/numpy-GCC-ATLAS
-Apps/PythonPackages/scipy/scipy-GCC-ATLAS
-Apps/PythonPackages/wxPython/2.8
-Compilers/Python/2.7.2
-Compilers/Python/2.7.3
-Compilers/Python/2.7.4rc2_experimental
-Compilers/Python/2.7.5
-Compilers/Python/2.7.6
-Compilers/Python/2.7.9
-Compilers/Python/3.2
-Compilers/Python/3.3.5
-Compilers/Python/OLD-2.7.5
-Langs/Python/2.7.2
-Langs/Python/2.7.3
-Langs/Python/2.7.4rc2_experimental
-Langs/Python/2.7.5
-Langs/Python/2.7.6
-Langs/Python/2.7.9
-Langs/Python/3.2
-Langs/Python/3.3.5
-Langs/Python/OLD-2.7.5
-Libraries/IPYTHON/1.1.0
-Libraries/NETCDF4-PYTHON/1.1.0
-Libraries/WXPYTHON/3.0.0
-Libs/IPYTHON/1.1.0
-Libs/NETCDF4-PYTHON/1.1.0
-Libs/WXPYTHON/3.0.0
-RH6/Langs/Python/2.7.2
-RH6/Langs/Python/2.7.3
-RH6/Langs/Python/2.7.4rc2_experimental
-RH6/Langs/Python/3.2
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;As can be seen in the included output above, &lt;code class=&quot;highlighter-rouge&quot;&gt;modulefind&lt;/code&gt; is case insensitive.
-There are many versions of python available, but the only packages that I
-wanted to uses were numpy and scipy.&lt;/p&gt;
-
-&lt;h4 id=&quot;loading-modules-and-adding-python-packages-using-pip&quot;&gt;Loading Modules and Adding Python Packages Using &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt;&lt;/h4&gt;
-
-&lt;p&gt;Adding more packages to your path can be a little tricky.
-I wanted to use python 2.7.9, but when I loaded that module,
-the &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt; command was not in my path. I loaded several others, and it looks
-like the most recent python 2 version to include &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt; on Omega is 2.7.3.
-Another problem is that you won’t have write access to install packages to
-the default site-packages directory, so you will need to create a subdirectory
-in your home directory, and specify an optional argument to pip telling it
-where to install the libraries you need:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;nv&quot;&gt;$mkdir&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;local&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;nv&quot;&gt;$module&lt;/span&gt; load Langs/Python/2.7.3
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;nv&quot;&gt;$module&lt;/span&gt; load Libs/NUMPY/1.9.1
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;nv&quot;&gt;$pip&lt;/span&gt; install --install-option&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;--prefix=~/local/&quot;&lt;/span&gt; pandas
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;mjg22@login-0-0 ~]&lt;span class=&quot;nv&quot;&gt;$pip&lt;/span&gt; install --install-option&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;--prefix=~/local/&quot;&lt;/span&gt; argparse&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;setting-up-your-bashrc-file&quot;&gt;Setting up your .bashrc file&lt;/h3&gt;
-
-&lt;p&gt;Now that we have the python libraries we want to use with our code, we can
-modify our bash startup file to load the other modules we want and modify
-our python path to include the libraries we installed in ~/local:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;c&quot;&gt;# .bashrc&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# Source global definitions&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -f /etc/bashrc &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
-        . /etc/bashrc
-&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# User specific aliases and functions&lt;/span&gt;
-
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/fas/fischer/mjg22/local/bin:&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;
-
-module load Langs/Python/2.7.9
-module load Libs/NUMPY/1.9.1
-module load Libraries/SCIPY/0.14.1
-module load MPI/OpenMPI/1.6.5
-module load Libs/MPI4PY/1.3.1
-
-&lt;span class=&quot;c&quot;&gt;### Add custom installed python packages to my python path&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;### To install these, you need to use Python 2.7.3 because&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;### pip does not exist in the more recent modules&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;### module load Compilers/Python/2.7.3&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;### pip install --install-option=&quot;--prefix=~/local/&quot; package_name&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;###for example&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;### pip install --install-option=&quot;--prefix=~/local/&quot; argparse&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PYTHONPATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/fas/fischer/mjg22/local/lib/python2.7/site-packages:&lt;span class=&quot;nv&quot;&gt;$PYTHONPATH&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;testing-the-real-code&quot;&gt;Testing the real code&lt;/h3&gt;
-&lt;p&gt;That should be everything. You should test your code on a single node before
-attempting to run it on many cores. &lt;code class=&quot;highlighter-rouge&quot;&gt;fas_devel&lt;/code&gt;, as shown in the test script
-above, is the queue you want to use for that. To see what other queues are
-available click &lt;a href=&quot;https://hpc.research.yale.edu/hpc_user_wiki/index.php/Omega#FAS_Queues&quot;&gt;here&lt;/a&gt;. Note there are 8 cores per node for
-Omega, and 36 GB of RAM per node, as mentioned in the &lt;a href=&quot;https://hpc.research.yale.edu/hpc_user_wiki/index.php/Omega#Hardware&quot;&gt;Hardware&lt;/a&gt;
-section.&lt;/p&gt;
-
-&lt;p&gt;I hope you found this post on getting started with MPI and python on the Yale
- Omega cluster helpful!&lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 12 Mar 2015 06:06:07 -0400</pubDate>
-        <link>http://mattgiguere.github.io/2015/03/12/running-mpi-python-code-on-yale-omega.html</link>
-        <guid isPermaLink="true">http://mattgiguere.github.io/2015/03/12/running-mpi-python-code-on-yale-omega.html</guid>
-        
-        <category>python,</category>
-        
-        <category>mpi4py,</category>
-        
-        <category>mcmc,</category>
-        
-        <category>omega,</category>
-        
-        <category>yale,</category>
-        
-        <category>hpc</category>
         
         
       </item>

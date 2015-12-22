@@ -11,11 +11,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Parallel Tempering</title>
-  <meta name="description" content="After a few days of working out the bugs in between other projects, Inow have the spot modeling code working with parallel tempering. Briefly,parallel temper...">
+  <title>Auto Scaling On EC2</title>
+  <meta name="description" content="For my Insight project, I created a Flask-based web app that I hosted on AmazonWeb Services (AWS) Elastic Cloud Computing (EC2). I had the original site on a...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://mattgiguere.github.io/2015/03/09/parallel-tempering.html">
+  <link rel="canonical" href="http://mattgiguere.github.io/2015/12/22/Auto_Scaling_On_EC2.html">
   <link rel="alternate" type="application/rss+xml" title="Matt Giguere" href="http://mattgiguere.github.io/feed.xml" />
 </head>
 
@@ -60,36 +60,17 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Parallel Tempering</h1>
-    <p class="post-meta">Mar 9, 2015</p>
+    <h1 class="post-title">Auto Scaling On EC2</h1>
+    <p class="post-meta">Dec 22, 2015</p>
   </header>
 
   <article class="post-content">
-    <p>After a few days of working out the bugs in between other projects, I
-now have the spot modeling code working with parallel tempering. Briefly,
-<a href="https://en.wikipedia.org/wiki/Parallel_tempering">parallel tempering</a> allows for better exploration of the
-parameter space of multi-modal distributions. In my particular example, there
-may be (and probably are) many spots on the surface of a star. I am trying to
-find the most probable coordinates for the spots, as well as their sizes, and
-other properties of the star. When performing the normal Affine Invariant MCMC
-Ensemble sampling of <a href="http://dan.iel.fm/emcee/current/">emcee</a>, Markov chains will get stuck in local
-minima (e.g. smaller spot locations), and do not explore the full parameter
-space to find the larger spot locations. Parallel tempering reduces the
-height of the barriers between the posterior distribution, allowing chains
-to fully explore the parameter space, and find the dominant spot locations.</p>
-
-<p>Here is the best fit solution employing a maximum likelihood method with an
-excellent initial guess based on a grid search:</p>
-
-<p><img src="/images/Show_TwoSpotModelLinearTrendCrat.png" alt="Maximum Likelihood" /></p>
-
-<p>And here are 100 random samples taken from the parallel tempering method:</p>
-
-<p><img src="/images/Show_eeTwoSpotParTmp100Samps.png" alt="Parallel Tempering" /></p>
-
-<p>Note the standard deviation of the residuals for the photometry is unchanged,
-but the standard deviation of the residuals for the RV data benefited from
-a 62 cm/s improvement.</p>
+    <p>For my Insight project, I created a Flask-based web app that I hosted on Amazon
+Web Services (AWS) Elastic Cloud Computing (EC2). I had the original site on a
+<a href="https://aws.amazon.com/ec2/instance-types/">micro instance</a>. That worked for the initial testing, but
+during demos I found that when several people in the audience were viewing my
+site at the same time while I was presenting, it would overload the server and
+result in an error.</p>
 
 
   </article>
